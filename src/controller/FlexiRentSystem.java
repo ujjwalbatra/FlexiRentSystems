@@ -1,6 +1,6 @@
 /*
  *
- * @project - FlexiRent
+ * @project - FlexiRentSystems
  * @author - ujjwalbatra
  *
  */
@@ -13,6 +13,10 @@ import utility.DateTime;
 import utility.InvalidInputException;
 import utility.InvalidOperationException;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Scanner;
 
 public class FlexiRentSystem {
@@ -21,11 +25,27 @@ public class FlexiRentSystem {
     private RentalProperty[] rentalProperty;
     private static int propertyIdentifier = 0;
 
+    static Connection connection;
+    static Statement statement;
+
+    static {
+        try {
+            Class.forName("org.hsqldb.jdbc.JDBCDriver");
+            connection = DriverManager.getConnection("jdbc:hsqldb:file:/Users/ujjwalbatra/projects/FlexiRentSystems/lib/localhost");
+            statement = connection.createStatement();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     public FlexiRentSystem() {
         this.rentalProperty = new RentalProperty[50];
     }
 
-//    this function will generate a new ID every time it is called
+    //    this function will generate a new ID every time it is called
     private static int identifierFactory() {
         return ++propertyIdentifier;
     }
@@ -90,11 +110,11 @@ public class FlexiRentSystem {
                         System.err.println("Enter a valid input. \nTry again - ");
                         break;
                 }
-            } catch (InvalidOperationException invalidOperationException){
+            } catch (InvalidOperationException invalidOperationException) {
                 System.out.println(invalidOperationException.getMessage());
-            } catch (InvalidInputException invalidInputException){
+            } catch (InvalidInputException invalidInputException) {
                 System.out.println(invalidInputException.getMessage());
-            } catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
@@ -103,9 +123,10 @@ public class FlexiRentSystem {
 
     }
 
-    private void addProperty() throws InvalidOperationException, InvalidInputException{
+    private void addProperty() throws InvalidOperationException, InvalidInputException {
 
-//        exiting if the rentalproperty array is already full
+
+        //        exiting if the rentalproperty array is already full
         if (propertyIndex == 49) {
             System.err.println("Storage full");
             return;
@@ -178,7 +199,7 @@ public class FlexiRentSystem {
             throw new InvalidInputException("Invalid input - the property initial is wrong");
         }
 
-//      adding property to the array and incrementing number of properties stored.
+        //      adding property to the array and incrementing number of properties stored.
         rentalProperty[++propertyIndex] = newProperty;
 
         System.out.println("A Property with property ID \"" + propertyID + "\" added");
@@ -347,7 +368,7 @@ public class FlexiRentSystem {
     private void checkIfApartmentAlreadyExist(RentalProperty newProperty) throws InvalidOperationException {
         for (RentalProperty currentProperty : rentalProperty) {
             if (currentProperty instanceof Apartment)
-//               compare  streetNumber, streetName, suburb, numberOfBedrooms
+                //               compare  streetNumber, streetName, suburb, numberOfBedrooms
                 if (currentProperty.getStreetNumber() == newProperty.getStreetNumber() && currentProperty.getStreetName().toLowerCase().equals(newProperty.getStreetName().toLowerCase())
                         && currentProperty.getSuburb().toLowerCase().equals(newProperty.getSuburb().toLowerCase()) && currentProperty.getNumberOfBedrooms() == newProperty.getNumberOfBedrooms())
                     return;
@@ -358,7 +379,7 @@ public class FlexiRentSystem {
     private void checkIfSuitAlreadyExist(RentalProperty newProperty) throws InvalidOperationException {
         for (RentalProperty currentProperty : rentalProperty) {
             if (currentProperty instanceof PremiumSuit)
-//              compare streetNumber, streetName, suburb
+                //              compare streetNumber, streetName, suburb
                 if (currentProperty.getStreetNumber() == newProperty.getStreetNumber() && currentProperty.getStreetName().toLowerCase().equals(newProperty.getStreetName().toLowerCase())
                         && currentProperty.getSuburb().toLowerCase().equals(newProperty.getSuburb().toLowerCase()) && currentProperty.getNumberOfBedrooms() == newProperty.getNumberOfBedrooms())
                     return;

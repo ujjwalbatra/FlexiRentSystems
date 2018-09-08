@@ -1,6 +1,6 @@
 /*
  *
- * @project - FlexiRent
+ * @project - FlexiRentSystems
  * @author - ujjwalbatra
  *
  */

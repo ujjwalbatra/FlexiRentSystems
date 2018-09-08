@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="database">
+  <database-model serializer="dbm" rdbms="HSQLDB" format-version="4.9">
+    <root id="1">
+      <ServerVersion>2.4</ServerVersion>
+    </root>
+    <database id="2" parent="1" name="PUBLIC">
+      <Current>1</Current>
+      <Visible>1</Visible>
+    </database>
+    <schema id="3" parent="2" name="FLEXIRENTSYSTEMS">
+      <Visible>1</Visible>
+    </schema>
+    <schema id="4" parent="2" name="INFORMATION_SCHEMA"/>
+    <schema id="5" parent="2" name="PUBLIC">
+      <Current>1</Current>
+      <Visible>1</Visible>
+    </schema>
+    <schema id="6" parent="2" name="SYSTEM_LOBS"/>
+    <table id="7" parent="3" name="RENTALPROPERTY"/>
+    <table id="8" parent="3" name="RENTALRECORD"/>
+    <column id="9" parent="7" name="PROPERTYID">
+      <Position>1</Position>
+      <DataType>VARCHAR(10)|12s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="10" parent="7" name="STREETNUMBER">
+      <Position>2</Position>
+      <DataType>INTEGER|4s</DataType>
+    </column>
+    <column id="11" parent="7" name="STREETNAME">
+      <Position>3</Position>
+      <DataType>VARCHAR(20)|12s</DataType>
+    </column>
+    <column id="12" parent="7" name="SUBURB">
+      <Position>4</Position>
+      <DataType>VARCHAR(20)|12s</DataType>
+    </column>
+    <column id="13" parent="7" name="NUMBEROFBEDROOMS">
+      <Position>5</Position>
+      <DataType>INTEGER|4s</DataType>
+    </column>
+    <column id="14" parent="7" name="PROPERTYTYPE">
+      <Position>6</Position>
+      <DataType>VARCHAR(20)|12s</DataType>
+    </column>
+    <column id="15" parent="7" name="PROPERTYSTATUS">
+      <Position>7</Position>
+      <DataType>VARCHAR(20)|12s</DataType>
+    </column>
+    <column id="16" parent="7" name="RENTALRATE">
+      <Position>8</Position>
+      <DataType>DOUBLE|8s</DataType>
+    </column>
+    <column id="17" parent="7" name="ISAVAILABLE">
+      <Position>9</Position>
+      <DataType>BOOLEAN|16s</DataType>
+    </column>
+    <column id="18" parent="7" name="LASTMAINTENANCEDATE">
+      <Position>10</Position>
+      <DataType>DATE|91s</DataType>
+    </column>
+    <index id="19" parent="7" name="SYS_IDX_SYS_PK_10092_10093">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>PROPERTYID</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="20" parent="7" name="SYS_PK_10092">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>PROPERTYID</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="21" parent="8" name="RECORDID">
+      <Position>1</Position>
+      <DataType>VARCHAR(10)|12s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="22" parent="8" name="RENTDATE">
+      <Position>2</Position>
+      <DataType>DATE|91s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="23" parent="8" name="PROPERTYID">
+      <Position>3</Position>
+      <DataType>VARCHAR(10)|12s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="24" parent="8" name="ESTIMATEDRETURNDATE">
+      <Position>4</Position>
+      <DataType>DATE|91s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="25" parent="8" name="ACTUALRETURNDATE">
+      <Position>5</Position>
+      <DataType>DATE|91s</DataType>
+    </column>
+    <column id="26" parent="8" name="RENTALFEE">
+      <Position>6</Position>
+      <DataType>DOUBLE|8s</DataType>
+    </column>
+    <column id="27" parent="8" name="LATEFEE">
+      <Position>7</Position>
+      <DataType>DOUBLE|8s</DataType>
+    </column>
+    <column id="28" parent="8" name="CUSTID">
+      <Position>8</Position>
+      <DataType>VARCHAR(10)|12s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="29" parent="8" name="SYS_IDX_SYS_PK_10123_10128">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>RECORDID</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="30" parent="8" name="SYS_IDX_RENTALRECORD_RENTALPROPERTY_PROPERTYID_FK_10133">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>PROPERTYID</ColNames>
+    </index>
+    <key id="31" parent="8" name="SYS_PK_10123">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>RECORDID</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="32" parent="8" name="RENTALRECORD_RENTALPROPERTY_PROPERTYID_FK">
+      <ColNames>PROPERTYID</ColNames>
+      <RefSchemaName>FLEXIRENTSYSTEMS</RefSchemaName>
+      <RefTableName>RENTALPROPERTY</RefTableName>
+      <RefKeyName>SYS_PK_10092</RefKeyName>
+      <RefColNames>PROPERTYID</RefColNames>
+      <OnDelete>cascade</OnDelete>
+    </foreign-key>
+  </database-model>
+</dataSource>
