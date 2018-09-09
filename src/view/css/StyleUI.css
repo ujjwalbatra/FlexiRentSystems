@@ -23,3 +23,14 @@
 .addPropertyDialog-pane > .content *.toggle-button{
      -fx-font-size: 16px;
  }
+
+.viewPropertyDialog-pane *.button{
+    -fx-font-size: 16px;
+    -fx-alignment: center;
+}
+
+.viewPropertyDialog-pane > .content *.label{
+    -fx-font-size: 18px;
+}
+
+

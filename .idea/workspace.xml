@@ -2,20 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0952388f-f5fb-4cfe-96c8-64452ed31645" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/view/AddPropertyUI.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/view/MainUI.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/view/css/StyleUI.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/723adb70-3a65-4985-b963-4c0fa0a16b6a.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/723adb70-3a65-4985-b963-4c0fa0a16b6a.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/view/ViewProperty.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/localhost.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/localhost.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/localhost.script" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controller/FlexiRentSystem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/FlexiRentSystem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controller/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/RentalProperty.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/RentalProperty.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/view/Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/AlertBox.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/view/AddPropertyUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/AddPropertyUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/view/MainUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/MainUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/view/css/StyleUI.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/css/StyleUI.css" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -24,7 +15,10 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/FlexiRentSystems$Main.ic" NAME="Main Coverage Results" MODIFIED="1536408022072" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/FlexiRentSystems$Main.ic" NAME="Main Coverage Results" MODIFIED="1536497908856" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+  </component>
+  <component name="CoverageViewManager">
+    <option name="myElementSize" value="221" />
   </component>
   <component name="DatabaseView">
     <option name="SHOW_INTERMEDIATE" value="true" />
@@ -76,17 +70,17 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="css" value="327" />
+          <entry key="css" value="350" />
           <entry key="dummy" value="8" />
-          <entry key="java" value="5295" />
+          <entry key="java" value="6114" />
           <entry key="sql" value="276" />
           <entry key="txt" value="49" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="CSS" value="327" />
-          <entry key="JAVA" value="5295" />
+          <entry key="CSS" value="350" />
+          <entry key="JAVA" value="6114" />
           <entry key="PLAIN_TEXT" value="57" />
           <entry key="SQL" value="276" />
         </counts>
@@ -96,7 +90,7 @@
           <entry key="RENTALPROPERTY" value="6" />
           <entry key="RENTALRECORD" value="1" />
           <entry key="css" value="1" />
-          <entry key="java" value="30" />
+          <entry key="java" value="33" />
           <entry key="log" value="2" />
           <entry key="properties" value="1" />
           <entry key="script" value="2" />
@@ -107,7 +101,7 @@
         <counts>
           <entry key="CSS" value="1" />
           <entry key="Database Element" value="7" />
-          <entry key="JAVA" value="30" />
+          <entry key="JAVA" value="33" />
           <entry key="PLAIN_TEXT" value="4" />
           <entry key="Properties" value="1" />
           <entry key="Scratch" value="4" />
@@ -123,18 +117,31 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/view/AlertBox.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-281">
-              <caret line="55" column="6" lean-forward="true" selection-start-line="55" selection-start-column="6" selection-end-line="55" selection-end-column="6" />
+            <state relative-caret-position="217">
+              <caret line="39" column="8" selection-start-line="39" selection-start-column="8" selection-end-line="40" selection-end-column="61" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/view/AddPropertyUI.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="237">
+              <caret line="148" lean-forward="true" selection-start-line="148" selection-end-line="152" selection-end-column="65" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/view/AddPropertyUI.java">
+        <entry file="file://$PROJECT_DIR$/src/view/ViewProperty.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="325">
-              <caret line="33" column="87" selection-start-line="33" selection-start-column="87" selection-end-line="33" selection-end-column="87" />
+            <state relative-caret-position="410">
+              <caret line="79" lean-forward="true" selection-start-line="79" selection-end-line="79" />
               <folding>
+                <element signature="e#0#112#0" expanded="true" />
                 <element signature="imports" expanded="true" />
               </folding>
             </state>
@@ -144,8 +151,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/view/css/StyleUI.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="22" column="35" selection-start-line="22" selection-start-column="35" selection-end-line="22" selection-end-column="35" />
+            <state relative-caret-position="-9">
+              <caret line="10" column="33" lean-forward="true" selection-start-line="10" selection-start-column="33" selection-end-line="10" selection-end-column="33" />
             </state>
           </provider>
         </entry>
@@ -153,8 +160,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/view/MainUI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="372">
-              <caret line="29" column="118" selection-start-line="29" selection-start-column="118" selection-end-line="29" selection-end-column="118" />
+            <state relative-caret-position="561">
+              <caret line="33" column="46" selection-start-line="33" selection-start-column="46" selection-end-line="33" selection-end-column="46" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#308#309#0" expanded="true" />
@@ -222,10 +229,11 @@
         <option value="$PROJECT_DIR$/src/controller/Main.java" />
         <option value="$PROJECT_DIR$/src/view/css/warningAlert.css" />
         <option value="$PROJECT_DIR$/src/model/RentalProperty.java" />
-        <option value="$PROJECT_DIR$/src/view/MainUI.java" />
         <option value="$PROJECT_DIR$/src/view/AlertBox.java" />
-        <option value="$PROJECT_DIR$/src/view/css/StyleUI.css" />
+        <option value="$PROJECT_DIR$/src/view/MainUI.java" />
         <option value="$PROJECT_DIR$/src/view/AddPropertyUI.java" />
+        <option value="$PROJECT_DIR$/src/view/css/StyleUI.css" />
+        <option value="$PROJECT_DIR$/src/view/ViewProperty.java" />
       </list>
     </option>
   </component>
@@ -321,7 +329,7 @@
     <property name="Repository.Attach.Sources" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1536488451643" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1536499848082" />
     <property name="database.console.LAST_STATE" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
@@ -372,7 +380,7 @@
       <updated>1536324465727</updated>
       <workItem from="1536324466991" duration="1218000" />
       <workItem from="1536376317044" duration="3682000" />
-      <workItem from="1536387026613" duration="27023000" />
+      <workItem from="1536387026613" duration="31522000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <created>1536324868102</created>
@@ -385,13 +393,13 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="31923000" />
+    <option name="totallyTimeSpent" value="36422000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25579977" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.25579977" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -402,7 +410,7 @@
       <window_info anchor="bottom" id="SQL Generator" weight="0.5510204" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32959184" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.40612245" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.40612245" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -423,6 +431,39 @@
       <window_info anchor="right" id="Palette&#9;" order="7" />
       <window_info anchor="right" id="Maven Projects" order="8" weight="0.32967034" />
     </layout>
+    <layout-to-restore>
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25579977" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Image Layers" order="2" />
+      <window_info id="Designer" order="3" />
+      <window_info id="UI Designer" order="4" />
+      <window_info id="Capture Tool" order="5" />
+      <window_info id="Favorites" order="6" side_tool="true" />
+      <window_info anchor="bottom" id="Database Console" order="0" weight="0.32959184" />
+      <window_info anchor="bottom" id="SQL Generator" order="1" weight="0.5510204" />
+      <window_info anchor="bottom" id="Message" order="2" />
+      <window_info anchor="bottom" id="Find" order="3" weight="0.32959184" />
+      <window_info active="true" anchor="bottom" id="Run" order="4" visible="true" weight="0.40612245" />
+      <window_info anchor="bottom" id="Debug" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="6" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="7" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="8" />
+      <window_info anchor="bottom" id="Version Control" order="9" weight="0.32959184" />
+      <window_info anchor="bottom" id="Database Changes" order="10" weight="0.32959184" />
+      <window_info anchor="bottom" id="Terminal" order="11" weight="0.32040817" />
+      <window_info anchor="bottom" id="Event Log" order="12" side_tool="true" />
+      <window_info anchor="bottom" id="Messages" order="13" weight="0.32941177" />
+      <window_info anchor="right" id="Coverage" order="0" side_tool="true" weight="0.32967034" />
+      <window_info anchor="right" id="Commander" order="1" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="2" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="3" weight="0.25" />
+      <window_info anchor="right" id="Palette" order="4" />
+      <window_info anchor="right" id="Capture Analysis" order="5" />
+      <window_info anchor="right" id="Database" order="6" weight="0.26190478" />
+      <window_info anchor="right" id="Theme Preview" order="7" />
+      <window_info anchor="right" id="Palette&#9;" order="8" />
+      <window_info anchor="right" id="Maven Projects" order="9" weight="0.32967034" />
+    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -596,10 +637,24 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/view/AlertBox.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="217">
+          <caret line="39" column="8" selection-start-line="39" selection-start-column="8" selection-end-line="40" selection-end-column="61" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/javafx-src.zip!/javafx/event/EventHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="44" column="9" selection-start-line="44" selection-start-column="9" selection-end-line="44" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/view/MainUI.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="372">
-          <caret line="29" column="118" selection-start-line="29" selection-start-column="118" selection-end-line="29" selection-end-column="118" />
+        <state relative-caret-position="561">
+          <caret line="33" column="46" selection-start-line="33" selection-start-column="46" selection-end-line="33" selection-end-column="46" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#308#309#0" expanded="true" />
@@ -608,25 +663,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/view/css/StyleUI.css">
+    <entry file="file://$USER_HOME$/Downloads/AP_W7_Lecture/src/shape/ShowShapes.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="22" column="35" selection-start-line="22" selection-start-column="35" selection-end-line="22" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/view/AlertBox.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-281">
-          <caret line="55" column="6" lean-forward="true" selection-start-line="55" selection-start-column="6" selection-end-line="55" selection-end-column="6" />
-        </state>
+        <state relative-caret-position="-451" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/view/AddPropertyUI.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="325">
-          <caret line="33" column="87" selection-start-line="33" selection-start-column="87" selection-end-line="33" selection-end-column="87" />
+        <state relative-caret-position="237">
+          <caret line="148" lean-forward="true" selection-start-line="148" selection-end-line="152" selection-end-column="65" />
           <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/view/css/StyleUI.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-9">
+          <caret line="10" column="33" lean-forward="true" selection-start-line="10" selection-start-column="33" selection-end-line="10" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/view/ViewProperty.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="410">
+          <caret line="79" lean-forward="true" selection-start-line="79" selection-end-line="79" />
+          <folding>
+            <element signature="e#0#112#0" expanded="true" />
             <element signature="imports" expanded="true" />
           </folding>
         </state>

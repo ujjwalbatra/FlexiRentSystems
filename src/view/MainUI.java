@@ -26,10 +26,12 @@ public class MainUI extends Application {
 
         AlertBox alertBox = new AlertBox();
         AddPropertyUI addPropertyUI = new AddPropertyUI();
+        ViewProperty viewProperty = new ViewProperty();
 
         alertBox.generateWarningAlertBox("Alert - FlexiRentSystems", "trial trial trial trial trial trial trial trial ");
         alertBox.confirmQuitting();
         addPropertyUI.generateAddpropertyUI();
+        viewProperty.generateViewPropertyUI();
 
         primaryStage.setScene(new Scene(root, 300, 300));
         primaryStage.show();

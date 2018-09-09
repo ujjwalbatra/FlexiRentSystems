@@ -34,15 +34,15 @@ public class AddPropertyUI {
         dialog.setGraphic(new ImageView(this.getClass().getResource("images/addProperty.png").toString()));
 
         // Set the button types.
-        ButtonType BtnAddPropertyBtn = new ButtonType("Add", ButtonBar.ButtonData.OK_DONE);
-        dialog.getDialogPane().getButtonTypes().addAll(BtnAddPropertyBtn, ButtonType.CANCEL);
+        ButtonType addPropertyBtn = new ButtonType("Add", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(addPropertyBtn, ButtonType.CANCEL);
 
         //create form for user input
         GridPane form = new GridPane();
 
         form.setHgap(10);
         form.setVgap(10);
-        form.setPadding(new Insets(20, 150, 10, 10));
+        form.setPadding(new Insets(20, 20, 20, 20));
 
         Label streetNumber = new Label("Street Number : ");
         Label streetName = new Label("Street Name : ");
@@ -60,7 +60,7 @@ public class AddPropertyUI {
         DatePicker lastMaintenanceDateInput = new DatePicker();
 
         //getting image input
-        Button imageInput = new Button("Attach Image");
+        Button imageInput = new Button("Upload Image");
 
         imageInput.setOnAction(event -> {
             FileChooser fileChooser = new FileChooser();
