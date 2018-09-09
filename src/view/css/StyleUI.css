@@ -1,0 +1,25 @@
+
+.myWarningDialog-pane:header *.header-panel *.label {
+    -fx-font-weight: bold;
+    -fx-font-size: 25px;
+}
+.myQuittingDialog-pane:header *.header-panel *.label {
+    -fx-font-weight: bold;
+    -fx-font-size: 20px;
+}
+
+.addPropertyDialog-pane:header *.header-panel *.label{
+    -fx-font-weight: bold;
+    -fx-font-size: 30px;
+}
+
+.addPropertyDialog-pane > .content *.label{
+    -fx-font-size: 18px;
+}
+
+.addPropertyDialog-pane *.button{
+     -fx-font-size: 16px;
+ }
+.addPropertyDialog-pane > .content *.toggle-button{
+     -fx-font-size: 16px;
+ }

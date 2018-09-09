@@ -23,6 +23,8 @@ public abstract class RentalProperty {
     private RentalRecord rentalRecord[];
     private boolean isAvailable;
     private int numberOfRecords = 0;
+    private String description;
+    private String imagePath;
     //stores number of rental records for this instance of property exists
 
 

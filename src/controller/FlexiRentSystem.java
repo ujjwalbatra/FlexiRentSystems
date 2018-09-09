@@ -13,11 +13,10 @@ import utility.DateTime;
 import utility.InvalidInputException;
 import utility.InvalidOperationException;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Scanner;
+
+import static java.sql.JDBCType.NULL;
 
 public class FlexiRentSystem {
 
@@ -31,7 +30,7 @@ public class FlexiRentSystem {
     static {
         try {
             Class.forName("org.hsqldb.jdbc.JDBCDriver");
-            connection = DriverManager.getConnection("jdbc:hsqldb:file:/Users/ujjwalbatra/projects/FlexiRentSystems/lib/localhost");
+            connection = DriverManager.getConnection("jdbc:hsqldb:file:/Users/ujjwalbatra/projects/FlexiRentSystems/lib/localhost", "root", "");
             statement = connection.createStatement();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -148,18 +147,17 @@ public class FlexiRentSystem {
         String suburb;
         int numberOfBedrooms;
         String lastMaintenanceDateString;
+        String sqlQuery;
 
         DateTime lastMaintenanceDate;
 
         Scanner scanner = new Scanner(System.in);
 
         System.out.printf("%-30s", row1);
-        propertyType = scanner.nextLine().toUpperCase();
+        propertyType = scanner.nextLine().toLowerCase();
 
         System.out.printf("%-30s", row2);
-        streetNumber = scanner.nextInt();
-
-        scanner.nextLine();
+        streetNumber = Integer.parseInt(scanner.nextLine());
 
         System.out.printf("%-30s", row3);
         streetName = scanner.nextLine();
@@ -169,13 +167,13 @@ public class FlexiRentSystem {
 
         propertyID = propertyType + "_" + identifierFactory();
 
-        char firstChar = propertyID.charAt(0);
+        char firstChar = propertyID.toUpperCase().charAt(0);
         char s = 'S';
         char a = 'A';
 
         if (a == firstChar) {
             System.out.printf("%-30s", row5);
-            numberOfBedrooms = scanner.nextInt();
+            numberOfBedrooms = Integer.parseInt(scanner.nextLine());
 
             if (numberOfBedrooms > 0 && numberOfBedrooms < 4)
                 newProperty = new Apartment(propertyID, streetNumber, streetName, suburb, numberOfBedrooms);
@@ -183,6 +181,20 @@ public class FlexiRentSystem {
                 throw new InvalidInputException("Invalid input - Number of days are invalid");
 
             checkIfApartmentAlreadyExist(newProperty);
+
+            sqlQuery = "INSERT INTO FLEXIRENTSYSTEMS.RENTALPROPERTY (PROPERTYID, STREETNUMBER, STREETNAME, SUBURB, NUMBEROFBEDROOMS, PROPERTYTYPE, PROPERTYSTATUS, RENTALRATE, ISAVAILABLE, LASTMAINTENANCEDATE) " +
+                    "VALUES(\'" +
+                    propertyID + "\'," +
+                    streetNumber + ",\'" +
+                    streetName + "\',\'" +
+                    suburb + "\'," +
+                    newProperty.getNumberOfBedrooms() + ",\'" +  //getting it from property, as for premium suit case locally number of rooms would'nt be initialised.
+                    propertyType + "\',\'" +
+                    newProperty.getPropertyStatus() + "\'," +
+                    newProperty.getRentalRate() + "," +
+                    newProperty.isAvailable() + "," +
+                    NULL +
+                    ")";
 
         } else if (s == firstChar) {
             System.out.printf("%-30s", row6);
@@ -195,12 +207,33 @@ public class FlexiRentSystem {
 
             checkIfSuitAlreadyExist(newProperty);
 
+            sqlQuery = "INSERT INTO PUBLIC.FLEXIRENT.RENTALPROPERTY (PROPERTYID, STREETNUMBER, STREETNAME, SUBURB, NUMBEROFBEDROOMS, PROPERTYTYPE, PROPERTYSTATUS, RENTALRATE, ISAVAILABLE, LASTMAINTENANCEDATE) " +
+                    "VALUES(\'" +
+                        propertyID + "\'," +
+                        streetNumber + ",\'" +
+                        streetName + "\',\'" +
+                        suburb + "\'," +
+                        newProperty.getNumberOfBedrooms() + "," +  //getting it from property, as for premium suit case locally number of rooms would'nt be initialised.
+                        propertyType + ",\'" +
+                        newProperty.getPropertyStatus() + "\'," +
+                        newProperty.getRentalRate() + "," +
+                        newProperty.isAvailable() + "," +
+                        lastMaintenanceDateString +
+                    ")";
+
         } else {
             throw new InvalidInputException("Invalid input - the property initial is wrong");
         }
 
         //      adding property to the array and incrementing number of properties stored.
         rentalProperty[++propertyIndex] = newProperty;
+
+//        try {
+//            statement.executeUpdate(sqlQuery);
+//            System.out.println("RentalPropterty inserted into the table");
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
 
         System.out.println("A Property with property ID \"" + propertyID + "\" added");
     }
@@ -359,7 +392,7 @@ public class FlexiRentSystem {
     //will return the index of property.
     private int findProperty(String propertyId) throws InvalidOperationException {
         for (int i = 0; i <= propertyIndex; i++)
-            if (rentalProperty[i].getPropertyID().equals(propertyId.toUpperCase())) {
+            if (rentalProperty[i].getPropertyID().equals(propertyId.toLowerCase())) {
                 return i;
             }
         throw new InvalidOperationException("Invalid Operation - Property not found.");
@@ -371,9 +404,9 @@ public class FlexiRentSystem {
                 //               compare  streetNumber, streetName, suburb, numberOfBedrooms
                 if (currentProperty.getStreetNumber() == newProperty.getStreetNumber() && currentProperty.getStreetName().toLowerCase().equals(newProperty.getStreetName().toLowerCase())
                         && currentProperty.getSuburb().toLowerCase().equals(newProperty.getSuburb().toLowerCase()) && currentProperty.getNumberOfBedrooms() == newProperty.getNumberOfBedrooms())
-                    return;
+                    throw new InvalidOperationException("Invalid operation - Apartment already exist.");
         }
-        throw new InvalidOperationException("Invalid operation - Apartment not found.");
+
     }
 
     private void checkIfSuitAlreadyExist(RentalProperty newProperty) throws InvalidOperationException {
