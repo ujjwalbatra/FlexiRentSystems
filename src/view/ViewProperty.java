@@ -9,16 +9,18 @@ package view;
 
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import model.RentalProperty;
 
-import java.io.File;
+/*
+ * this class is used to generate view property UI, when
+ * a user clicks on a particular Property
+ *
+ */
 
 public class ViewProperty {
     public void generateViewPropertyUI() {
@@ -70,7 +72,7 @@ public class ViewProperty {
 
         rentalPropertyDetails.setHgap(10);
         rentalPropertyDetails.setVgap(10);
-        rentalPropertyDetails.setPadding(new Insets(20, 20, 20,20));
+        rentalPropertyDetails.setPadding(new Insets(20, 20, 20, 20));
 
         rentalRecordDetails.add(rentalrec1, 0, 0);
         rentalRecordDetails.add(rentalrec2, 0, 1);
@@ -81,15 +83,15 @@ public class ViewProperty {
         rentalRecordDetails.add(rentalrec7, 0, 6);
         rentalRecordDetails.add(rentalrec8, 0, 7);
 
-        rentalPropertyDetails.add(imageView, 0 , 0, 4, 2);
-        rentalPropertyDetails.add(streetNumber, 0,4,2,1);
-        rentalPropertyDetails.add(streetName, 0,5,2,1);
-        rentalPropertyDetails.add(suburb, 0,6,2,1);
-        rentalPropertyDetails.add(numberOfBedrooms, 0,7,2,1);
-        rentalPropertyDetails.add(propertyType, 0,8,2,1);
-        rentalPropertyDetails.add(description, 0,9,2,2);
-        rentalPropertyDetails.add(propertyStatus, 0,11,2,1);
-        rentalPropertyDetails.add(lastMaintenanceDate, 0,12,2,1);
+        rentalPropertyDetails.add(imageView, 0, 0, 4, 2);
+        rentalPropertyDetails.add(streetNumber, 0, 4, 2, 1);
+        rentalPropertyDetails.add(streetName, 0, 5, 2, 1);
+        rentalPropertyDetails.add(suburb, 0, 6, 2, 1);
+        rentalPropertyDetails.add(numberOfBedrooms, 0, 7, 2, 1);
+        rentalPropertyDetails.add(propertyType, 0, 8, 2, 1);
+        rentalPropertyDetails.add(description, 0, 9, 2, 2);
+        rentalPropertyDetails.add(propertyStatus, 0, 11, 2, 1);
+        rentalPropertyDetails.add(lastMaintenanceDate, 0, 12, 2, 1);
         rentalPropertyDetails.add(scrollPane, 0, 13, 4, 3);
 
         rentalPropertyDetails.add(rentBtn, 0, 16);

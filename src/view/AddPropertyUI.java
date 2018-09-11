@@ -30,7 +30,7 @@ public class AddPropertyUI {
         dialog.setTitle("Add Property");
         dialog.setHeaderText("Add new property");
 
-        //set thr icon
+        //set the icon
         dialog.setGraphic(new ImageView(this.getClass().getResource("images/addProperty.png").toString()));
 
         // Set the button types.
@@ -62,6 +62,7 @@ public class AddPropertyUI {
         //getting image input
         Button imageInput = new Button("Upload Image");
 
+        //implementing file chooser ot get file from user
         imageInput.setOnAction(event -> {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Select image resource");
@@ -127,11 +128,22 @@ public class AddPropertyUI {
                     lastMaintenanceDateInput.opacityProperty().set(0);
                     numberOfBedrooms.opacityProperty().set(1);
                     numberOfBedroomInput.opacityProperty().set(1);
+
+                    lastMaintenanceDate.setDisable(true);
+                    lastMaintenanceDateInput.setDisable(true);
+                    numberOfBedrooms.setDisable(false);
+                    numberOfBedroomInput.setDisable(false);
                 } else if (new_toggle == premiumSuit) {
                     numberOfBedrooms.opacityProperty().set(0);
                     numberOfBedroomInput.opacityProperty().set(0);
                     lastMaintenanceDate.opacityProperty().set(1);
                     lastMaintenanceDateInput.opacityProperty().set(1);
+
+                    numberOfBedrooms.setDisable(true);
+                    numberOfBedroomInput.setDisable(true);
+                    lastMaintenanceDate.setDisable(false);
+                    lastMaintenanceDateInput.setDisable(false);
+
 
                 }
             }
