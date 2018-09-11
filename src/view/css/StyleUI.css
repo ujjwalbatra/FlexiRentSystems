@@ -31,8 +31,12 @@
     -fx-alignment: center;
 }
 
-.viewPropertyDialog-pane > .content *.label {
+.viewPropertyDialog-pane > *.label {
     -fx-font-size: 18px;
+}
+.viewPropertyDialog-pane > *.scroll-pane {
+    -fx-border-color: #000;
+    -fx-border-width: 1px;
 }
 
 .border-Pane *.button {
