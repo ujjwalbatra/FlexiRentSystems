@@ -32,13 +32,12 @@ public class AlertBox {
      * */
     public void generateWarningAlertBox(String title, String contentText) {
 
-        Stage dialogStage = new Stage();
         String headerText = "Warning!";
 
         Dialog alert = new Alert(Alert.AlertType.WARNING);
 
         //block user interaction with other windows, until this window has been taken care of
-        dialogStage.initModality(Modality.APPLICATION_MODAL);
+        alert.initModality(Modality.APPLICATION_MODAL);
 
         //styling the alert box
         DialogPane dialogPane = alert.getDialogPane();
@@ -50,7 +49,6 @@ public class AlertBox {
         alert.setContentText(contentText);
 
         alert.showAndWait();
-        dialogStage.show();
     }
 
     /*
@@ -61,7 +59,6 @@ public class AlertBox {
      *
      */
     public void confirmQuitting() {
-        Stage dialogStage = new Stage();
 
         String title = "Quit",
                 headerText = "Are you sure you want to quit?",
@@ -70,7 +67,7 @@ public class AlertBox {
         Dialog alert = new Alert(Alert.AlertType.CONFIRMATION);
 
         //block user interaction with other windows, until this window has been taken care of
-        dialogStage.initModality(Modality.APPLICATION_MODAL);
+        alert.initModality(Modality.APPLICATION_MODAL);
 
         //styling the alert box
         DialogPane dialogPane = alert.getDialogPane();
@@ -91,6 +88,5 @@ public class AlertBox {
 
         }
 
-        dialogStage.show();
     }
 }

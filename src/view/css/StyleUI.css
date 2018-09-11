@@ -3,36 +3,44 @@
     -fx-font-weight: bold;
     -fx-font-size: 25px;
 }
+
 .myQuittingDialog-pane:header *.header-panel *.label {
     -fx-font-weight: bold;
     -fx-font-size: 20px;
 }
 
-.addPropertyDialog-pane:header *.header-panel *.label{
+.addPropertyDialog-pane:header *.header-panel *.label {
     -fx-font-weight: bold;
     -fx-font-size: 30px;
 }
 
-.addPropertyDialog-pane > .content *.label{
+.addPropertyDialog-pane > .content *.label {
     -fx-font-size: 18px;
 }
 
-.addPropertyDialog-pane *.button{
-     -fx-font-size: 16px;
- }
-.addPropertyDialog-pane > .content *.toggle-button{
-     -fx-font-size: 16px;
- }
+.addPropertyDialog-pane *.button {
+    -fx-font-size: 16px;
+}
 
-.viewPropertyDialog-pane *.button{
+.addPropertyDialog-pane > .content *.toggle-button {
+    -fx-font-size: 16px;
+}
+
+.viewPropertyDialog-pane *.button {
     -fx-font-size: 16px;
     -fx-alignment: center;
 }
 
-.viewPropertyDialog-pane > .content *.label{
+.viewPropertyDialog-pane > .content *.label {
     -fx-font-size: 18px;
 }
 
+.welcomeMessage *.label{
+    -fx-font-size: 30px;
+    -fx-font-weight: bold;
+}
 
-
+.welcomeMessage .F .R .S {
+    -fx-color-label-visible: #fff;
+}
 

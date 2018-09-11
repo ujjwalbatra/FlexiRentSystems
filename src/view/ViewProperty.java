@@ -28,7 +28,6 @@ public class ViewProperty {
 
         //block user interaction with other windows, until this window has been taken care of
         dialog.initModality(Modality.APPLICATION_MODAL);
-
         dialog.setTitle("Property Viewer");
 
         // Set the button types.

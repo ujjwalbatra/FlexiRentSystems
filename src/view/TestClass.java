@@ -35,7 +35,7 @@ public class TestClass extends Application {
         viewProperty.generateViewPropertyUI();
         mainUI.generateMainPage();
 
-        primaryStage.setScene(new Scene(root, 300, 300));
-        primaryStage.show();
+//        primaryStage.setScene(new Scene(root, 300, 300));
+//        primaryStage.show();
     }
 }
