@@ -33,8 +33,14 @@ public class ViewProperty {
         ButtonType closeBtn = new ButtonType("Close", ButtonBar.ButtonData.CANCEL_CLOSE);
         dialog.getDialogPane().getButtonTypes().addAll(closeBtn);
 
-        GridPane gridPane = new GridPane();
+        GridPane rentalPropertyDetails = new GridPane();
+        GridPane rentalRecordDetails = new GridPane();
 
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setContent(rentalRecordDetails);
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+        scrollPane.setPrefSize(115, 100);
 
         Image image = new Image(this.getClass().getResource("images/sampleHouse1.png").toString(), 350, 350, true, true);
         ImageView imageView = new ImageView(image);
@@ -48,29 +54,48 @@ public class ViewProperty {
         Label lastMaintenanceDate = new Label("Last Maintenance Date : ");
         Label propertyStatus = new Label("Property Status : ");
 
+        Label rentalrec1 = new Label("record : ");
+        Label rentalrec2 = new Label("record : ");
+        Label rentalrec3 = new Label("record: ");
+        Label rentalrec4 = new Label("record : ");
+        Label rentalrec5 = new Label("record: ");
+        Label rentalrec6 = new Label("record : ");
+        Label rentalrec7 = new Label("record : ");
+        Label rentalrec8 = new Label("record : ");
+
         Button rentBtn = new Button("Rent");
         Button returnPropertyBtn = new Button("Return");
         Button performMaintenanceBtn = new Button("Perform Maintenance");
         Button completeMaintenanceBtn = new Button("Complete Maintenance");
 
-        gridPane.setHgap(10);
-        gridPane.setVgap(10);
-        gridPane.setPadding(new Insets(20, 20, 20,20));
+        rentalPropertyDetails.setHgap(10);
+        rentalPropertyDetails.setVgap(10);
+        rentalPropertyDetails.setPadding(new Insets(20, 20, 20,20));
 
-        gridPane.add(imageView, 0 , 0, 4, 2);
-        gridPane.add(streetNumber, 0,4,2,1);
-        gridPane.add(streetName, 0,5,2,1);
-        gridPane.add(suburb, 0,6,2,1);
-        gridPane.add(numberOfBedrooms, 0,7,2,1);
-        gridPane.add(propertyType, 0,8,2,1);
-        gridPane.add(description, 0,9,2,2);
-        gridPane.add(propertyStatus, 0,11,2,1);
-        gridPane.add(lastMaintenanceDate, 0,12,2,1);
+        rentalRecordDetails.add(rentalrec1, 0, 0);
+        rentalRecordDetails.add(rentalrec2, 0, 1);
+        rentalRecordDetails.add(rentalrec3, 0, 2);
+        rentalRecordDetails.add(rentalrec4, 0, 3);
+        rentalRecordDetails.add(rentalrec5, 0, 4);
+        rentalRecordDetails.add(rentalrec6, 0, 5);
+        rentalRecordDetails.add(rentalrec7, 0, 6);
+        rentalRecordDetails.add(rentalrec8, 0, 7);
 
-        gridPane.add(rentBtn, 0, 13);
-        gridPane.add(returnPropertyBtn, 1, 13);
-        gridPane.add(performMaintenanceBtn, 2, 13);
-        gridPane.add(completeMaintenanceBtn, 3, 13);
+        rentalPropertyDetails.add(imageView, 0 , 0, 4, 2);
+        rentalPropertyDetails.add(streetNumber, 0,4,2,1);
+        rentalPropertyDetails.add(streetName, 0,5,2,1);
+        rentalPropertyDetails.add(suburb, 0,6,2,1);
+        rentalPropertyDetails.add(numberOfBedrooms, 0,7,2,1);
+        rentalPropertyDetails.add(propertyType, 0,8,2,1);
+        rentalPropertyDetails.add(description, 0,9,2,2);
+        rentalPropertyDetails.add(propertyStatus, 0,11,2,1);
+        rentalPropertyDetails.add(lastMaintenanceDate, 0,12,2,1);
+        rentalPropertyDetails.add(scrollPane, 0, 13, 4, 3);
+
+        rentalPropertyDetails.add(rentBtn, 0, 16);
+        rentalPropertyDetails.add(returnPropertyBtn, 1, 16);
+        rentalPropertyDetails.add(performMaintenanceBtn, 2, 16);
+        rentalPropertyDetails.add(completeMaintenanceBtn, 3, 16);
 
         GridPane.setHalignment(imageView, HPos.CENTER);
         GridPane.setHalignment(rentBtn, HPos.CENTER);
@@ -83,7 +108,7 @@ public class ViewProperty {
         dialogPane.getStylesheets().add(getClass().getResource("css/StyleUI.css").toExternalForm());
         dialogPane.getStyleClass().add("viewPropertyDialog-pane");
 
-        dialog.getDialogPane().setContent(gridPane);
+        dialog.getDialogPane().setContent(rentalPropertyDetails);
         dialog.showAndWait();
 
     }

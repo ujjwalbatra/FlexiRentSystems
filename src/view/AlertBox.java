@@ -83,7 +83,6 @@ public class AlertBox {
 
         Optional<ButtonType> result = alert.showAndWait();
 
-
         //get response value, and act on the response appropriately
         // TODO:figure out how to connect these with other windows.
         if (result.get() == ButtonType.OK) {
