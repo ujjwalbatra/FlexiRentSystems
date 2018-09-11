@@ -123,29 +123,28 @@ public class AddPropertyUI {
         groupPropertyType.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
             public void changed(ObservableValue<? extends Toggle> ov,
                                 Toggle toggle, Toggle new_toggle) {
-                if (new_toggle == apartment) {
-                    lastMaintenanceDate.opacityProperty().set(0);
-                    lastMaintenanceDateInput.opacityProperty().set(0);
-                    numberOfBedrooms.opacityProperty().set(1);
-                    numberOfBedroomInput.opacityProperty().set(1);
+                boolean setVisibility = (new_toggle == apartment);
+                int i, j;
 
-                    lastMaintenanceDate.setDisable(true);
-                    lastMaintenanceDateInput.setDisable(true);
-                    numberOfBedrooms.setDisable(false);
-                    numberOfBedroomInput.setDisable(false);
-                } else if (new_toggle == premiumSuit) {
-                    numberOfBedrooms.opacityProperty().set(0);
-                    numberOfBedroomInput.opacityProperty().set(0);
-                    lastMaintenanceDate.opacityProperty().set(1);
-                    lastMaintenanceDateInput.opacityProperty().set(1);
-
-                    numberOfBedrooms.setDisable(true);
-                    numberOfBedroomInput.setDisable(true);
-                    lastMaintenanceDate.setDisable(false);
-                    lastMaintenanceDateInput.setDisable(false);
-
-
+                if (setVisibility) {
+                    i = 0;
+                    j = 1;
+                } else {
+                    i = 1;
+                    j = 0;
                 }
+
+                //hide unwanted options
+                lastMaintenanceDate.opacityProperty().set(i);
+                lastMaintenanceDateInput.opacityProperty().set(i);
+                numberOfBedrooms.opacityProperty().set(j);
+                numberOfBedroomInput.opacityProperty().set(j);
+
+                //disable hidden options
+                lastMaintenanceDate.setDisable(setVisibility);
+                lastMaintenanceDateInput.setDisable(setVisibility);
+                numberOfBedrooms.setDisable(!setVisibility);
+                numberOfBedroomInput.setDisable(!setVisibility);
             }
         });
 

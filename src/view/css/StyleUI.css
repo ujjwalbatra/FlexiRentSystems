@@ -35,12 +35,25 @@
     -fx-font-size: 18px;
 }
 
-.welcomeMessage *.label{
+.border-Pane *.button {
+    -fx-font-size: 16px;
+}
+
+.border-Pane *.check-box {
+    -fx-font-size: 16px;
+}
+
+.border-Pane *.combo-box {
+    -fx-font-size: 16px;
+}
+
+.welcomeMessage *.label {
     -fx-font-size: 30px;
     -fx-font-weight: bold;
 }
 
-.welcomeMessage .F .R .S {
-    -fx-color-label-visible: #fff;
+.filterHeader *.label {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
 }
 
