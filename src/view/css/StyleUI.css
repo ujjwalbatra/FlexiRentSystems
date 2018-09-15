@@ -1,20 +1,20 @@
 
-.myWarningDialog-pane:header *.header-panel *.label {
+.myWarningDialog-pane *.header-panel *.label {
     -fx-font-weight: bold;
     -fx-font-size: 25px;
 }
 
-.myQuittingDialog-pane:header *.header-panel *.label {
+.myQuittingDialog-pane *.header-panel *.label {
     -fx-font-weight: bold;
     -fx-font-size: 20px;
 }
 
-.addPropertyDialog-pane:header *.header-panel *.label {
+.addPropertyDialog-pane *.header-panel *.label {
     -fx-font-weight: bold;
     -fx-font-size: 30px;
 }
 
-.addPropertyDialog-pane > .content *.label {
+.addPropertyDialog-pane .content *.label {
     -fx-font-size: 18px;
 }
 
@@ -22,7 +22,7 @@
     -fx-font-size: 16px;
 }
 
-.addPropertyDialog-pane > .content *.toggle-button {
+.addPropertyDialog-pane .content *.toggle-button {
     -fx-font-size: 16px;
 }
 
@@ -31,33 +31,39 @@
     -fx-alignment: center;
 }
 
-.viewPropertyDialog-pane > *.label {
+.viewPropertyDialog-pane *.label {
     -fx-font-size: 18px;
 }
-.viewPropertyDialog-pane > *.scroll-pane {
-    -fx-border-color: #000;
-    -fx-border-width: 1px;
-}
 
-.border-Pane *.button {
+
+.allContent-Pane *.check-box *.combo-box *.button {
     -fx-font-size: 16px;
 }
 
-.border-Pane *.check-box {
-    -fx-font-size: 16px;
+#filterHeader {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
 }
 
-.border-Pane *.combo-box {
-    -fx-font-size: 16px;
-}
-
-.welcomeMessage *.label {
+#welcomeMessage {
     -fx-font-size: 30px;
     -fx-font-weight: bold;
 }
 
-.filterHeader *.label {
-    -fx-font-size: 24px;
-    -fx-font-weight: bold;
+.root {
+    -fx-background-color: rgb(255, 255, 255);
 }
+
+.allContent-Pane .scroll-pane {
+    -fx-border-color: #000;
+    -fx-border-width: 1px;
+}
+
+#filterOptions-Pane {
+    -fx-border-color: #000;
+    -fx-border-width: 1px;
+}
+
+
+
 

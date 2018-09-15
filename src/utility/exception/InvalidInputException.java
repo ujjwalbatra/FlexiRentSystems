@@ -1,4 +1,4 @@
-package utility;
+package utility.exception;
 
 public class InvalidInputException extends Exception {
 

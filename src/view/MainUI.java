@@ -61,7 +61,7 @@ public class MainUI {
     private ComboBox comboBox;
     private HBox searchFilter;
     private ObservableList<String> propertyStatusFilter;
-    private HBox welcome;
+    private HBox welcomePane;
     private Label welcomeLabel;
     private VBox bindLabeFilterlOptions;
     private Label filterLabel;
@@ -97,7 +97,7 @@ public class MainUI {
         this.threeBedroomFilter = new CheckBox();
         this.comboBox = new ComboBox(propertyStatusFilter);
         this.searchFilter = new HBox();
-        this.welcome = new HBox();
+        this.welcomePane = new HBox();
         this.welcomeLabel = new Label();
         this.filterLabel = new Label();
         this.bindLabeFilterlOptions = new VBox();
@@ -128,6 +128,7 @@ public class MainUI {
         this.twoBedroomFilter.setText("2 Bedroom");
         this.threeBedroomFilter.setText("3 Bedroom");
         this.filterLabel.setText("Filter Properties :");
+        this.filterLabel.setId("filterHeader");
 
 
         //adding all menu items to menu and menu to menubar
@@ -136,7 +137,7 @@ public class MainUI {
         this.menuBar.getMenus().addAll(this.fileMenu, this.toolsMenu);
 
         //setting up vbox to accommodate all content
-        this.allContent.getChildren().addAll(this.welcome, this.bindLabeFilterlOptions, this.propertyScrollPane, this.groupBtns);
+        this.allContent.getChildren().addAll(this.welcomePane, this.bindLabeFilterlOptions, this.propertyScrollPane, this.groupBtns);
         this.allContent.setPadding(new Insets(20, 20, 20, 20));
         this.allContent.setSpacing(10);
 
@@ -145,32 +146,31 @@ public class MainUI {
         this.groupBtns.setSpacing(20);
 
 
-        //setting up welcome message and logo
+        //setting up welcomePane message and logo
         Image image = new Image(this.getClass().getResource("images/frsLogo.png").toString(), 100, 100, true, true);
         ImageView imageViewLogo = new ImageView(image);
 
         this.welcomeLabel.setText("Welcome to Flexi Rent Systems");
-        this.welcome.getChildren().addAll(imageViewLogo, this.welcomeLabel);
-        this.welcome.setAlignment(Pos.CENTER);
-        this.welcome.setSpacing(20);
+        this.welcomeLabel.setId("welcomeMessage");
+        this.welcomePane.getChildren().addAll(imageViewLogo, this.welcomeLabel);
+        this.welcomePane.setAlignment(Pos.CENTER);
+        this.welcomePane.setSpacing(20);
 
         //setting up property scroll pane
         this.propertyScrollPane.setContent(this.allProperties);
         this.propertyScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         this.propertyScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
         this.propertyScrollPane.setPrefSize(115, 350);
-        this.propertyScrollPane.setStyle("-fx-border-width: 1px");
-        this.propertyScrollPane.setStyle("-fx-border-color: #000000");
 
-        this.comboBox.setValue("Property Status");
         //setting up propertyStatusFilter pane
         this.propertyStatusFilter = FXCollections.observableArrayList(
+                "Property Status",
                 "All",
                 "Available",
                 "Rented",
                 "Under Maintenance"
         );
-
+        this.comboBox.setValue("Property Status");
 
         this.searchFilter.getChildren().addAll(this.searchInput, this.searchBtn);
         this.searchFilter.setSpacing(4);
@@ -181,8 +181,7 @@ public class MainUI {
         this.bindLabeFilterlOptions.setSpacing(10);
         this.bindLabeFilterlOptions.getChildren().addAll(this.filterLabel, this.optionsPane);
         this.bindLabeFilterlOptions.setPadding(new Insets(4, 10, 10, 10));
-        this.bindLabeFilterlOptions.setStyle("-fx-border-width: 1px");
-        this.bindLabeFilterlOptions.setStyle("-fx-border-color: #000000");
+        this.bindLabeFilterlOptions.setId("filterOptions-Pane");
 
         this.optionsPane.setHgap(30);
         this.optionsPane.setVgap(30);
@@ -227,12 +226,8 @@ public class MainUI {
 
 
         //styling
-        this.welcome.getStylesheets().add(getClass().getResource("css/StyleUI.css").toExternalForm());
-        this.welcome.getStyleClass().add("welcomeMessage");
-        this.bindLabeFilterlOptions.getStylesheets().add(getClass().getResource("css/StyleUI.css").toExternalForm());
-        this.bindLabeFilterlOptions.getStyleClass().add("filterHeader");
-        this.borderPane.getStylesheets().add(getClass().getResource("css/StyleUI.css").toExternalForm());
-        this.borderPane.getStyleClass().add("border-Pane");
+        this.allContent.getStylesheets().add(getClass().getResource("css/StyleUI.css").toExternalForm());
+        this.allContent.getStyleClass().add("allContent-Pane");
 
         //align each node
         this.groupBtns.setAlignment(Pos.BOTTOM_RIGHT);

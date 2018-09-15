@@ -18,6 +18,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.hsqldb.rights.Right;
 
 /*
  * this class is used to generate view property UI, when
@@ -29,12 +30,16 @@ public class ViewProperty {
 
     private Stage stage;
     private VBox completeUI;
-    private HBox functionBtns;
+    private VBox functionBtns;
+    private HBox topHalfPage;
+    private Button closeBtn;
 
     public ViewProperty() {
         this.stage = new Stage();
         this.completeUI = new VBox();
-        this.functionBtns = new HBox();
+        this.functionBtns = new VBox();
+        this.topHalfPage = new HBox();
+        this.closeBtn = new Button("Close");
     }
 
     public void generateViewPropertyUI() {
@@ -51,7 +56,7 @@ public class ViewProperty {
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
         scrollPane.setPrefSize(700, 200);
 
-        Image image = new Image(this.getClass().getResource("images/sampleHouse1.png").toString(), 300, 300, true, true);
+        Image image = new Image(this.getClass().getResource("images/sampleHouse1.png").toString(), 400, 400, true, true);
         ImageView imageView = new ImageView(image);
 
         Label streetNumber = new Label("Street Number : ");
@@ -86,7 +91,6 @@ public class ViewProperty {
         rentalRecordDetails.add(rentalrec7, 0, 6);
         rentalRecordDetails.add(rentalrec8, 0, 7);
 
-
         rentalPropertyDetails.add(streetNumber, 0, 4, 2, 1);
         rentalPropertyDetails.add(streetName, 0, 5, 2, 1);
         rentalPropertyDetails.add(suburb, 0, 6, 2, 1);
@@ -97,27 +101,31 @@ public class ViewProperty {
         rentalPropertyDetails.add(lastMaintenanceDate, 0, 12, 2, 1);
 
         this.functionBtns.getChildren().addAll(rentBtn, returnPropertyBtn, performMaintenanceBtn, completeMaintenanceBtn);
-        this.functionBtns.setSpacing(25);
+        this.functionBtns.setSpacing(10);
+        this.functionBtns.setAlignment(Pos.CENTER_RIGHT);
+        rentBtn.setMaxWidth(Double.MAX_VALUE);
+        returnPropertyBtn.setMaxWidth(Double.MAX_VALUE);
+        performMaintenanceBtn.setMaxWidth(Double.MAX_VALUE);
+        completeMaintenanceBtn.setMaxWidth(Double.MAX_VALUE);
+
+        this.topHalfPage.getChildren().addAll(imageView,this.functionBtns);
+        this.topHalfPage.setSpacing(50);
+        this.topHalfPage.setAlignment(Pos.CENTER);
 
         this.completeUI.setPadding(new Insets(20,20,20,20));
-        this.completeUI.setSpacing(15);
+        this.completeUI.setSpacing(20);
 
         rentalPropertyDetails.setVgap(5);
 
-        this.completeUI.getChildren().addAll(imageView, rentalPropertyDetails, scrollPane, this.functionBtns);
-        this.completeUI.setAlignment(Pos.CENTER);
+        this.completeUI.getChildren().addAll(this.topHalfPage, rentalPropertyDetails, scrollPane, this.closeBtn);
+        this.completeUI.setAlignment(Pos.CENTER_RIGHT);
         rentalPropertyDetails.setAlignment(Pos.CENTER_LEFT);
-        this.functionBtns.setAlignment(Pos.CENTER);
 
         //styling the page
         completeUI.getStylesheets().add(getClass().getResource("css/StyleUI.css").toExternalForm());
         completeUI.getStyleClass().add("viewPropertyDialog-pane");
-        rentalPropertyDetails.getStylesheets().add(getClass().getResource("css/StyleUI.css").toExternalForm());
-        rentalPropertyDetails.getStyleClass().add("viewPropertyDialog-pane");
-        rentalRecordDetails.getStylesheets().add(getClass().getResource("css/StyleUI.css").toExternalForm());
-        rentalRecordDetails.getStyleClass().add("viewPropertyDialog-pane");
 
-        this.stage.setScene(new Scene(completeUI, 800, 750));
+        this.stage.setScene(new Scene(completeUI, 700, 800));
         this.stage.showAndWait();
 
     }

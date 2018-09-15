@@ -11,8 +11,9 @@ import view.AlertBox;
 
 public class Main {
 
-//    public static void main(String[] args) {
-//        AlertBox.generateWarningAlertBox("sample title", "ma ki chut", "bhenchod");
-//    }
+    public static void main(String[] args) {
+        FlexiRentSystem flexiRentSystem = new FlexiRentSystem();
+        flexiRentSystem.displaySystemMenu();
+    }
 }
 

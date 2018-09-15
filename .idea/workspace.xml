@@ -2,7 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0952388f-f5fb-4cfe-96c8-64452ed31645" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/723adb70-3a65-4985-b963-4c0fa0a16b6a.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/723adb70-3a65-4985-b963-4c0fa0a16b6a.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controller/FlexiRentSystem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/FlexiRentSystem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controller/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/Apartment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Apartment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/PremiumSuit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/PremiumSuit.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/RentalProperty.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/RentalProperty.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utility/InvalidInputException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utility/exception/InvalidInputException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utility/InvalidOperationException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utility/exception/InvalidOperationException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/view/AddPropertyUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/AddPropertyUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/view/MainUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/MainUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/view/TestClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/TestClass.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/view/ViewProperty.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/ViewProperty.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/view/css/StyleUI.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/css/StyleUI.css" afterDir="false" />
     </list>
@@ -13,7 +26,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/FlexiRentSystems$Main.ic" NAME="Main Coverage Results" MODIFIED="1536667504545" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/FlexiRentSystems$Main.ic" NAME="Main Coverage Results" MODIFIED="1536841639940" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
   <component name="CoverageViewManager">
     <option name="myElementSize" value="237" />
@@ -29,68 +42,48 @@
     <option name="HIDDEN_KINDS">
       <set />
     </option>
-    <expand>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="database" type="feb32156:DbDataSourceImpl" />
-      </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="database" type="feb32156:DbDataSourceImpl" />
-        <item name="PUBLIC: database" type="189accc2:HsqlImplModel$Database" />
-      </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="database" type="feb32156:DbDataSourceImpl" />
-        <item name="PUBLIC: database" type="189accc2:HsqlImplModel$Database" />
-        <item name="FLEXIRENT: schema" type="302dc3d9:HsqlImplModel$Schema" />
-      </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="database" type="feb32156:DbDataSourceImpl" />
-        <item name="PUBLIC: database" type="189accc2:HsqlImplModel$Database" />
-        <item name="FLEXIRENT: schema" type="302dc3d9:HsqlImplModel$Schema" />
-        <item name="RENTALPROPERTY: table" type="aa3f54b6:HsqlImplModel$Table" />
-      </path>
-    </expand>
+    <expand />
     <select />
   </component>
   <component name="FUSProjectUsageTrigger">
     <session id="-522107651">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="7" />
+          <entry key="project.closed" value="11" />
           <entry key="project.open.time.0" value="2" />
-          <entry key="project.open.time.1" value="3" />
+          <entry key="project.open.time.1" value="4" />
           <entry key="project.open.time.11" value="1" />
           <entry key="project.open.time.12" value="1" />
           <entry key="project.open.time.15" value="1" />
-          <entry key="project.opened" value="8" />
+          <entry key="project.open.time.2" value="1" />
+          <entry key="project.open.time.3" value="1" />
+          <entry key="project.open.time.8" value="1" />
+          <entry key="project.opened" value="12" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="css" value="803" />
+          <entry key="css" value="1256" />
           <entry key="dummy" value="30" />
-          <entry key="java" value="11805" />
-          <entry key="sql" value="276" />
+          <entry key="java" value="14836" />
+          <entry key="sql" value="309" />
           <entry key="txt" value="49" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="CSS" value="803" />
-          <entry key="JAVA" value="11805" />
+          <entry key="CSS" value="1256" />
+          <entry key="JAVA" value="14824" />
           <entry key="PLAIN_TEXT" value="79" />
-          <entry key="SQL" value="276" />
+          <entry key="SQL" value="321" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="RENTALPROPERTY" value="6" />
           <entry key="RENTALRECORD" value="1" />
-          <entry key="css" value="3" />
-          <entry key="java" value="46" />
+          <entry key="css" value="4" />
+          <entry key="java" value="63" />
           <entry key="log" value="2" />
           <entry key="properties" value="1" />
           <entry key="script" value="2" />
@@ -99,9 +92,9 @@
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="CSS" value="3" />
+          <entry key="CSS" value="4" />
           <entry key="Database Element" value="7" />
-          <entry key="JAVA" value="46" />
+          <entry key="JAVA" value="63" />
           <entry key="PLAIN_TEXT" value="4" />
           <entry key="Properties" value="1" />
           <entry key="Scratch" value="4" />
@@ -110,62 +103,81 @@
       <usages-collector id="statistics.spring.boot.mvc.usages" />
       <usages-collector id="statistics.spring.boot.run.usages" />
       <usages-collector id="statistics.js.language.service.starts" />
+      <usages-collector id="statistics.vcs.git.usages" />
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/view/MainUI.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3298">
-              <caret line="214" column="36" selection-start-line="214" selection-start-column="36" selection-end-line="214" selection-end-column="36" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/view/AddPropertyUI.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="111">
-              <caret line="142" column="40" selection-start-line="142" selection-start-column="40" selection-end-line="142" selection-end-column="40" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/view/ViewProperty.java">
+        <entry file="file://$PROJECT_DIR$/src/controller/FlexiRentSystem.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="213">
-              <caret line="102" column="37" selection-start-line="102" selection-start-column="37" selection-end-line="102" selection-end-column="37" />
+            <state relative-caret-position="473">
+              <caret line="52" column="46" lean-forward="true" selection-start-line="52" selection-start-column="46" selection-end-line="52" selection-end-column="46" />
               <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="e#0#25#1" />
+                <element signature="e#2119#2121#0" />
+                <element signature="method#getSystemMenu#0;class#FlexiRentSystem#0" />
+                <element signature="method#displaySystemMenu#0;class#FlexiRentSystem#0" />
+                <element signature="method#addProperty#0;class#FlexiRentSystem#0" />
+                <element signature="method#rentProperty#0;class#FlexiRentSystem#0" />
+                <element signature="method#returnProperty#0;class#FlexiRentSystem#0" />
+                <element signature="method#performMaintenance#0;class#FlexiRentSystem#0" />
+                <element signature="method#completeMaintenance#0;class#FlexiRentSystem#0" />
+                <element signature="method#displayAllProperties#0;class#FlexiRentSystem#0" />
+                <element signature="method#findProperty#0;class#FlexiRentSystem#0" />
+                <element signature="method#checkIfApartmentAlreadyExist#0;class#FlexiRentSystem#0" />
+                <element signature="method#checkIfSuitAlreadyExist#0;class#FlexiRentSystem#0" />
+                <element signature="method#stringToDateTime#0;class#FlexiRentSystem#0" />
+                <element signature="e#0#349#1" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/view/css/StyleUI.css">
+        <entry file="file://$PROJECT_DIR$/src/model/Apartment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="646">
-              <caret line="38" column="25" selection-start-line="38" selection-start-column="25" selection-end-line="38" selection-end-column="25" />
+            <state relative-caret-position="106">
+              <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
+              <folding>
+                <element signature="e#0#3191#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/view/TestClass.java">
+        <entry file="file://$PROJECT_DIR$/src/model/PremiumSuit.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="544">
-              <caret line="39" column="5" selection-start-line="39" selection-start-column="5" selection-end-line="39" selection-end-column="5" />
+            <state relative-caret-position="-826">
+              <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/model/RentalProperty.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="214">
+              <caret line="197" column="50" selection-start-line="197" selection-start-column="50" selection-end-line="197" selection-end-column="50" />
               <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="e#7238#7239#0" expanded="true" />
+                <element signature="e#7291#7292#0" expanded="true" />
+                <element signature="e#7339#7340#0" expanded="true" />
+                <element signature="e#7391#7392#0" expanded="true" />
+                <element signature="e#7435#7436#0" expanded="true" />
+                <element signature="e#7479#7480#0" expanded="true" />
+                <element signature="e#7515#7516#0" expanded="true" />
+                <element signature="e#7576#7577#0" expanded="true" />
+                <element signature="e#7632#7633#0" expanded="true" />
+                <element signature="e#7696#7697#0" expanded="true" />
+                <element signature="e#7744#7745#0" expanded="true" />
+                <element signature="e#7803#7804#0" expanded="true" />
+                <element signature="e#7857#7858#0" expanded="true" />
+                <element signature="e#7911#7912#0" expanded="true" />
+                <element signature="e#7957#7958#0" expanded="true" />
+                <element signature="e#8007#8008#0" expanded="true" />
+                <element signature="e#8049#8050#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -194,7 +206,18 @@
       <find>back</find>
       <find>0</find>
       <find>center</find>
+      <find>lastmain</find>
+      <find>btn</find>
+      <find>welcomeme</find>
+      <find>css</find>
+      <find>lastmai</find>
     </findStrings>
+    <replaceStrings>
+      <replace />
+    </replaceStrings>
+    <dirStrings>
+      <dir>$USER_HOME$/Downloads/hsqldb-2.4.1/hsqldb/lib/hsqldb.jar</dir>
+    </dirStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -209,18 +232,18 @@
         <option value="$PROJECT_DIR$/src/model/PremiumSuit.java" />
         <option value="$PROJECT_DIR$/src/model/Apartment.java" />
         <option value="$PROJECT_DIR$/src/model/RentalRecord.java" />
-        <option value="$PROJECT_DIR$/src/controller/FlexiRentSystem.java" />
         <option value="$PROJECT_DIR$/src/view/MainScreenUI.java" />
         <option value="$PROJECT_DIR$/src/view/Main.java" />
-        <option value="$PROJECT_DIR$/src/controller/Main.java" />
         <option value="$PROJECT_DIR$/src/view/css/warningAlert.css" />
-        <option value="$PROJECT_DIR$/src/model/RentalProperty.java" />
-        <option value="$PROJECT_DIR$/src/view/TestClass.java" />
         <option value="$PROJECT_DIR$/src/view/AlertBox.java" />
-        <option value="$PROJECT_DIR$/src/view/MainUI.java" />
-        <option value="$PROJECT_DIR$/src/view/AddPropertyUI.java" />
         <option value="$PROJECT_DIR$/src/view/css/StyleUI.css" />
         <option value="$PROJECT_DIR$/src/view/ViewProperty.java" />
+        <option value="$PROJECT_DIR$/src/view/AddPropertyUI.java" />
+        <option value="$PROJECT_DIR$/src/view/MainUI.java" />
+        <option value="$PROJECT_DIR$/src/controller/Main.java" />
+        <option value="$PROJECT_DIR$/src/view/TestClass.java" />
+        <option value="$PROJECT_DIR$/src/model/RentalProperty.java" />
+        <option value="$PROJECT_DIR$/src/controller/FlexiRentSystem.java" />
       </list>
     </option>
   </component>
@@ -236,10 +259,9 @@
       <select />
     </treeState>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6" fullScreen="true">
-    <option name="y" value="23" />
+  <component name="ProjectFrameBounds" fullScreen="true">
     <option name="width" value="1680" />
-    <option name="height" value="1027" />
+    <option name="height" value="1050" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -249,7 +271,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -260,12 +281,38 @@
             <path>
               <item name="FlexiRentSystems" type="b2602c69:ProjectViewProjectNode" />
               <item name="FlexiRentSystems" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="FlexiRentSystems" type="b2602c69:ProjectViewProjectNode" />
               <item name="FlexiRentSystems" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="controller" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="FlexiRentSystems" type="b2602c69:ProjectViewProjectNode" />
+              <item name="FlexiRentSystems" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="database" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="FlexiRentSystems" type="b2602c69:ProjectViewProjectNode" />
+              <item name="FlexiRentSystems" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="model" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="FlexiRentSystems" type="b2602c69:ProjectViewProjectNode" />
+              <item name="FlexiRentSystems" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="utility" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="FlexiRentSystems" type="b2602c69:ProjectViewProjectNode" />
+              <item name="FlexiRentSystems" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="utility" type="462c0819:PsiDirectoryNode" />
+              <item name="exception" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="FlexiRentSystems" type="b2602c69:ProjectViewProjectNode" />
@@ -278,23 +325,19 @@
               <item name="FlexiRentSystems" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="view" type="462c0819:PsiDirectoryNode" />
-              <item name="images" type="462c0819:PsiDirectoryNode" />
+              <item name="css" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="FlexiRentSystems" type="b2602c69:ProjectViewProjectNode" />
               <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-            </path>
-            <path>
-              <item name="FlexiRentSystems" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="hsqldb" type="70bed36:NamedLibraryElementNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="AndroidView" />
+      <pane id="Scope" />
       <pane id="PackagesPane" />
+      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -304,7 +347,7 @@
     <property name="Repository.Attach.Sources" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1536668885268" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1537006808978" />
     <property name="database.console.LAST_STATE" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
@@ -314,6 +357,11 @@
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="preferences.sourceCode.Java" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="utility.exception" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -327,7 +375,14 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.Back">
+    <configuration name="Back" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="controller.Main" />
+      <module name="FlexiRentSystems" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Main" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="view.TestClass" />
       <module name="FlexiRentSystems" />
@@ -335,6 +390,10 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Application.Main" />
+      <item itemvalue="Application.Back" />
+    </list>
   </component>
   <component name="SQLScriptSettings">
     <option name="matrix">
@@ -363,7 +422,11 @@
       <workItem from="1536578510154" duration="3105000" />
       <workItem from="1536632064666" duration="1163000" />
       <workItem from="1536636270593" duration="19765000" />
-      <workItem from="1536666026087" duration="2800000" />
+      <workItem from="1536666026087" duration="3313000" />
+      <workItem from="1536672383503" duration="459000" />
+      <workItem from="1536813029645" duration="11638000" />
+      <workItem from="1536903974930" duration="181000" />
+      <workItem from="1536923981947" duration="9793000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <created>1536324868102</created>
@@ -376,7 +439,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="65060000" />
+    <option name="totallyTimeSpent" value="87644000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -388,10 +451,9 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1680" height="1050" extended-state="6" />
-    <editor active="true" />
+    <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49828178" visible="true" weight="0.14224665" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49828178" visible="true" weight="0.18742369" />
       <window_info id="Structure" order="1" sideWeight="0.5017182" side_tool="true" weight="0.21733822" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -400,15 +462,15 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32959184" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.2489796" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.35510203" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.11632653" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32959184" />
-      <window_info anchor="bottom" id="Database Changes" order="8" weight="0.32959184" />
-      <window_info anchor="bottom" id="Terminal" order="9" weight="0.3197492" />
-      <window_info anchor="bottom" id="Messages" order="10" weight="0.32834226" />
+      <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" weight="0.32959184" />
+      <window_info anchor="bottom" id="Terminal" order="9" weight="0.31938776" />
+      <window_info anchor="bottom" id="Messages" order="10" weight="0.327551" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
       <window_info anchor="bottom" id="Database Console" order="12" weight="0.32959184" />
       <window_info anchor="bottom" id="SQL Generator" order="13" weight="0.5510204" />
@@ -417,7 +479,7 @@
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="right" id="Capture Analysis" order="4" />
-      <window_info anchor="right" id="Database" order="5" weight="0.26190478" />
+      <window_info anchor="right" id="Database" order="5" weight="0.26007327" />
       <window_info anchor="right" id="Theme Preview" order="6" />
       <window_info anchor="right" id="Palette&#9;" order="7" />
       <window_info anchor="right" id="Maven Projects" order="8" weight="0.32967034" />
@@ -467,25 +529,21 @@
     <MESSAGE value="initial commit" />
     <option name="LAST_COMMIT_MESSAGE" value="initial commit" />
   </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/controller/FlexiRentSystem.java</url>
+          <line>243</line>
+          <properties />
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
   <component name="editorHistoryManager">
     <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/723adb70-3a65-4985-b963-4c0fa0a16b6a/console_1.sql" />
-    <entry file="file://$PROJECT_DIR$/lib/localhost.script">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/model/PremiumSuit.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/model/Apartment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="30" selection-start-line="2" selection-start-column="30" selection-end-line="2" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/localhost.script" />
     <entry file="file://$PROJECT_DIR$/src/model/RentalRecord.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
@@ -506,36 +564,15 @@
         <state relative-caret-position="-1644" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/localhost.properties">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/localhost.log">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/localhost.properties" />
+    <entry file="file://$PROJECT_DIR$/lib/localhost.log" />
     <entry file="das://723adb70-3a65-4985-b963-4c0fa0a16b6a/database/PUBLIC/schema/FLEXIRENTSYSTEMS/table/RENTALRECORD" />
     <entry file="das://723adb70-3a65-4985-b963-4c0fa0a16b6a/database/PUBLIC/schema/FLEXIRENTSYSTEMS/table/RENTALPROPERTY" />
-    <entry file="das://723adb70-3a65-4985-b963-4c0fa0a16b6a/database/PUBLIC/schema/FLEXIRENT/table/RENTALPROPERTY">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/controller/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="13" column="4" lean-forward="true" selection-start-line="13" selection-start-column="4" selection-end-line="15" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="das://723adb70-3a65-4985-b963-4c0fa0a16b6a/database/PUBLIC/schema/FLEXIRENT/table/RENTALPROPERTY" />
     <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/javafx-src.zip!/javafx/scene/control/DialogPane.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="203">
           <caret line="514" column="32" selection-start-line="514" selection-start-column="32" selection-end-line="514" selection-end-column="32" />
-          <folding>
-            <element signature="e#20079#20080#0" expanded="true" />
-            <element signature="e#20112#20113#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -543,10 +580,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="134">
           <caret line="607" column="43" selection-start-line="607" selection-start-column="43" selection-end-line="607" selection-end-column="43" />
-          <folding>
-            <element signature="e#24216#24217#0" expanded="true" />
-            <element signature="e#24275#24276#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -555,13 +588,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="391">
           <caret line="49" column="19" selection-start-line="49" selection-start-column="19" selection-end-line="49" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/model/RentalProperty.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2552">
-          <caret line="26" column="29" selection-start-line="26" selection-start-column="29" selection-end-line="26" selection-end-column="29" />
         </state>
       </provider>
     </entry>
@@ -591,13 +617,6 @@
         <state relative-caret-position="-451" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/controller/FlexiRentSystem.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="607">
-          <caret line="222" lean-forward="true" selection-start-line="222" selection-end-line="222" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/javafx-src.zip!/javafx/scene/layout/Border.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="261">
@@ -619,30 +638,34 @@
         </state>
       </provider>
     </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/javafx-src.zip!/javafx/scene/control/Button.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="222">
+          <caret line="146" column="22" selection-start-line="146" selection-start-column="22" selection-end-line="146" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/view/MainUI.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3298">
-          <caret line="214" column="36" selection-start-line="214" selection-start-column="36" selection-end-line="214" selection-end-column="36" />
+        <state relative-caret-position="-569">
+          <caret line="175" column="40" selection-start-line="175" selection-start-column="40" selection-end-line="175" selection-end-column="40" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/view/TestClass.java">
+    <entry file="file://$PROJECT_DIR$/src/controller/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="544">
-          <caret line="39" column="5" selection-start-line="39" selection-start-column="5" selection-end-line="39" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="238">
+          <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/view/AddPropertyUI.java">
+    <entry file="file://$PROJECT_DIR$/src/view/ViewProperty.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="111">
-          <caret line="142" column="40" selection-start-line="142" selection-start-column="40" selection-end-line="142" selection-end-column="40" />
+        <state relative-caret-position="899">
+          <caret line="91" column="50" selection-start-line="91" selection-start-column="50" selection-end-line="91" selection-end-column="50" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -651,17 +674,98 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/view/css/StyleUI.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="646">
-          <caret line="38" column="25" selection-start-line="38" selection-start-column="25" selection-end-line="38" selection-end-column="25" />
+        <state relative-caret-position="629">
+          <caret line="37" selection-start-line="37" selection-end-line="37" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/view/ViewProperty.java">
+    <entry file="file://$PROJECT_DIR$/src/view/AddPropertyUI.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="213">
-          <caret line="102" column="37" selection-start-line="102" selection-start-column="37" selection-end-line="102" selection-end-column="37" />
+        <state relative-caret-position="899">
+          <caret line="185" column="33" selection-start-line="185" selection-start-column="33" selection-end-line="185" selection-end-column="33" />
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/view/TestClass.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="41" column="3" selection-start-line="41" selection-end-line="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/src.zip!/java/sql/Statement.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="497">
+          <caret line="89" column="8" selection-start-line="89" selection-start-column="8" selection-end-line="89" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/model/PremiumSuit.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-826">
+          <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/model/RentalProperty.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="214">
+          <caret line="197" column="50" selection-start-line="197" selection-start-column="50" selection-end-line="197" selection-end-column="50" />
+          <folding>
+            <element signature="e#7238#7239#0" expanded="true" />
+            <element signature="e#7291#7292#0" expanded="true" />
+            <element signature="e#7339#7340#0" expanded="true" />
+            <element signature="e#7391#7392#0" expanded="true" />
+            <element signature="e#7435#7436#0" expanded="true" />
+            <element signature="e#7479#7480#0" expanded="true" />
+            <element signature="e#7515#7516#0" expanded="true" />
+            <element signature="e#7576#7577#0" expanded="true" />
+            <element signature="e#7632#7633#0" expanded="true" />
+            <element signature="e#7696#7697#0" expanded="true" />
+            <element signature="e#7744#7745#0" expanded="true" />
+            <element signature="e#7803#7804#0" expanded="true" />
+            <element signature="e#7857#7858#0" expanded="true" />
+            <element signature="e#7911#7912#0" expanded="true" />
+            <element signature="e#7957#7958#0" expanded="true" />
+            <element signature="e#8007#8008#0" expanded="true" />
+            <element signature="e#8049#8050#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/model/Apartment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="106">
+          <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
+          <folding>
+            <element signature="e#0#3191#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/controller/FlexiRentSystem.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="473">
+          <caret line="52" column="46" lean-forward="true" selection-start-line="52" selection-start-column="46" selection-end-line="52" selection-end-column="46" />
+          <folding>
+            <element signature="e#0#25#1" />
+            <element signature="e#2119#2121#0" />
+            <element signature="method#getSystemMenu#0;class#FlexiRentSystem#0" />
+            <element signature="method#displaySystemMenu#0;class#FlexiRentSystem#0" />
+            <element signature="method#addProperty#0;class#FlexiRentSystem#0" />
+            <element signature="method#rentProperty#0;class#FlexiRentSystem#0" />
+            <element signature="method#returnProperty#0;class#FlexiRentSystem#0" />
+            <element signature="method#performMaintenance#0;class#FlexiRentSystem#0" />
+            <element signature="method#completeMaintenance#0;class#FlexiRentSystem#0" />
+            <element signature="method#displayAllProperties#0;class#FlexiRentSystem#0" />
+            <element signature="method#findProperty#0;class#FlexiRentSystem#0" />
+            <element signature="method#checkIfApartmentAlreadyExist#0;class#FlexiRentSystem#0" />
+            <element signature="method#checkIfSuitAlreadyExist#0;class#FlexiRentSystem#0" />
+            <element signature="method#stringToDateTime#0;class#FlexiRentSystem#0" />
+            <element signature="e#0#349#1" />
           </folding>
         </state>
       </provider>

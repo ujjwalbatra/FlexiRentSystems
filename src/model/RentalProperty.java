@@ -8,8 +8,8 @@
 package model;
 
 import utility.DateTime;
-import utility.InvalidOperationException;
-import utility.InvalidInputException;
+import utility.exception.InvalidInputException;
+import utility.exception.InvalidOperationException;
 
 public abstract class RentalProperty {
     private String propertyID;
@@ -28,7 +28,7 @@ public abstract class RentalProperty {
     //stores number of rental records for this instance of property exists
 
 
-    public RentalProperty(String propertyID, int streetNumber, String streetName, String suburb, int numberOfBedrooms) {
+    protected RentalProperty(String propertyID, int streetNumber, String streetName, String suburb, int numberOfBedrooms) {
         this.propertyID = propertyID;
         this.streetNumber = streetNumber;
         this.streetName = streetName;
@@ -41,17 +41,17 @@ public abstract class RentalProperty {
 
     public abstract double calculateLateFee();
 
-    public abstract void checkRentingCondition (DateTime rentDate, int numOfDays) throws InvalidOperationException, InvalidInputException;
+    public abstract void checkRentingCondition(DateTime rentDate, int numOfDays) throws InvalidOperationException, InvalidInputException;
 
-//    checking all the renting conditions, if acceptable changing status and isAvailable for the property.
-    public  void rent(String customerID, DateTime rentDate, int numOfDays) throws InvalidOperationException, InvalidInputException{
+    //    checking all the renting conditions, if acceptable changing status and isAvailable for the property.
+    public void rent(String customerID, DateTime rentDate, int numOfDays) throws InvalidOperationException, InvalidInputException {
 
         if (!isAvailable()) throw new InvalidOperationException("Invalid Operation - the property isn't available");
 
-//      checking if number of days is a valid input
+        //      checking if number of days is a valid input
         if (numOfDays <= 0) throw new InvalidInputException("Invalid Input - the number of days is less than 1");
 
-//      if renting conditions of a specific property is not satisfied exception bounces to caller
+        //      if renting conditions of a specific property is not satisfied exception bounces to caller
         checkRentingCondition(rentDate, numOfDays);
 
         DateTime estimatedReturnDate = new DateTime(rentDate, numOfDays);
@@ -61,9 +61,9 @@ public abstract class RentalProperty {
         shiftRecords();
 
         //adding new record
-        newRecord =  new RentalRecord(customerID, rentDate, estimatedReturnDate);
+        newRecord = new RentalRecord(customerID, rentDate, estimatedReturnDate);
         this.getRentalRecord()[0] = newRecord;
-        newRecord.setRecordID(this.getPropertyID()+ "_" + customerID + "_" + rentDate.toString());
+        newRecord.setRecordID(this.getPropertyID() + "_" + customerID + "_" + rentDate.toString());
 
 
         //making changes to status of property
@@ -90,7 +90,7 @@ public abstract class RentalProperty {
 
     }
 
-    public void performMaintenance() throws InvalidOperationException{
+    public void performMaintenance() throws InvalidOperationException {
 
         //if the property is rented or already under maintenance return false
         if (!isAvailable) throw new InvalidOperationException("Invalid Operation - the property isn't available");
@@ -101,15 +101,16 @@ public abstract class RentalProperty {
         System.out.println("Property" + this.propertyID + " is now under maintenance");
     }
 
-    public void completeMaintenance(DateTime completionDate) throws InvalidOperationException{
+    public void completeMaintenance(DateTime completionDate) throws InvalidOperationException {
 
         //if the property is not under maintenance return false
-        if (!propertyStatus.toLowerCase().equals("under maintenance")) throw new InvalidOperationException("Invalid operation - Property is not under maintenance");
+        if (!propertyStatus.toLowerCase().equals("under maintenance"))
+            throw new InvalidOperationException("Invalid operation - Property is not under maintenance");
 
         this.propertyStatus = "available";
         this.isAvailable = true;
 
-        System.out.println("Maintenance on property ID " + this.propertyID +" completed");
+        System.out.println("Maintenance on property ID " + this.propertyID + " completed");
     }
 
     @Override
@@ -124,10 +125,10 @@ public abstract class RentalProperty {
     }
 
     /*
-    *
-    * this method generates all the details for a property
-    * format is adapted if the property is on rent for now
-    *
+     *
+     * this method generates all the details for a property
+     * format is adapted if the property is on rent for now
+     *
      */
     public String getDetails() {
         String details;
@@ -143,15 +144,15 @@ public abstract class RentalProperty {
         details += String.format("%-25s%s\n%-25s%d %s %s\n%-25s%s\n%-25s%d\n%-25s%s\n", row1, this.propertyID, row2,
                 this.streetNumber, this.streetName, this.suburb, row3, this.propertyType, row4, this.numberOfBedrooms, row5, this.propertyStatus);
 
-        if (this.propertyType.equals("premium suit"))  details += String.format("%-25s%s\n",additionalRow, ((PremiumSuit) this).getLastMaintenanceDate());
+        if (this.propertyType.equals("premium suit"))
+            details += String.format("%-25s%s\n", additionalRow, ((PremiumSuit) this).getLastMaintenanceDate());
 
         details += String.format("%-25s\n", row6);
 
         if (this.rentalRecord[0] == null) {
             details += "empty\n";
             details += "-------------------------------------\n";
-        }
-        else {
+        } else {
             int index = 0;
             RentalRecord record = this.rentalRecord[index];
             while (record != null) {
@@ -166,9 +167,9 @@ public abstract class RentalProperty {
 
 
     /*
-    *  calculateLateFee() will calculate the fee from date rented till estimated date,
-    * save it to rental record and return the fee.
-    */
+     *  calculateLateFee() will calculate the fee from date rented till estimated date,
+     * save it to rental record and return the fee.
+     */
     private double calculateRentalFee() {
         double rentalFee;
         int daysRented;
@@ -186,12 +187,56 @@ public abstract class RentalProperty {
     }
 
     //    shift records to make room for new record
-    private void shiftRecords(){
-        if (numberOfRecords > 0 ) {
+    private void shiftRecords() {
+        if (numberOfRecords > 0) {
             for (int i = numberOfRecords - 1; i >= 0; i--) {
-                this.getRentalRecord()[i+1] = this.getRentalRecord()[i];
+                this.getRentalRecord()[i + 1] = this.getRentalRecord()[i];
             }
         }
+    }
+
+    public void setPropertyID(String propertyID) {
+        this.propertyID = propertyID;
+    }
+
+    public void setStreetNumber(int streetNumber) {
+        this.streetNumber = streetNumber;
+    }
+
+    public void setStreetName(String streetName) {
+        this.streetName = streetName;
+    }
+
+    public void setSuburb(String suburb) {
+        this.suburb = suburb;
+    }
+
+    public void setNumberOfBedrooms(int numberOfBedrooms) {
+        this.numberOfBedrooms = numberOfBedrooms;
+    }
+
+    public void setRentalRecord(RentalRecord[] rentalRecord) {
+        this.rentalRecord = rentalRecord;
+    }
+
+    public void setNumberOfRecords(int numberOfRecords) {
+        this.numberOfRecords = numberOfRecords;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getImagePath() {
+        return imagePath;
     }
 
     public String getPropertyID() {

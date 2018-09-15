@@ -10,8 +10,8 @@ import model.Apartment;
 import model.PremiumSuit;
 import model.RentalProperty;
 import utility.DateTime;
-import utility.InvalidInputException;
-import utility.InvalidOperationException;
+import utility.exception.InvalidInputException;
+import utility.exception.InvalidOperationException;
 
 import java.sql.*;
 import java.util.Scanner;
@@ -30,8 +30,45 @@ public class FlexiRentSystem {
     static {
         try {
             Class.forName("org.hsqldb.jdbc.JDBCDriver");
-            connection = DriverManager.getConnection("jdbc:hsqldb:file:/Users/ujjwalbatra/projects/FlexiRentSystems/lib/localhost", "root", "");
+            connection = DriverManager.getConnection("jdbc:hsqldb:file:database/localhost", "SA", "");
             statement = connection.createStatement();
+            System.err.println("SQL Connection established");
+
+                        String dropTable = "drop table rentalproperty";
+                        int result = statement.executeUpdate(dropTable);
+
+                        String createTable = "CREATE TABLE RentalProperty ("
+                                + "propertyID VARCHAR(10) NOT NULL,"
+                                + "streetNumber int NOT NULL,"
+                                + "streetName VARCHAR(20) NOT NULL,"
+                                + "suburb VARCHAR(20) NOT NULL,"
+                                + "propertyType VARCHAR(20) NOT NULL,"
+                                + "numberOfBedrooms INTEGER NOT NULL,"
+                                + "rentalRate FLOAT NOT NULL,"
+                                + "propertyStatus DOUBLE NOT NULL,"
+                                + "lastMaintenanceDate DATE,"
+                                + "description VARCHAR(100),"
+                                + "imagePath VARCHAR(20),"
+                                + "PRIMARY KEY (propertyID))";
+                        result = statement.executeUpdate(createTable);
+            //
+            //            if (result == 0) System.err.println("table created");
+
+            //            String insertQuery ="DELETE FROM RentalProperty where numberOfBedrooms > 0";
+            //
+            //           int result = statement.executeUpdate(dropTable);
+            //
+            //           String selectQuery = "Select * from RentalProperty";
+            //
+            //           ResultSet resultSet = statement.executeQuery(selectQuery);
+
+            //            while(resultSet.next()) {
+            //                System.out.printf("Id: %s | Student Number: %s \n",
+            //                        resultSet.getString("propertyID"), resultSet.getString("lastMaintenanceDate"));
+            //            }
+            //
+            //            System.err.println(result + " rows affected");
+
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -147,7 +184,6 @@ public class FlexiRentSystem {
         String suburb;
         int numberOfBedrooms;
         String lastMaintenanceDateString;
-        String sqlQuery;
 
         DateTime lastMaintenanceDate;
 
@@ -182,19 +218,9 @@ public class FlexiRentSystem {
 
             checkIfApartmentAlreadyExist(newProperty);
 
-            sqlQuery = "INSERT INTO FLEXIRENTSYSTEMS.RENTALPROPERTY (PROPERTYID, STREETNUMBER, STREETNAME, SUBURB, NUMBEROFBEDROOMS, PROPERTYTYPE, PROPERTYSTATUS, RENTALRATE, ISAVAILABLE, LASTMAINTENANCEDATE) " +
-                    "VALUES(\'" +
-                    propertyID + "\'," +
-                    streetNumber + ",\'" +
-                    streetName + "\',\'" +
-                    suburb + "\'," +
-                    newProperty.getNumberOfBedrooms() + ",\'" +  //getting it from property, as for premium suit case locally number of rooms would'nt be initialised.
-                    propertyType + "\',\'" +
-                    newProperty.getPropertyStatus() + "\'," +
-                    newProperty.getRentalRate() + "," +
-                    newProperty.isAvailable() + "," +
-                    NULL +
-                    ")";
+            String description = "descriptionnnn";
+            String image = "imagepath";
+
 
         } else if (s == firstChar) {
             System.out.printf("%-30s", row6);
@@ -207,19 +233,6 @@ public class FlexiRentSystem {
 
             checkIfSuitAlreadyExist(newProperty);
 
-            sqlQuery = "INSERT INTO PUBLIC.FLEXIRENT.RENTALPROPERTY (PROPERTYID, STREETNUMBER, STREETNAME, SUBURB, NUMBEROFBEDROOMS, PROPERTYTYPE, PROPERTYSTATUS, RENTALRATE, ISAVAILABLE, LASTMAINTENANCEDATE) " +
-                    "VALUES(\'" +
-                        propertyID + "\'," +
-                        streetNumber + ",\'" +
-                        streetName + "\',\'" +
-                        suburb + "\'," +
-                        newProperty.getNumberOfBedrooms() + "," +  //getting it from property, as for premium suit case locally number of rooms would'nt be initialised.
-                        propertyType + ",\'" +
-                        newProperty.getPropertyStatus() + "\'," +
-                        newProperty.getRentalRate() + "," +
-                        newProperty.isAvailable() + "," +
-                        lastMaintenanceDateString +
-                    ")";
 
         } else {
             throw new InvalidInputException("Invalid input - the property initial is wrong");
@@ -228,12 +241,13 @@ public class FlexiRentSystem {
         //      adding property to the array and incrementing number of properties stored.
         rentalProperty[++propertyIndex] = newProperty;
 
-//        try {
-//            statement.executeUpdate(sqlQuery);
-//            System.out.println("RentalPropterty inserted into the table");
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
+        RentalProperty apartmentTest = new Apartment("testID", 3, "testName", "testSuburb", 3);
+        apartmentTest.setAvailable(true);
+        apartmentTest.setImagePath("testpath");
+        apartmentTest.setDescription("test");
+        apartmentTest.setPropertyStatus("available");
+
+        this.insertIntoDB(apartmentTest);
 
         System.out.println("A Property with property ID \"" + propertyID + "\" added");
     }
@@ -440,4 +454,52 @@ public class FlexiRentSystem {
         return new DateTime(day, month, year);
     }
 
+    private void insertIntoDB(RentalProperty rentalProperty) {
+        String sqlQuery = null;
+
+        if (rentalProperty.getPropertyType() == "apartment") {
+            sqlQuery = "INSERT INTO RENTALPROPERTY (propertyID, streetNumber, streetName, suburb,  propertyType, numberOfBedrooms, rentalRate, propertyStatus, lastMaintenanceDate, description, imagePath)" +
+                    " VALUES (" +
+                    "\'" + rentalProperty.getPropertyID() + "\'," +
+                    rentalProperty.getStreetNumber() + "," +
+                    "\'" + rentalProperty.getStreetName() + "\'," +
+                    "\'" + rentalProperty.getSuburb() + "\'," +
+                    "\'" + rentalProperty.getPropertyType() + "\'," +
+                    rentalProperty.getNumberOfBedrooms() + "," +
+                    rentalProperty.getRentalRate()+ "," +
+                    "\'" + rentalProperty.getPropertyStatus() + "\'," +
+                    JDBCType.NULL + "," +
+                    "\'" + rentalProperty.getDescription() + "\'," +
+                    "\'" + rentalProperty.getImagePath() + "\'" +
+                    ");";
+
+        } else if (rentalProperty.getPropertyType() == "premium suit") {
+            sqlQuery = "INSERT INTO RENTALPROPERTY (propertyID, streetNumber, streetName, suburb,  propertyType, numberOfBedrooms, rentalRate, propertyStatus, lastMaintenanceDate, description, imagePath)" +
+
+                    "VALUES(" +
+                    "\'" + rentalProperty.getPropertyID() + "\'," +
+                    rentalProperty.getStreetNumber() + "," +
+                    "\'" + rentalProperty.getStreetName() + "\'," +
+                    "\'" + rentalProperty.getSuburb() + "\'," +
+                    "\'" + rentalProperty.getPropertyType() + "\'," +
+                    rentalProperty.getNumberOfBedrooms() + "," +
+                    rentalProperty.getRentalRate() + "," +
+                    "\'" + rentalProperty.getPropertyStatus() + "\'," +
+                    JDBCType.NULL + "," +
+                    "\'" + rentalProperty.getDescription() + "\'," +
+                    "\'" + rentalProperty.getImagePath() + "\'" +
+                    ")";
+        }
+
+        System.out.println(sqlQuery);
+        try {
+            statement.executeUpdate(sqlQuery);
+            System.out.println("RentalPropterty inserted into the table");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
+
+

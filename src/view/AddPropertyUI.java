@@ -15,7 +15,11 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
 import model.RentalProperty;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 
 /*
@@ -26,6 +30,8 @@ public class AddPropertyUI {
     public void generateAddpropertyUI() {
 
         Dialog<RentalProperty> dialog = new Dialog();
+
+        String dateFormat = "yyyy-MM-dd";
 
         dialog.setTitle("Add Property");
         dialog.setHeaderText("Add new property");
@@ -58,6 +64,27 @@ public class AddPropertyUI {
         TextField suburbInput = new TextField();
         TextArea descriptionInput = new TextArea();
         DatePicker lastMaintenanceDateInput = new DatePicker();
+        lastMaintenanceDateInput.setConverter(new StringConverter<LocalDate>() {
+
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(dateFormat);
+            @Override
+            public String toString(LocalDate date) {
+                if (date != null) {
+                    return dateTimeFormatter.format(date);
+                } else {
+                    return "";
+                }
+            }
+
+            @Override
+            public LocalDate fromString(String string) {
+                if (string != null && !string.isEmpty()) {
+                    return LocalDate.parse(string, dateTimeFormatter);
+                } else {
+                    return null;
+                }
+            }
+        });
 
         //getting image input
         Button imageInput = new Button("Upload Image");
@@ -117,46 +144,46 @@ public class AddPropertyUI {
         numberOfBedrooms.opacityProperty().set(0);
         numberOfBedroomInput.opacityProperty().set(0);
 
-        boolean apartmentSelected = apartment.isSelected();
-
         //listener for toggle button
         groupPropertyType.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
             public void changed(ObservableValue<? extends Toggle> ov,
                                 Toggle toggle, Toggle new_toggle) {
                 boolean setVisibility = (new_toggle == apartment);
-                int i, j;
+                int visibility, visibilityInverse;
 
                 if (setVisibility) {
-                    i = 0;
-                    j = 1;
+                    visibility = 0;
+                    visibilityInverse = 1;
                 } else {
-                    i = 1;
-                    j = 0;
+                    visibility = 1;
+                    visibilityInverse = 0;
                 }
 
                 //hide unwanted options
-                lastMaintenanceDate.opacityProperty().set(i);
-                lastMaintenanceDateInput.opacityProperty().set(i);
-                numberOfBedrooms.opacityProperty().set(j);
-                numberOfBedroomInput.opacityProperty().set(j);
+                lastMaintenanceDate.opacityProperty().set(visibility);
+                lastMaintenanceDateInput.opacityProperty().set(visibility);
+                numberOfBedrooms.opacityProperty().set(visibilityInverse);
+                numberOfBedroomInput.opacityProperty().set(visibilityInverse);
 
                 //disable hidden options
                 lastMaintenanceDate.setDisable(setVisibility);
                 lastMaintenanceDateInput.setDisable(setVisibility);
                 numberOfBedrooms.setDisable(!setVisibility);
                 numberOfBedroomInput.setDisable(!setVisibility);
+                lastMaintenanceDateInput.getEditor().setEditable(false);
+
             }
         });
 
         form.add(numberOfBedrooms, 0, 4);
         form.add(numberOfBedroomInput, 1, 4);
-        form.add(lastMaintenanceDate, 0, 5);
-        form.add(lastMaintenanceDateInput, 1, 5);
+        form.add(lastMaintenanceDate, 0, 4);
+        form.add(lastMaintenanceDateInput, 1, 4);
 
-        form.add(description, 0, 6);
-        form.add(descriptionInput, 0, 7, 2, 3);
-        form.add(image, 0, 10);
-        form.add(imageInput, 1, 10);
+        form.add(description, 0, 5);
+        form.add(descriptionInput, 0, 6, 2, 3);
+        form.add(image, 0, 9);
+        form.add(imageInput, 1, 9);
 
         //styling the dialog box
         DialogPane dialogPane = dialog.getDialogPane();

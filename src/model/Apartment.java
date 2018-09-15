@@ -7,8 +7,8 @@
 package model;
 
 import utility.DateTime;
-import utility.InvalidInputException;
-import utility.InvalidOperationException;
+import utility.exception.InvalidInputException;
+import utility.exception.InvalidOperationException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
