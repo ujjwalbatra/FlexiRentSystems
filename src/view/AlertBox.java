@@ -58,7 +58,7 @@ public class AlertBox {
      * entered input.
      *
      */
-    public void confirmQuitting() {
+    public Boolean confirmQuitting() {
 
         String title = "Quit",
                 headerText = "Are you sure you want to quit?",
@@ -81,12 +81,11 @@ public class AlertBox {
         Optional<ButtonType> result = alert.showAndWait();
 
         //get response value, and act on the response appropriately
-        // TODO:figure out how to connect these with other windows.
         if (result.get() == ButtonType.OK) {
-
+            return  true;
         } else if (result.get() == ButtonType.CANCEL) {
-
+            return false;
         }
-
+        return false;
     }
 }

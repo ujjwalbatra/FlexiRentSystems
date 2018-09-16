@@ -6,6 +6,7 @@
  */
 package view;
 
+import controller.ExitBtnHandler;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -22,6 +23,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import model.RentalProperty;
 
 
 /*
@@ -208,7 +210,7 @@ public class MainUI {
         this.borderPane.setCenter(this.allContent);
 
         //handle apartment checkbox event
-        apartmentFilter.selectedProperty().addListener(new ChangeListener<Boolean>() {
+        this.apartmentFilter.selectedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 if (newValue == true) {
@@ -224,6 +226,32 @@ public class MainUI {
             }
         });
 
+        //defining exit procedure
+        this.exitBtn.setOnAction(event -> {
+            ExitBtnHandler.getInstance().getConfirmDialogBoxMainUI(this);
+        });
+
+        this.exitMenu.setOnAction(event -> {
+            ExitBtnHandler.getInstance().getConfirmDialogBoxMainUI(this);
+        });
+
+        //Not allowing user to close program from the red cross button.
+        //And giving user choice b/w, to close or not.
+        this.stage.setOnCloseRequest(event -> {
+            event.consume();
+            ExitBtnHandler.getInstance().getConfirmDialogBoxMainUI(this);
+        });
+
+        //config for add property button
+        this.addPropertyBtn.setOnAction(event -> {
+            AddPropertyUI addPropertyUI = new AddPropertyUI();
+            addPropertyUI.generateAddpropertyUI();
+        });
+
+        this.addPropertyMenuBtn.setOnAction(event -> {
+            AddPropertyUI addPropertyUI = new AddPropertyUI();
+            addPropertyUI.generateAddpropertyUI();
+        });
 
         //styling
         this.allContent.getStylesheets().add(getClass().getResource("css/StyleUI.css").toExternalForm());
@@ -237,5 +265,40 @@ public class MainUI {
 
         this.stage.setScene(this.scene);
         this.stage.show();
+    }
+
+    public void close() {
+        this.stage.close();
+    }
+
+    private HBox generatePropertySummary (RentalProperty rentalProperty) {
+        HBox propertyContent = new HBox(10);
+        VBox propertyDetails = new VBox(2);
+        HBox propertyWithLink = new HBox(10);
+
+        Image image = new Image(this.getClass().getResource("images/sampleHouse1.png").toString(), 200, 200, true, true);
+        ImageView imageView = new ImageView(image);
+
+        Button view = new Button("View");
+
+        Label type = new Label(rentalProperty.getPropertyType().toUpperCase());
+        Label streetNumber = new Label("Street Number : " + rentalProperty.getStreetNumber());
+        Label streetName = new Label("Street Number : " + rentalProperty.getStreetNumber());
+        Label numberOfBedrooms;
+
+        propertyDetails.getChildren().addAll(type, streetNumber, streetName);
+
+        if (rentalProperty.getPropertyType().equals("apartment")) {
+            numberOfBedrooms = new Label("Street Number : " + rentalProperty.getStreetNumber());
+            propertyDetails.getChildren().add(numberOfBedrooms);
+        }
+
+        propertyWithLink.getChildren().addAll(propertyDetails, view);
+
+        propertyContent.getChildren().addAll(imageView, propertyWithLink);
+        propertyContent.setPrefWidth(450);
+        propertyContent.setPrefHeight(200);
+
+        return propertyContent;
     }
 }

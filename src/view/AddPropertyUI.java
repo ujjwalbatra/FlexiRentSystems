@@ -6,8 +6,10 @@ package view;/*
  */
 
 
+import controller.ExitBtnHandler;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
@@ -20,6 +22,7 @@ import model.RentalProperty;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 
 
 /*
@@ -27,21 +30,71 @@ import java.time.format.DateTimeFormatter;
  */
 public class AddPropertyUI {
 
+    Dialog<RentalProperty> dialog;
+    TextField streetNumberInput;
+    TextField streetNameInput;
+    TextField suburbInput;
+    TextArea descriptionInput;
+    DatePicker lastMaintenanceDateInput;
+
+    Label streetNumber;
+    Label streetName;
+    Label suburb;
+    Label numberOfBedrooms;
+    Label propertyType;
+    Label description;
+    Label image;
+    Label lastMaintenanceDate;
+
+    ToggleGroup groupPropertyType;
+    ToggleGroup groupNumberOfBedrooms;
+    ToggleButton apartment;
+    ToggleButton premiumSuit;
+    ToggleButton one;
+    ToggleButton two;
+    ToggleButton three;
+
+    public AddPropertyUI() {
+        this.dialog = new Dialog();
+        this.streetNumberInput = new TextField();
+        this.streetNameInput = new TextField();
+        this.suburbInput = new TextField();
+        this.descriptionInput = new TextArea();
+        this.lastMaintenanceDateInput = new DatePicker();
+
+        this.streetNumber = new Label("Street Number : ");
+        this.streetName = new Label("Street Name : ");
+        this.suburb = new Label("Suburb : ");
+        this.numberOfBedrooms = new Label("Number Of Bedrooms : ");
+        this.propertyType = new Label("Property Type : ");
+        this.description = new Label("Description : ");
+        this.image = new Label("Upload image(png) : ");
+        this.lastMaintenanceDate = new Label("Last Maintenance Date : ");
+
+        this.groupPropertyType = new ToggleGroup();
+        this.groupNumberOfBedrooms = new ToggleGroup();
+        this.apartment = new ToggleButton("Apartment");
+        this.premiumSuit = new ToggleButton("Premium Suit");
+        this.one = new ToggleButton("1");
+        this.two = new ToggleButton("2");
+        this.three = new ToggleButton("3");
+
+    }
+
     public void generateAddpropertyUI() {
 
-        Dialog<RentalProperty> dialog = new Dialog();
 
         String dateFormat = "yyyy-MM-dd";
 
-        dialog.setTitle("Add Property");
-        dialog.setHeaderText("Add new property");
+        this.dialog.setTitle("Add Property");
+        this.dialog.setHeaderText("Add new property");
 
         //set the icon
-        dialog.setGraphic(new ImageView(this.getClass().getResource("images/addProperty.png").toString()));
+        this.dialog.setGraphic(new ImageView(this.getClass().getResource("images/addProperty.png").toString()));
 
         // Set the button types.
         ButtonType addPropertyBtn = new ButtonType("Add", ButtonBar.ButtonData.OK_DONE);
-        dialog.getDialogPane().getButtonTypes().addAll(addPropertyBtn, ButtonType.CANCEL);
+        this.dialog.getDialogPane().getButtonTypes().addAll(addPropertyBtn, ButtonType.CANCEL);
 
         //create form for user input
         GridPane form = new GridPane();
@@ -50,23 +103,10 @@ public class AddPropertyUI {
         form.setVgap(10);
         form.setPadding(new Insets(20, 20, 20, 20));
 
-        Label streetNumber = new Label("Street Number : ");
-        Label streetName = new Label("Street Name : ");
-        Label suburb = new Label("Suburb : ");
-        Label numberOfBedrooms = new Label("Number Of Bedrooms : ");
-        Label propertyType = new Label("Property Type : ");
-        Label description = new Label("Description : ");
-        Label image = new Label("Upload image(png) : ");
-        Label lastMaintenanceDate = new Label("Last Maintenance Date : ");
-
-        TextField streetNumberInput = new TextField();
-        TextField streetNameInput = new TextField();
-        TextField suburbInput = new TextField();
-        TextArea descriptionInput = new TextArea();
-        DatePicker lastMaintenanceDateInput = new DatePicker();
-        lastMaintenanceDateInput.setConverter(new StringConverter<LocalDate>() {
+        this.lastMaintenanceDateInput.setConverter(new StringConverter<LocalDate>() {
 
             DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(dateFormat);
+
             @Override
             public String toString(LocalDate date) {
                 if (date != null) {
@@ -96,23 +136,10 @@ public class AddPropertyUI {
             fileChooser.showOpenDialog(new Stage());
         });
 
-        streetNameInput.setPromptText("Street name");
-        streetNumberInput.setPromptText("Street number");
-        suburbInput.setPromptText("suburb");
-        descriptionInput.setPromptText("Enter property description here.");
-
-        //making a toogle button for property type
-        ToggleGroup groupPropertyType = new ToggleGroup();
-        ToggleGroup groupNumberOfBedrooms = new ToggleGroup();
-
-        //toggle for proper types
-        ToggleButton apartment = new ToggleButton("Apartment");
-        ToggleButton premiumSuit = new ToggleButton("Premium Suit");
-
-        //toggle for number of bedrooms
-        ToggleButton one = new ToggleButton("1");
-        ToggleButton two = new ToggleButton("2");
-        ToggleButton three = new ToggleButton("3");
+        this.streetNameInput.setPromptText("Street name");
+        this.streetNumberInput.setPromptText("Street number");
+        this.suburbInput.setPromptText("suburb");
+        this.descriptionInput.setPromptText("Enter property description here.");
 
         //grouping toggle button
         apartment.setToggleGroup(groupPropertyType);
@@ -185,13 +212,27 @@ public class AddPropertyUI {
         form.add(image, 0, 9);
         form.add(imageInput, 1, 9);
 
+        dialog.getDialogPane().setContent(form);
+
         //styling the dialog box
         DialogPane dialogPane = dialog.getDialogPane();
         dialogPane.getStylesheets().add(getClass().getResource("css/StyleUI.css").toExternalForm());
         dialogPane.getStyleClass().add("addPropertyDialog-pane");
 
-        dialog.getDialogPane().setContent(form);
         dialog.showAndWait();
+        dialog.getDialogPane().setContent(form);
+
+    }
+
+    public void close() {
+        this.dialog.close();
+    }
+
+    public void closeProcedure() {
+        this.streetNameInput.clear();
+        this.descriptionInput.clear();
+        this.streetNumberInput.clear();
+        this.suburbInput.clear();
     }
 
 }
