@@ -12,17 +12,18 @@ import javafx.stage.Stage;
 import view.AlertBox;
 import view.MainUI;
 
-public class Main extends Application {
+public class Main  extends Application{
 
-    public static void main(String[] args) {
-        launch(args);
-    }
-
+//    public static void main(String[] args) {
+//        FlexiRentSystem flexiRentSystem = new FlexiRentSystem();
+//        flexiRentSystem.displaySystemMenu();
+//    }
+//
     @Override
     public void start(Stage primaryStage) throws Exception {
         MainUI mainUI = new MainUI();
         mainUI.generateMainPage();
-        mainUI.generatePropertySummary();
+//        mainUI.generatePropertySummary();
 
     }
 }

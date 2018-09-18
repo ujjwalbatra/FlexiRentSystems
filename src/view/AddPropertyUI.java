@@ -6,7 +6,7 @@ package view;/*
  */
 
 
-import controller.ExitBtnHandler;
+import controller.AddPropertyBtnHandler;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -19,10 +19,12 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import model.RentalProperty;
+import utility.exception.IncompleteInputException;
+import utility.exception.InvalidInpuException;
 
+import java.io.File;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Optional;
 
 
 /*
@@ -30,29 +32,34 @@ import java.util.Optional;
  */
 public class AddPropertyUI {
 
-    Dialog<RentalProperty> dialog;
-    TextField streetNumberInput;
-    TextField streetNameInput;
-    TextField suburbInput;
-    TextArea descriptionInput;
-    DatePicker lastMaintenanceDateInput;
+    private Dialog<RentalProperty> dialog;
+    private TextField streetNumberInput;
+    private TextField streetNameInput;
+    private TextField suburbInput;
+    private TextArea descriptionInput;
+    private DatePicker lastMaintenanceDateInput;
 
-    Label streetNumber;
-    Label streetName;
-    Label suburb;
-    Label numberOfBedrooms;
-    Label propertyType;
-    Label description;
-    Label image;
-    Label lastMaintenanceDate;
+    private Label streetNumber;
+    private Label streetName;
+    private Label suburb;
+    private Label numberOfBedrooms;
+    private Label propertyType;
+    private Label description;
+    private Label image;
+    private Label lastMaintenanceDate;
 
-    ToggleGroup groupPropertyType;
-    ToggleGroup groupNumberOfBedrooms;
-    ToggleButton apartment;
-    ToggleButton premiumSuit;
-    ToggleButton one;
-    ToggleButton two;
-    ToggleButton three;
+    private ToggleGroup groupPropertyType;
+    private ToggleGroup groupNumberOfBedrooms;
+    private ToggleButton apartment;
+    private ToggleButton premiumSuit;
+    private ToggleButton oneBed;
+    private ToggleButton twoBed;
+    private ToggleButton threeBed;
+
+    private Button addPropertyBtn;
+
+    private File selectedFile;
+
 
     public AddPropertyUI() {
         this.dialog = new Dialog();
@@ -75,9 +82,9 @@ public class AddPropertyUI {
         this.groupNumberOfBedrooms = new ToggleGroup();
         this.apartment = new ToggleButton("Apartment");
         this.premiumSuit = new ToggleButton("Premium Suit");
-        this.one = new ToggleButton("1");
-        this.two = new ToggleButton("2");
-        this.three = new ToggleButton("3");
+        this.oneBed = new ToggleButton("1");
+        this.twoBed = new ToggleButton("2");
+        this.threeBed = new ToggleButton("3");
 
     }
 
@@ -93,8 +100,8 @@ public class AddPropertyUI {
         this.dialog.setGraphic(new ImageView(this.getClass().getResource("images/addProperty.png").toString()));
 
         // Set the button types.
-        ButtonType addPropertyBtn = new ButtonType("Add", ButtonBar.ButtonData.OK_DONE);
-        this.dialog.getDialogPane().getButtonTypes().addAll(addPropertyBtn, ButtonType.CANCEL);
+        ButtonType addPropertyBtnType = new ButtonType("Add", ButtonBar.ButtonData.OK_DONE);
+        this.dialog.getDialogPane().getButtonTypes().addAll(addPropertyBtnType, ButtonType.CANCEL);
 
         //create form for user input
         GridPane form = new GridPane();
@@ -133,7 +140,8 @@ public class AddPropertyUI {
         imageInput.setOnAction(event -> {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Select image resource");
-            fileChooser.showOpenDialog(new Stage());
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files (*.png)", "*.png"));
+            selectedFile = fileChooser.showOpenDialog(new Stage());
         });
 
         this.streetNameInput.setPromptText("Street name");
@@ -146,15 +154,21 @@ public class AddPropertyUI {
         premiumSuit.setToggleGroup(groupPropertyType);
 
         //grouping number of bedroom toggle
-        one.setToggleGroup(groupNumberOfBedrooms);
-        two.setToggleGroup(groupNumberOfBedrooms);
-        three.setToggleGroup(groupNumberOfBedrooms);
+        oneBed.setToggleGroup(groupNumberOfBedrooms);
+        twoBed.setToggleGroup(groupNumberOfBedrooms);
+        threeBed.setToggleGroup(groupNumberOfBedrooms);
+
+        oneBed.setSelected(false);
+        twoBed.setSelected(false);
+        threeBed.setSelected(false);
+        apartment.setSelected(false);
+        premiumSuit.setSelected(false);
 
         HBox propertyTypeInput = new HBox();
         propertyTypeInput.getChildren().addAll(apartment, premiumSuit);
 
         HBox numberOfBedroomInput = new HBox();
-        numberOfBedroomInput.getChildren().addAll(one, two, three);
+        numberOfBedroomInput.getChildren().addAll(oneBed, twoBed, threeBed);
 
         form.add(streetNumber, 0, 0);
         form.add(streetNumberInput, 1, 0);
@@ -212,6 +226,27 @@ public class AddPropertyUI {
         form.add(image, 0, 9);
         form.add(imageInput, 1, 9);
 
+        this.addPropertyBtn = (Button) dialog.getDialogPane().lookupButton(addPropertyBtnType);
+
+        this.addPropertyBtn.addEventFilter(
+                ActionEvent.ACTION,
+                event -> {
+                    try {
+                        AddPropertyBtnHandler addPropertyBtnHandler = new AddPropertyBtnHandler(this);
+                        closeProcedure();
+                        close();
+                    } catch (InvalidInpuException e) {
+                        event.consume();
+                        AlertBox alertBox = new AlertBox();
+                        alertBox.generateWarningAlertBox(e.getTitle(), e.getHeader(), e.getMessage());
+                    } catch (IncompleteInputException e) {
+                        event.consume();
+                        AlertBox alertBox = new AlertBox();
+                        alertBox.generateWarningAlertBox(e.getTitle(), e.getHeader(), e.getMessage());
+                    }
+                }
+        );
+
         dialog.getDialogPane().setContent(form);
 
         //styling the dialog box
@@ -233,6 +268,43 @@ public class AddPropertyUI {
         this.descriptionInput.clear();
         this.streetNumberInput.clear();
         this.suburbInput.clear();
+    }
+
+    public String getStreetNumberInput() {
+        return streetNumberInput.getText();
+    }
+
+    public String getStreetNameInput() {
+        return streetNameInput.getText();
+    }
+
+    public String getSuburbInput() {
+        return suburbInput.getText();
+    }
+
+    public String getDescriptionInput() {
+        return descriptionInput.getText();
+    }
+
+    public String getLastMaintenanceDateInput() {
+        return lastMaintenanceDateInput.getEditor().getText();
+    }
+
+    public String getSelectedPropertyType() {
+        if (groupPropertyType.getSelectedToggle() == apartment) return "apartment";
+        if (groupPropertyType.getSelectedToggle() == premiumSuit) return "premium suit";
+        return null;
+    }
+
+    public String getSelectedNumberOfBed() {
+        if (groupNumberOfBedrooms.getSelectedToggle() == oneBed) return "one";
+        if (groupNumberOfBedrooms.getSelectedToggle() == twoBed) return "two";
+        if (groupNumberOfBedrooms.getSelectedToggle() == threeBed) return "three";
+        return null;
+    }
+
+    public File getSelectedFile() {
+        return selectedFile;
     }
 
 }

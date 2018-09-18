@@ -276,7 +276,7 @@ public class MainUI {
         VBox propertyDetails = new VBox(2);
         HBox propertyWithLink = new HBox(10);
 
-        Image image = new Image(this.getClass().getResource("images/sampleHouse1.png").toString(), 200, 200, true, true);
+        Image image = new Image(this.getClass().getResource("view/images/sampleHouse1.png").toString(), 200, 200, true, true);
         ImageView imageView = new ImageView(image);
 
         Button view = new Button("View");

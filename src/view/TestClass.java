@@ -60,7 +60,7 @@ public class TestClass extends Application {
             ViewProperty viewProperty = new ViewProperty();
             MainUI mainUI = new MainUI();
 
-            alertBox.generateWarningAlertBox("Alert - FlexiRentSystems", "trial trial trial trial trial trial trial trial ");
+//            alertBox.generateWarningAlertBox("Alert - FlexiRentSystems", "trial trial trial trial trial trial trial trial ");
             alertBox.confirmQuitting();
             addPropertyUI.generateAddpropertyUI();
             viewProperty.generateViewPropertyUI();

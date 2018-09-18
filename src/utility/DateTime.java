@@ -27,6 +27,7 @@ public class DateTime {
         setDate(day, month, year);
     }
 
+
     public static String getCurrentTime() {
         Date date = new Date(System.currentTimeMillis());  // returns current Date/Time
         return date.toString();

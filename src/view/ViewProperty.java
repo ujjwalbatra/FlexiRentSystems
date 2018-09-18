@@ -18,7 +18,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import org.hsqldb.rights.Right;
 
 /*
  * this class is used to generate view property UI, when
@@ -56,7 +55,7 @@ public class ViewProperty {
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
         scrollPane.setPrefSize(700, 200);
 
-        Image image = new Image(this.getClass().getResource("images/sampleHouse1.png").toString(), 400, 400, true, true);
+        Image image = new Image(this.getClass().getResource("view/images/sampleHouse1.png").toString(), 400, 400, true, true);
         ImageView imageView = new ImageView(image);
 
         Label streetNumber = new Label("Street Number : ");

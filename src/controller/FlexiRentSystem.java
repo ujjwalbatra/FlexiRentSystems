@@ -16,8 +16,6 @@ import utility.exception.InvalidOperationException;
 import java.sql.*;
 import java.util.Scanner;
 
-import static java.sql.JDBCType.NULL;
-
 public class FlexiRentSystem {
 
     private int propertyIndex = -1; // to store number of properties added to the system
@@ -34,23 +32,27 @@ public class FlexiRentSystem {
             statement = connection.createStatement();
             System.err.println("SQL Connection established");
 
-                        String dropTable = "drop table rentalproperty";
-                        int result = statement.executeUpdate(dropTable);
+            String dropTable = "drop table rentalproperty";
+            int result = statement.executeUpdate(dropTable);
 
-                        String createTable = "CREATE TABLE RentalProperty ("
-                                + "propertyID VARCHAR(10) NOT NULL,"
-                                + "streetNumber int NOT NULL,"
-                                + "streetName VARCHAR(20) NOT NULL,"
-                                + "suburb VARCHAR(20) NOT NULL,"
-                                + "propertyType VARCHAR(20) NOT NULL,"
-                                + "numberOfBedrooms INTEGER NOT NULL,"
-                                + "rentalRate FLOAT NOT NULL,"
-                                + "propertyStatus DOUBLE NOT NULL,"
-                                + "lastMaintenanceDate DATE,"
-                                + "description VARCHAR(100),"
-                                + "imagePath VARCHAR(20),"
-                                + "PRIMARY KEY (propertyID))";
-                        result = statement.executeUpdate(createTable);
+            System.err.println("table dropped");
+
+            String createTable = "CREATE TABLE RentalProperty ("
+                    + "propertyID VARCHAR(10) NOT NULL,"
+                    + "streetNumber int NOT NULL,"
+                    + "streetName VARCHAR(20) NOT NULL,"
+                    + "suburb VARCHAR(20) NOT NULL,"
+                    + "propertyType VARCHAR(20) NOT NULL,"
+                    + "numberOfBedrooms INTEGER NOT NULL,"
+                    + "rentalRate FLOAT NOT NULL,"
+                    + "propertyStatus VARCHAR(10) NOT NULL,"
+                    + "lastMaintenanceDate DATE,"
+                    + "description VARCHAR(100),"
+                    + "imagePath VARCHAR(20),"
+                    + "PRIMARY KEY (propertyID))";
+            result = statement.executeUpdate(createTable);
+            System.err.println("table created");
+
             //
             //            if (result == 0) System.err.println("table created");
 
@@ -457,44 +459,66 @@ public class FlexiRentSystem {
     private void insertIntoDB(RentalProperty rentalProperty) {
         String sqlQuery = null;
 
-        if (rentalProperty.getPropertyType() == "apartment") {
-            sqlQuery = "INSERT INTO RENTALPROPERTY (propertyID, streetNumber, streetName, suburb,  propertyType, numberOfBedrooms, rentalRate, propertyStatus, lastMaintenanceDate, description, imagePath)" +
-                    " VALUES (" +
-                    "\'" + rentalProperty.getPropertyID() + "\'," +
-                    rentalProperty.getStreetNumber() + "," +
-                    "\'" + rentalProperty.getStreetName() + "\'," +
-                    "\'" + rentalProperty.getSuburb() + "\'," +
-                    "\'" + rentalProperty.getPropertyType() + "\'," +
-                    rentalProperty.getNumberOfBedrooms() + "," +
-                    rentalProperty.getRentalRate()+ "," +
-                    "\'" + rentalProperty.getPropertyStatus() + "\'," +
-                    JDBCType.NULL + "," +
-                    "\'" + rentalProperty.getDescription() + "\'," +
-                    "\'" + rentalProperty.getImagePath() + "\'" +
-                    ");";
-
-        } else if (rentalProperty.getPropertyType() == "premium suit") {
-            sqlQuery = "INSERT INTO RENTALPROPERTY (propertyID, streetNumber, streetName, suburb,  propertyType, numberOfBedrooms, rentalRate, propertyStatus, lastMaintenanceDate, description, imagePath)" +
-
-                    "VALUES(" +
-                    "\'" + rentalProperty.getPropertyID() + "\'," +
-                    rentalProperty.getStreetNumber() + "," +
-                    "\'" + rentalProperty.getStreetName() + "\'," +
-                    "\'" + rentalProperty.getSuburb() + "\'," +
-                    "\'" + rentalProperty.getPropertyType() + "\'," +
-                    rentalProperty.getNumberOfBedrooms() + "," +
-                    rentalProperty.getRentalRate() + "," +
-                    "\'" + rentalProperty.getPropertyStatus() + "\'," +
-                    JDBCType.NULL + "," +
-                    "\'" + rentalProperty.getDescription() + "\'," +
-                    "\'" + rentalProperty.getImagePath() + "\'" +
-                    ")";
-        }
+        PreparedStatement preparedStatement;
+        //        if (rentalProperty.getPropertyType() == "apartment") {
+        //            sqlQuery = "INSERT INTO RENTALPROPERTY (propertyID, streetNumber, streetName, suburb,  propertyType, numberOfBedrooms, rentalRate, propertyStatus, lastMaintenanceDate, description, imagePath)" +
+        //                    " VALUES (" +
+        //                    "\'" + rentalProperty.getPropertyID() + "\'," +
+        //                    rentalProperty.getStreetNumber() + "," +
+        //                    "\'" + rentalProperty.getStreetName() + "\'," +
+        //                    "\'" + rentalProperty.getSuburb() + "\'," +
+        //                    "\'" + rentalProperty.getPropertyType() + "\'," +
+        //                    rentalProperty.getNumberOfBedrooms() + "," +
+        //                    rentalProperty.getRentalRate()+ "," +
+        //                    "\'" + rentalProperty.getPropertyStatus() + "\'," +
+        //                    JDBCType.NULL + "," +
+        //                    "\'" + rentalProperty.getDescription() + "\'," +
+        //                    "\'" + rentalProperty.getImagePath() + "\'" +
+        //                    ");";
+        //
+        //        } else if (rentalProperty.getPropertyType() == "premium suit") {
+        //            sqlQuery = "INSERT INTO RENTALPROPERTY (propertyID, streetNumber, streetName, suburb,  propertyType, numberOfBedrooms, rentalRate, propertyStatus, lastMaintenanceDate, description, imagePath)" +
+        //
+        //                    "VALUES(" +
+        //                    "\'" + rentalProperty.getPropertyID() + "\'," +
+        //                    rentalProperty.getStreetNumber() + "," +
+        //                    "\'" + rentalProperty.getStreetName() + "\'," +
+        //                    "\'" + rentalProperty.getSuburb() + "\'," +
+        //                    "\'" + rentalProperty.getPropertyType() + "\'," +
+        //                    rentalProperty.getNumberOfBedrooms() + "," +
+        //                    rentalProperty.getRentalRate() + "," +
+        //                    "\'" + rentalProperty.getPropertyStatus() + "\'," +
+        //                    JDBCType.NULL + "," +
+        //                    "\'" + rentalProperty.getDescription() + "\'," +
+        //                    "\'" + rentalProperty.getImagePath() + "\'" +
+        //                    ")";
+        //        }
 
         System.out.println(sqlQuery);
         try {
-            statement.executeUpdate(sqlQuery);
+            preparedStatement = connection.prepareStatement("INSERT INTO RentalProperty VALUES (?,?,?,?,?,?,?,?,?,?,?);");
+
+            preparedStatement.setString(1, rentalProperty.getPropertyID());
+            preparedStatement.setInt(2, rentalProperty.getStreetNumber());
+            preparedStatement.setString(3, rentalProperty.getStreetName());
+            preparedStatement.setString(4, rentalProperty.getSuburb());
+            preparedStatement.setString(5, rentalProperty.getPropertyType());
+            preparedStatement.setDouble(7, rentalProperty.getRentalRate());
+            preparedStatement.setString(8, rentalProperty.getPropertyStatus());
+            preparedStatement.setString(10, rentalProperty.getDescription());
+            preparedStatement.setString(11, rentalProperty.getImagePath());
+
+            if (rentalProperty.getPropertyType().equals("apartment")) {
+                preparedStatement.setInt(6, rentalProperty.getNumberOfBedrooms());
+                preparedStatement.setNull(9, Types.DATE);
+            } else if (rentalProperty.getPropertyType().equals("premium suit")) {
+                preparedStatement.setInt(6, 3);
+                preparedStatement.setDate(9, new Date(1010,10,10));
+            }
+
+            preparedStatement.executeUpdate();
             System.out.println("RentalPropterty inserted into the table");
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

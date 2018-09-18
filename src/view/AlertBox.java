@@ -30,9 +30,7 @@ public class AlertBox {
      * about esceptions, like invalid input or invalid operation.
      *
      * */
-    public void generateWarningAlertBox(String title, String contentText) {
-
-        String headerText = "Warning!";
+    public void generateWarningAlertBox(String title, String headerText,String contentText) {
 
         Dialog alert = new Alert(Alert.AlertType.WARNING);
 
