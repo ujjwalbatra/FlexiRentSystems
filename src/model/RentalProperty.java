@@ -141,7 +141,7 @@ public abstract class RentalProperty {
         String additionalRow = "Last Maintenance Date:";
 
         details = "-------------------------------------\n";
-        details += String.format("%-25s%d %s %s\n%-25s%s\n%-25s%d\n%-25s%s\n",row2,
+        details += String.format("%-25s%d %s %s\n%-25s%s\n%-25s%d\n%-25s%s\n", row2,
                 this.streetNumber, this.streetName, this.suburb, row3, this.propertyType, row4, this.numberOfBedrooms, row5, this.propertyStatus);
 
         if (this.propertyType.equals("premium suit"))
@@ -196,10 +196,7 @@ public abstract class RentalProperty {
     }
 
     public void addPropertyToDB() {
-        try (
-                Connection connection = DriverManager.getConnection("jdbc:hsqldb:file:database/localhost", "SA", "");
-                Statement statement = connection.createStatement()
-        ) {
+        try (Connection connection = DriverManager.getConnection("jdbc:hsqldb:file:database/localhost", "SA", "")) {
 
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO RentalProperty " +
                     "(streetNumber, streetName, suburb, propertyType, numberOfBedrooms, rentalRate, propertyStatus, lastMaintenanceDate, description, imagePath )" +
@@ -214,7 +211,7 @@ public abstract class RentalProperty {
             preparedStatement.setString(7, this.getPropertyStatus());
 
             if (this.propertyType.equals("premium suit"))
-                preparedStatement.setDate(8, ((PremiumSuit)this).getLastMaintenanceDate().toSqlDate());
+                preparedStatement.setDate(8, ((PremiumSuit) this).getLastMaintenanceDate().toSqlDate());
             else if (this.propertyType.equals("apartment"))
                 preparedStatement.setNull(8, Types.DATE);
 
@@ -322,5 +319,6 @@ public abstract class RentalProperty {
     public void setAvailable(boolean available) {
         this.isAvailable = available;
     }
+
 
 }

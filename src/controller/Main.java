@@ -9,7 +9,7 @@ package controller;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import model.PremiumSuit;
+import model.PropertyFinder;
 import view.MainUI;
 
 import java.sql.*;
@@ -24,7 +24,35 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         MainUI mainUI = new MainUI();
+
+        try (
+                Connection connection = DriverManager.getConnection("jdbc:hsqldb:file:database/localhost", "SA", "");
+                Statement statement = connection.createStatement()
+        ) {
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM RentalProperty WHERE propertyType = 'apartment';");
+
+            while (resultSet.next()) {
+                System.out.println(resultSet.getInt("propertyID"));
+                System.out.println(resultSet.getString("propertyType"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        //populating the main page in another thread
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                PropertyFinder propertyFinder = new PropertyFinder(mainUI);
+                propertyFinder.getAllProperties();
+            }
+        };
+
+        runnable.run();
         mainUI.generateMainPage();
+
+
     }
 
     private void createTableRentalProperty() {

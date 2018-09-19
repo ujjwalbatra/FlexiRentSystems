@@ -1,0 +1,195 @@
+package model;/*
+ *
+ * @project - FlexiRentSystems
+ * @author - ujjwalbatra on 19/09/18
+ *
+ */
+
+import utility.DateTime;
+import view.MainUI;
+
+import java.sql.*;
+import java.util.HashMap;
+import java.util.Map;
+
+public class PropertyFinder {
+
+    private MainUI mainUI;
+    private Map<Integer, RentalProperty> propertiesFound;
+    private RentalProperty rentalProperty;
+    private static Connection connection;
+
+    static {
+        try {
+            connection = DriverManager.getConnection("jdbc:hsqldb:file:database/localhost", "SA", "");
+            Class.forName("org.hsqldb.jdbc.JDBCDriver");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public PropertyFinder(MainUI mainUI) {
+        this.mainUI = mainUI;
+        this.propertiesFound = new HashMap<>();
+    }
+
+    /*
+     *
+     * binds all the properties to a single hash map
+     * and then calls update view, to make view aware of
+     * all the properties to display
+     *
+     */
+    public void getAllProperties() {
+
+        this.getAllOneBedRoomApartments();
+        this.getAllTwoBedRoomApartments();
+        this.getAllThreeBedRoomApartments();
+        this.getAllPremiumSuits();
+
+        this.updateView();
+    }
+
+    /*
+     *
+     * adds all one bedroom apartments available in DB to the hash map
+     *
+     */
+    private void getAllOneBedRoomApartments() {
+        try {
+            PreparedStatement preparedStatement;
+
+            preparedStatement = connection.prepareStatement("SELECT * FROM RentalProperty WHERE propertyType = 'apartment' AND numberOfBedrooms = 1;");
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                this.rentalProperty = new Apartment(resultSet.getInt("streetNumber"), resultSet.getString("streetName"),
+                        resultSet.getString("suburb"), resultSet.getInt("numberOfBedrooms"),
+                        resultSet.getString("description"), resultSet.getString("imagePath"));
+
+                this.propertiesFound.put(resultSet.getInt("propertyID"), this.rentalProperty);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*
+     *
+     * adds all two bedroom apartments available in DB to the hash map
+     *
+     */
+    private void getAllTwoBedRoomApartments() {
+        try {
+            PreparedStatement preparedStatement;
+
+            preparedStatement = connection.prepareStatement("SELECT * FROM RentalProperty WHERE propertyType = 'apartment' AND numberOfBedrooms = 2;");
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                this.rentalProperty = new Apartment(resultSet.getInt("streetNumber"), resultSet.getString("streetName"),
+                        resultSet.getString("suburb"), resultSet.getInt("numberOfBedrooms"),
+                        resultSet.getString("description"), resultSet.getString("imagePath"));
+
+                this.propertiesFound.put(resultSet.getInt("propertyID"), this.rentalProperty);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*
+     *
+     * adds all three bedroom apartments available in DB to the hash map
+     *
+     */
+    private void getAllThreeBedRoomApartments() {
+        try {
+            PreparedStatement preparedStatement;
+
+            preparedStatement = connection.prepareStatement("SELECT * FROM RentalProperty WHERE propertyType = 'apartment' AND numberOfBedrooms = 3;");
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                this.rentalProperty = new Apartment(resultSet.getInt("streetNumber"), resultSet.getString("streetName"),
+                        resultSet.getString("suburb"), resultSet.getInt("numberOfBedrooms"),
+                        resultSet.getString("description"), resultSet.getString("imagePath"));
+
+                this.propertiesFound.put(resultSet.getInt("propertyID"), this.rentalProperty);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*
+     *
+     * adds all premium suits available in DB to the hash map
+     *
+     */
+    private void getAllPremiumSuits() {
+        try {
+            PreparedStatement preparedStatement;
+
+            preparedStatement = connection.prepareStatement("SELECT * FROM RentalProperty WHERE propertyType = 'premium suit';");
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                this.rentalProperty = new PremiumSuit(resultSet.getInt("streetNumber"), resultSet.getString("streetName"),
+                        resultSet.getString("suburb"), new DateTime(resultSet.getDate("lastMaintenanceDate")),
+                        resultSet.getString("description"), resultSet.getString("imagePath"));
+
+                this.propertiesFound.put(resultSet.getInt("propertyID"), this.rentalProperty);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*
+    *
+    * Deleting all properties from database
+    *
+    */
+    public void deleteAllProperties() {
+        try {
+            PreparedStatement preparedStatement;
+
+            preparedStatement = connection.prepareStatement("DELETE FROM RentalProperty WHERE propertyID > 0;");
+
+            int result = preparedStatement.executeUpdate();
+
+            if (result == 0) System.out.println("All properties deleted");
+
+            this.propertiesFound = null;
+
+            this.updateView();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+
+    /*
+     *
+     * sends all the required properties to view
+     *
+     */
+    private void updateView() {
+        mainUI.populatePropertiesFlowPane(this.propertiesFound);
+    }
+}
