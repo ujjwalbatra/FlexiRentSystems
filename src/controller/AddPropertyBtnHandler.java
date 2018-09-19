@@ -8,7 +8,10 @@
 package controller;
 
 
+import model.Apartment;
+import model.PremiumSuit;
 import model.RentalProperty;
+import utility.DateTime;
 import utility.exception.IncompleteInputException;
 import utility.exception.InvalidInpuException;
 import view.AddPropertyUI;
@@ -22,15 +25,17 @@ import java.nio.file.Paths;
 
 public class AddPropertyBtnHandler {
 
-    AddPropertyUI addPropertyUI;
-    RentalProperty rentalProperty;
-    int streetNumber;
-    File imageFile;
+    private AddPropertyUI addPropertyUI;
+    private RentalProperty rentalProperty;
+    private int streetNumber;
+    private int numberOfBedrooms;
+    private File imageFile;
+    String imagePath;
+    private static int propertyIdentifier = 0;
 
 
     public AddPropertyBtnHandler(AddPropertyUI addPropertyUI) throws InvalidInpuException, IncompleteInputException {
         this.addPropertyUI = addPropertyUI;
-        this.verifyProcessInput();
     }
 
     /*
@@ -73,21 +78,56 @@ public class AddPropertyBtnHandler {
         } else
             throw new IncompleteInputException("Error", "Incomplete Input", "Select Apartment or Premium suit");
 
+
         //add image to resources
         if (this.addPropertyUI.getSelectedFile() != null) {
+
             Path from;
             Path to;
+
             this.imageFile = this.addPropertyUI.getSelectedFile();
             from = Paths.get(this.imageFile.toURI());
             to = Paths.get("resources/images/" + streetNumber + this.addPropertyUI.getStreetNameInput() + ".png");
+            this.imagePath = to.toString();
+
             try {
                 Files.copy(from, to);
             } catch (IOException e) {
+                e.printStackTrace();
                 //                throw new InvalidInpuException("Error","Image not found","THe file attached was not found please attach another");
             }
+
         } else {
             throw new IncompleteInputException("Error", "Input Incomplete", "Please upload image for the property");
         }
-
+        wrapProperty();
     }
+
+    /*
+     *
+     * wrapProperty method wraps all the property details
+     * in a rental property object, finalising it for database.
+     * And then calling rentalproperty in model to add it to DB
+     *
+     */
+    private void wrapProperty() {
+
+        if (this.addPropertyUI.getSelectedPropertyType().equals("apartment")) {
+
+            if (this.addPropertyUI.getSelectedNumberOfBed().equals("one")) this.numberOfBedrooms = 1;
+            if (this.addPropertyUI.getSelectedNumberOfBed().equals("two")) this.numberOfBedrooms = 2;
+            if (this.addPropertyUI.getSelectedNumberOfBed().equals("three")) this.numberOfBedrooms = 3;
+            this.rentalProperty = new Apartment(this.streetNumber, this.addPropertyUI.getStreetNameInput().trim(), this.addPropertyUI.getSuburbInput().trim(), this.numberOfBedrooms, this.addPropertyUI.getDescriptionInput().trim(), this.imagePath.trim());
+
+        } else if (this.addPropertyUI.getSelectedPropertyType().equals("premium suit")) {
+
+            int year = Integer.parseInt(this.addPropertyUI.getLastMaintenanceDateInput().substring(0, 4));
+            int month = Integer.parseInt(this.addPropertyUI.getLastMaintenanceDateInput().substring(5, 7));
+            int day = Integer.parseInt(this.addPropertyUI.getLastMaintenanceDateInput().substring(8, 10));
+            this.rentalProperty = new PremiumSuit(this.streetNumber, this.addPropertyUI.getStreetNameInput().trim(), this.addPropertyUI.getSuburbInput().trim(), new DateTime(day, month, year), this.addPropertyUI.getDescriptionInput().trim(), this.imagePath.trim());
+
+        }
+        this.rentalProperty.addPropertyToDB();
+    }
+
 }

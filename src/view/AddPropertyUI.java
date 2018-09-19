@@ -233,6 +233,7 @@ public class AddPropertyUI {
                 event -> {
                     try {
                         AddPropertyBtnHandler addPropertyBtnHandler = new AddPropertyBtnHandler(this);
+                        addPropertyBtnHandler.verifyProcessInput();
                         closeProcedure();
                         close();
                     } catch (InvalidInpuException e) {

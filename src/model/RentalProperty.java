@@ -11,8 +11,9 @@ import utility.DateTime;
 import utility.exception.InvalidInputException;
 import utility.exception.InvalidOperationException;
 
+import java.sql.*;
+
 public abstract class RentalProperty {
-    private String propertyID;
     private int streetNumber;
     private String streetName;
     private String suburb;
@@ -28,8 +29,7 @@ public abstract class RentalProperty {
     //stores number of rental records for this instance of property exists
 
 
-    protected RentalProperty(String propertyID, int streetNumber, String streetName, String suburb, int numberOfBedrooms) {
-        this.propertyID = propertyID;
+    protected RentalProperty(int streetNumber, String streetName, String suburb, int numberOfBedrooms, String description, String imagePath) {
         this.streetNumber = streetNumber;
         this.streetName = streetName;
         this.suburb = suburb;
@@ -37,6 +37,8 @@ public abstract class RentalProperty {
         this.rentalRecord = new RentalRecord[10];
         this.propertyStatus = "available";
         this.isAvailable = true;
+        this.description = description;
+        this.imagePath = imagePath;
     }
 
     public abstract double calculateLateFee();
@@ -63,7 +65,7 @@ public abstract class RentalProperty {
         //adding new record
         newRecord = new RentalRecord(customerID, rentDate, estimatedReturnDate);
         this.getRentalRecord()[0] = newRecord;
-        newRecord.setRecordID(this.getPropertyID() + "_" + customerID + "_" + rentDate.toString());
+        newRecord.setRecordID("_" + customerID + "_" + rentDate.toString());
 
 
         //making changes to status of property
@@ -98,7 +100,6 @@ public abstract class RentalProperty {
         //changing status to under maintenance and making isAvailable false.
         this.propertyStatus = "under maintenance";
         this.isAvailable = false;
-        System.out.println("Property" + this.propertyID + " is now under maintenance");
     }
 
     public void completeMaintenance(DateTime completionDate) throws InvalidOperationException {
@@ -110,15 +111,14 @@ public abstract class RentalProperty {
         this.propertyStatus = "available";
         this.isAvailable = true;
 
-        System.out.println("Maintenance on property ID " + this.propertyID + " completed");
     }
 
     @Override
     public String toString() {
         String print;
 
-        print = String.format("%s:%d:%s:%s:%s:%d:%s",
-                this.propertyID, this.streetNumber, this.streetName, this.suburb, this.propertyType,
+        print = String.format("%d:%s:%s:%s:%d:%s",
+                this.streetNumber, this.streetName, this.suburb, this.propertyType,
                 this.numberOfBedrooms, this.propertyStatus);
 
         return print;
@@ -141,7 +141,7 @@ public abstract class RentalProperty {
         String additionalRow = "Last Maintenance Date:";
 
         details = "-------------------------------------\n";
-        details += String.format("%-25s%s\n%-25s%d %s %s\n%-25s%s\n%-25s%d\n%-25s%s\n", row1, this.propertyID, row2,
+        details += String.format("%-25s%d %s %s\n%-25s%s\n%-25s%d\n%-25s%s\n",row2,
                 this.streetNumber, this.streetName, this.suburb, row3, this.propertyType, row4, this.numberOfBedrooms, row5, this.propertyStatus);
 
         if (this.propertyType.equals("premium suit"))
@@ -195,9 +195,41 @@ public abstract class RentalProperty {
         }
     }
 
-    public void setPropertyID(String propertyID) {
-        this.propertyID = propertyID;
+    public void addPropertyToDB() {
+        try (
+                Connection connection = DriverManager.getConnection("jdbc:hsqldb:file:database/localhost", "SA", "");
+                Statement statement = connection.createStatement()
+        ) {
+
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO RentalProperty " +
+                    "(streetNumber, streetName, suburb, propertyType, numberOfBedrooms, rentalRate, propertyStatus, lastMaintenanceDate, description, imagePath )" +
+                    " VALUES (?,?,?,?,?,?,?,?,?,?);");
+
+            preparedStatement.setInt(1, this.getStreetNumber());
+            preparedStatement.setString(2, this.getStreetName());
+            preparedStatement.setString(3, this.getSuburb());
+            preparedStatement.setString(4, this.getPropertyType());
+            preparedStatement.setInt(5, this.getNumberOfBedrooms());
+            preparedStatement.setDouble(6, this.getRentalRate());
+            preparedStatement.setString(7, this.getPropertyStatus());
+
+            if (this.propertyType.equals("premium suit"))
+                preparedStatement.setDate(8, ((PremiumSuit)this).getLastMaintenanceDate().toSqlDate());
+            else if (this.propertyType.equals("apartment"))
+                preparedStatement.setNull(8, Types.DATE);
+
+            preparedStatement.setString(9, this.getDescription());
+            preparedStatement.setString(10, this.getImagePath());
+
+
+            preparedStatement.executeUpdate();
+            System.out.println("RentalPropterty inserted into the table");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
+
 
     public void setStreetNumber(int streetNumber) {
         this.streetNumber = streetNumber;
@@ -237,10 +269,6 @@ public abstract class RentalProperty {
 
     public String getImagePath() {
         return imagePath;
-    }
-
-    public String getPropertyID() {
-        return propertyID;
     }
 
     public int getStreetNumber() {

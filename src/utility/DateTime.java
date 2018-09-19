@@ -83,6 +83,14 @@ public class DateTime {
         time = date.getTime();
     }
 
+    public Date toSqlDate() {
+        String date = getFormattedDate();
+        int day = Integer.parseInt(date.substring(0,2));
+        int month = Integer.parseInt(date.substring(3,5));
+        int year = Integer.parseInt(date.substring(6,10));
+
+        return new Date(year, month, day);
+    }
     // Advances date/time by specified days, hours and mins for testing purposes
     public void setAdvance(int days, int hours, int mins) {
         advance = ((days * 24L + hours) * 60L) * 60000L;
