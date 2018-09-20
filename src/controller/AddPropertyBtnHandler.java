@@ -32,9 +32,7 @@ public class AddPropertyBtnHandler {
     private RentalProperty rentalProperty;
     private int streetNumber;
     private int numberOfBedrooms;
-    private File imageFile;
     String imagePath;
-    private static int propertyIdentifier = 0;
 
 
     public AddPropertyBtnHandler(AddPropertyUI addPropertyUI, MainUI mainUI) {
@@ -67,20 +65,24 @@ public class AddPropertyBtnHandler {
 
 
         //if neither apartment, nor premium suit are selected throw exception
-        if (this.addPropertyUI.getSelectedPropertyType().equals("apartment")) {
+        switch (this.addPropertyUI.getSelectedPropertyType()) {
+            case "apartment":
 
-            //if it is an apartment, and number of bedrooms are not selected, then throw new exception
-            if (this.addPropertyUI.getSelectedNumberOfBed() == null)
-                throw new IncompleteInputException("Error", "Incomplete Input", "Select number of bedrooms for apartment");
+                //if it is an apartment, and number of bedrooms are not selected, then throw new exception
+                if (this.addPropertyUI.getSelectedNumberOfBed() == null)
+                    throw new IncompleteInputException("Error", "Incomplete Input", "Select number of bedrooms for apartment");
 
-        } else if (this.addPropertyUI.getSelectedPropertyType().equals("premium suit")) {
+                break;
+            case "premium suit":
 
-            //if last maintenance date for premium suit is not selected, then throw new exception
-            if (this.addPropertyUI.getLastMaintenanceDateInput().equals(""))
-                throw new IncompleteInputException("Error", "Incomplete Input", "Select last maintenance date for premium suit");
+                //if last maintenance date for premium suit is not selected, then throw new exception
+                if (this.addPropertyUI.getLastMaintenanceDateInput().equals(""))
+                    throw new IncompleteInputException("Error", "Incomplete Input", "Select last maintenance date for premium suit");
 
-        } else
-            throw new IncompleteInputException("Error", "Incomplete Input", "Select Apartment or Premium suit");
+                break;
+            default:
+                throw new IncompleteInputException("Error", "Incomplete Input", "Select Apartment or Premium suit");
+        }
 
 
         //add image to resources
@@ -89,11 +91,11 @@ public class AddPropertyBtnHandler {
             Path from;
             Path to;
 
-            this.imageFile = this.addPropertyUI.getSelectedFile();
-            from = Paths.get(this.imageFile.toURI());
+            File imageFile = this.addPropertyUI.getSelectedFile();
+            from = Paths.get(imageFile.toURI());
             to = Paths.get("src/view/images/" + streetNumber + this.addPropertyUI.getStreetNameInput() + ".jpg");
             this.imagePath = to.toString().substring(9);
-            System.out.println(imagePath);
+
             try {
                 Files.copy(from, to);
             } catch (IOException e) {
@@ -133,7 +135,10 @@ public class AddPropertyBtnHandler {
         }
 
         PropertyFinder propertyFinder = new PropertyFinder(mainUI);
-        propertyFinder.addPropertyToDB(this.rentalProperty);
+
+        Runnable runnable = () -> propertyFinder.addPropertyToDB(rentalProperty);
+
+        runnable.run();
     }
 
 }

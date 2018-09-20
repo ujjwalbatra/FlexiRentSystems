@@ -91,7 +91,6 @@ public class Main extends Application {
                                 + "actualReturnDate DATE,"
                                 + "rentalFee DOUBLE,"
                                 + "lateFee DOUBLE,"
-                                + "lastMaintenanceDate DATE,"
                                 + "custID VARCHAR(10) NOT NULL,"
                                 + "FOREIGN KEY (propertyID) REFERENCES RentalProperty (propertyID) ON DELETE CASCADE,"
                                 + "PRIMARY KEY (recordID, propertyID)"

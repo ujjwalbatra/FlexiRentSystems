@@ -7,7 +7,6 @@ package view;/*
 
 
 import controller.AddPropertyBtnHandler;
-import controller.Main;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -259,16 +258,16 @@ public class AddPropertyUI {
         dialogPane.getStylesheets().add(getClass().getResource("css/StyleUI.css").toExternalForm());
         dialogPane.getStyleClass().add("addPropertyDialog-pane");
 
-        dialog.showAndWait();
         dialog.getDialogPane().setContent(form);
+        dialog.showAndWait();
 
     }
 
-    public void close() {
+    private void close() {
         this.dialog.close();
     }
 
-    public void closeProcedure() {
+    private void closeProcedure() {
         this.streetNameInput.clear();
         this.descriptionInput.clear();
         this.streetNumberInput.clear();

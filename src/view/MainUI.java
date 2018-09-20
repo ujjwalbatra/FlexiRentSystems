@@ -281,7 +281,7 @@ public class MainUI {
 
         String imagePath =  rentalProperty.getImagePath();
 
-        Image image = new Image(this.getClass().getResource("images/sampleHouse1.png").toString(), 200, 200, true, true);
+        Image image = new Image(this.getClass().getResource(imagePath).toString(), 200, 200, true, true);
         ImageView imageView = new ImageView(image);
 
         Button viewPropertyBtn = new Button("View");

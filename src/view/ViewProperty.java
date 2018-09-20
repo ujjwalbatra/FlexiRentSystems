@@ -7,12 +7,11 @@
 
 package view;
 
+import javafx.beans.binding.Bindings;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -37,6 +36,13 @@ public class ViewProperty {
     private HBox topHalfPage;
     private Button closeBtn;
     private RentalProperty rentalProperty;
+    private TableView rentalRecords;
+    private TableColumn rentDate;
+    private TableColumn estimatedReturnDate;
+    private TableColumn actualReturnDate;
+    private TableColumn rentalFee;
+    private TableColumn lateFee;
+    private TableColumn custID;
 
     public ViewProperty(RentalProperty rentalProperty) {
         this.rentalProperty = rentalProperty;
@@ -45,6 +51,13 @@ public class ViewProperty {
         this.functionBtns = new VBox();
         this.topHalfPage = new HBox();
         this.closeBtn = new Button("Close");
+        this.rentalRecords = new TableView();
+        this.rentDate = new TableColumn("Rent Date");
+        this.estimatedReturnDate = new TableColumn("Estimated Return Date");
+        this.actualReturnDate = new TableColumn("Actual Return Date");
+        this.rentalFee = new TableColumn("Rental Fee");
+        this.lateFee = new TableColumn("Late Fee");
+        this.custID = new TableColumn("Customer ID");
     }
 
     public void generateViewPropertyUI() {
@@ -54,48 +67,30 @@ public class ViewProperty {
         this.stage.setTitle("Property Viewer");
 
         GridPane rentalPropertyDetails = new GridPane();
-        GridPane rentalRecordDetails = new GridPane();
 
         ScrollPane scrollPane = new ScrollPane();
-        scrollPane.setContent(rentalRecordDetails);
+        scrollPane.setContent(rentalRecords);
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
         scrollPane.setPrefSize(700, 200);
 
-        Image image = new Image(this.getClass().getResource("images/sampleHouse1.png").toString(), 350, 350, true, true);
+        String imagePath = rentalProperty.getImagePath();
+
+        Image image = new Image(this.getClass().getResource(imagePath).toString(), 350, 350, true, true);
         ImageView imageView = new ImageView(image);
 
-        Label streetNumber = new Label(String.format("%-50s%s", "Street Number:", this.rentalProperty.getStreetNumber()));
-        Label streetName = new Label(String.format("%-50s%s", "Street name:", this.rentalProperty.getStreetName()));
-        Label suburb = new Label(String.format("%-50s%s", "Suburb:", this.rentalProperty.getSuburb()));
-        Label numberOfBedrooms = new Label(String.format("%-50s%s", "Number of Bedrooms:", this.rentalProperty.getNumberOfBedrooms()));
-        Label description = new Label(String.format("%-50s%s", "Description:", this.rentalProperty.getPropertyID()));
+        Label streetNumber = new Label(String.format("%s : %s", "Street Number", this.rentalProperty.getStreetNumber()));
+        Label streetName = new Label(String.format("%s : %s", "Street name", this.rentalProperty.getStreetName()));
+        Label suburb = new Label(String.format("%s : %s", "Suburb", this.rentalProperty.getSuburb()));
+        Label numberOfBedrooms = new Label(String.format("%s : %s", "Number of Bedrooms", this.rentalProperty.getNumberOfBedrooms()));
+        Label description = new Label(String.format("%s : %s", "Description", this.rentalProperty.getPropertyID()));
         Label lastMaintenanceDate;
 
-
         Label propertyTypeAndStatus = new Label(this.rentalProperty.getPropertyType().toUpperCase() + " - " + this.rentalProperty.getPropertyStatus().toUpperCase());
-
-        Label rentalrec1 = new Label("record : ");
-        Label rentalrec2 = new Label("record : ");
-        Label rentalrec3 = new Label("record: ");
-        Label rentalrec4 = new Label("record : ");
-        Label rentalrec5 = new Label("record: ");
-        Label rentalrec6 = new Label("record : ");
-        Label rentalrec7 = new Label("record : ");
-        Label rentalrec8 = new Label("record : ");
 
         Button rentBtn = new Button("Rent Property");
         Button returnPropertyBtn = new Button("Return Property");
         Button performMaintenanceBtn = new Button("Perform Maintenance");
         Button completeMaintenanceBtn = new Button("Complete Maintenance");
-
-        rentalRecordDetails.add(rentalrec1, 0, 0);
-        rentalRecordDetails.add(rentalrec2, 0, 1);
-        rentalRecordDetails.add(rentalrec3, 0, 2);
-        rentalRecordDetails.add(rentalrec4, 0, 3);
-        rentalRecordDetails.add(rentalrec5, 0, 4);
-        rentalRecordDetails.add(rentalrec6, 0, 5);
-        rentalRecordDetails.add(rentalrec7, 0, 6);
-        rentalRecordDetails.add(rentalrec8, 0, 7);
 
         rentalPropertyDetails.add(propertyTypeAndStatus, 0, 4, 4, 1);
         rentalPropertyDetails.add(streetNumber, 0, 5, 4, 1);
@@ -105,8 +100,8 @@ public class ViewProperty {
         rentalPropertyDetails.add(description, 0, 10, 4, 3);
 
         if (this.rentalProperty instanceof PremiumSuit) {
-            lastMaintenanceDate = new Label(String.format("%-50s%s", "Last Maintenance Date:", ((PremiumSuit) this.rentalProperty).getLastMaintenanceDate().toString()));
-            rentalPropertyDetails.add(lastMaintenanceDate, 0, 12, 4, 1);
+            lastMaintenanceDate = new Label(String.format("%s : %s", "Last Maintenance Date:", ((PremiumSuit) this.rentalProperty).getLastMaintenanceDate().toString()));
+            rentalPropertyDetails.add(lastMaintenanceDate, 0, 13, 4, 1);
         }
 
         this.functionBtns.getChildren().addAll(rentBtn, returnPropertyBtn, performMaintenanceBtn, completeMaintenanceBtn);
@@ -117,34 +112,47 @@ public class ViewProperty {
         performMaintenanceBtn.setMaxWidth(Double.MAX_VALUE);
         completeMaintenanceBtn.setMaxWidth(Double.MAX_VALUE);
 
+        //making rental record table
+        this.rentalRecords.getColumns().addAll(rentDate, estimatedReturnDate, actualReturnDate, rentalFee, lateFee, custID);
+        this.rentalRecords.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        rentalRecords.prefWidthProperty().bind(Bindings.add(-5, scrollPane.widthProperty()));
+
+
         //configuring close button
-        this.closeBtn.setOnAction(event -> {
-            this.stage.close();
-        });
+        this.closeBtn.setOnAction(event -> this.stage.close());
 
         //disabling property function buttons on the basis of status
-        if (this.rentalProperty.getPropertyStatus().equals("available")) {
+        switch (this.rentalProperty.getPropertyStatus()) {
+            case "available":
 
-            returnPropertyBtn.setDisable(true);
-            completeMaintenanceBtn.setDisable(true);
-            performMaintenanceBtn.setDisable(false);
-            rentBtn.setDisable(false);
+                returnPropertyBtn.setDisable(true);
+                completeMaintenanceBtn.setDisable(true);
+                performMaintenanceBtn.setDisable(false);
+                rentBtn.setDisable(false);
 
-        } else if (this.rentalProperty.getPropertyStatus().equals("rented")) {
+                break;
+            case "rented":
 
-            returnPropertyBtn.setDisable(false);
-            completeMaintenanceBtn.setDisable(true);
-            performMaintenanceBtn.setDisable(true);
-            rentBtn.setDisable(true);
+                returnPropertyBtn.setDisable(false);
+                completeMaintenanceBtn.setDisable(true);
+                performMaintenanceBtn.setDisable(true);
+                rentBtn.setDisable(true);
 
-        } else if (this.rentalProperty.getPropertyStatus().equals("under maintenance")) {
+                break;
+            case "under maintenance":
 
-            returnPropertyBtn.setDisable(true);
-            completeMaintenanceBtn.setDisable(false);
-            performMaintenanceBtn.setDisable(true);
-            rentBtn.setDisable(true);
+                returnPropertyBtn.setDisable(true);
+                completeMaintenanceBtn.setDisable(false);
+                performMaintenanceBtn.setDisable(true);
+                rentBtn.setDisable(true);
 
+                break;
         }
+
+        rentBtn.setOnAction(event -> {
+            PropertyOperationsUI propertyOperationsUI = new PropertyOperationsUI(this.rentalProperty);
+            propertyOperationsUI.rentPropertyUI();
+        });
 
         this.topHalfPage.getChildren().addAll(imageView, this.functionBtns);
         this.topHalfPage.setSpacing(50);

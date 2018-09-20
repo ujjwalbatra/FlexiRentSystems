@@ -52,22 +52,9 @@ public class PremiumSuit extends RentalProperty {
 
     }
 
-    @Override
     public void checkRentingCondition(DateTime rentDate, int numOfDays) throws InvalidOperationException, InvalidInputException {
 
-        boolean overlapsMaintenanceDay = false; //true when property is rented on a maintenance day.
 
-        DateTime nextMaintenanceDate = new DateTime(lastMaintenanceDate, 10);
-        DateTime testDate; //the day when the suit will be rented, testing if it overlaps with maintenance date.
-
-        //if any of the dates when property is rented overlaps with maintenance date, overlapsMaintenanceDay is set as true and control is returned with false.
-        for (int i = 0; i < numOfDays; i++) {
-            testDate = new DateTime(rentDate, i);
-            if (nextMaintenanceDate.toString().equals(testDate.toString())) overlapsMaintenanceDay = true;
-        }
-
-        if (numOfDays < 1) throw new InvalidInputException("Invalid operation - Number of days are less than 1");
-        if (overlapsMaintenanceDay) throw new InvalidOperationException("Invalid operation - Renting days overlapping with the date of maintenance.");
 
     }
 

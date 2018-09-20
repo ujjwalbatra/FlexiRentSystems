@@ -211,16 +211,22 @@ public class PropertyFinder {
             preparedStatement.setDouble(6, rentalProperty.getRentalRate());
             preparedStatement.setString(7, rentalProperty.getPropertyStatus());
 
-            if (rentalProperty.getPropertyType().equals("premium suit"))
+            if (rentalProperty.getPropertyType().equals("premium suit")) {
+                //todo : handle this date problem
+                System.out.println(((PremiumSuit) rentalProperty).getLastMaintenanceDate().toSqlDate().toString());
                 preparedStatement.setDate(8, ((PremiumSuit) rentalProperty).getLastMaintenanceDate().toSqlDate());
+
+            }
             else if (rentalProperty.getPropertyType().equals("apartment"))
                 preparedStatement.setNull(8, Types.DATE);
+
 
             preparedStatement.setString(9, rentalProperty.getDescription());
             preparedStatement.setString(10, rentalProperty.getImagePath());
 
 
             preparedStatement.executeUpdate();
+
             System.out.println(preparedStatement);
             System.err.println("RentalPropterty inserted into the table");
 

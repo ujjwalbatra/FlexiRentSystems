@@ -15,6 +15,11 @@ public class RentalRecord {
     private DateTime estimatedReturnDate;
     private DateTime actualReturnDate;
     private double rentalFee;
+
+    public String getCustID() {
+        return custID;
+    }
+
     private double lateFee;
     private String custID;
 

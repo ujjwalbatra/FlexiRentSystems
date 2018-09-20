@@ -20,7 +20,7 @@ public class DataRequestHandler {
     }
 
     public void requestRentalRecords(int propertyID) {
-//call property finder send all records to view property window and add a table view there
+//todo : call property finder send all records to view property window and add a table view there
     }
 
 }

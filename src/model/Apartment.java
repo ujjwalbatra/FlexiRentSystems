@@ -57,30 +57,7 @@ public class Apartment extends RentalProperty {
         return totalLateFee;
     }
 
-    @Override
-    public void checkRentingCondition(DateTime rentDate, int numOfDays) throws InvalidOperationException, InvalidInputException {
 
-        int day = 0;
-
-        //calculating rental day to check minimum number of days condition. where Day 1 is for sunday and 7 for saturday
-        try {
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(new SimpleDateFormat("dd/mm/yyyy").parse(rentDate.toString()));
-            day = calendar.get(Calendar.DAY_OF_WEEK);
-        } catch (ParseException e) {
-            System.err.println("Can't parse date to day");;
-        }
-
-        //checking if rental day is between sunday and thursday
-        if (numOfDays < 2 && (day >= 1 && day <=5) ) throw new InvalidOperationException("Invalid Operation - Number of days is wrong");
-
-        //checking if rental day is friday or saturday
-        if (numOfDays < 3 && (day == 6 || day == 7)) throw new InvalidOperationException("Invalid Operation - Number of days is wrong");
-
-        //checking if the apartment is being rented for more than 28 days
-        if (numOfDays > 28) throw new InvalidOperationException("Invalid Operation - Number of days is wrong");
-
-    }
 
 
 }

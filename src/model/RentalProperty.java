@@ -51,7 +51,6 @@ public abstract class RentalProperty {
 
     public abstract double calculateLateFee();
 
-    public abstract void checkRentingCondition(DateTime rentDate, int numOfDays) throws InvalidOperationException, InvalidInputException;
 
     //    checking all the renting conditions, if acceptable changing status and isAvailable for the property.
     public void rent(String customerID, DateTime rentDate, int numOfDays) throws InvalidOperationException, InvalidInputException {
@@ -62,7 +61,7 @@ public abstract class RentalProperty {
         if (numOfDays <= 0) throw new InvalidInputException("Invalid Input - the number of days is less than 1");
 
         //      if renting conditions of a specific property is not satisfied exception bounces to caller
-        checkRentingCondition(rentDate, numOfDays);
+//        checkRentingCondition(rentDate, numOfDays);
 
         DateTime estimatedReturnDate = new DateTime(rentDate, numOfDays);
         RentalRecord newRecord;
