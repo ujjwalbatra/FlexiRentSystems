@@ -37,7 +37,7 @@ public class AddPropertyBtnHandler {
     private static int propertyIdentifier = 0;
 
 
-    public AddPropertyBtnHandler(AddPropertyUI addPropertyUI, MainUI mainUI) throws InvalidInpuException, IncompleteInputException {
+    public AddPropertyBtnHandler(AddPropertyUI addPropertyUI, MainUI mainUI) {
         this.addPropertyUI = addPropertyUI;
         this.mainUI = mainUI;
     }
@@ -48,7 +48,7 @@ public class AddPropertyBtnHandler {
      * and copies the image to project resources
      *
      */
-    public void verifyProcessInput() throws IncompleteInputException {
+    public void verifyProcessInput() throws IncompleteInputException, InvalidInpuException {
         //get details and insert into DB from model
 
         //if any input field is empty throw exception
@@ -62,7 +62,7 @@ public class AddPropertyBtnHandler {
         try {
             this.streetNumber = Integer.parseInt(this.addPropertyUI.getStreetNumberInput());
         } catch (NumberFormatException e) {
-            //            throw new InvalidInpuException("Error", "Invalid Input", "Enter a number (without decimal) in Street number field");
+            throw new InvalidInpuException("Error", "Invalid Input", "Enter a number (without decimal) in the Street number field");
         }
 
 
@@ -91,14 +91,14 @@ public class AddPropertyBtnHandler {
 
             this.imageFile = this.addPropertyUI.getSelectedFile();
             from = Paths.get(this.imageFile.toURI());
-            to = Paths.get("resources/images/" + streetNumber + this.addPropertyUI.getStreetNameInput() + ".png");
-            this.imagePath = to.toString();
-
+            to = Paths.get("src/view/images/" + streetNumber + this.addPropertyUI.getStreetNameInput() + ".jpg");
+            this.imagePath = to.toString().substring(9);
+            System.out.println(imagePath);
             try {
                 Files.copy(from, to);
             } catch (IOException e) {
                 e.printStackTrace();
-//                throw new InvalidInpuException("Error", "Image not found", "THe file attached was not found please attach another");
+                throw new InvalidInpuException("Error", "Image not found", "The file attached was not found please attach another");
             }
 
         } else {

@@ -9,7 +9,7 @@ public class InvalidInpuException extends Exception {
     private String title;
     private String header;
 
-    public InvalidInpuException(String message, String title, String header) {
+    public InvalidInpuException(String title, String header, String message) {
         super(message);
         this.title = title;
         this.header = header;

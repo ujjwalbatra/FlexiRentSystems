@@ -11,9 +11,17 @@ import utility.DateTime;
 import utility.exception.InvalidInputException;
 import utility.exception.InvalidOperationException;
 
-import java.sql.*;
-
 public abstract class RentalProperty {
+    private int propertyID;
+
+    public int getPropertyID() {
+        return propertyID;
+    }
+
+    public void setPropertyID(int propertyID) {
+        this.propertyID = propertyID;
+    }
+
     private int streetNumber;
     private String streetName;
     private String suburb;

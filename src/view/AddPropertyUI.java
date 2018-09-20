@@ -79,7 +79,7 @@ public class AddPropertyUI {
         this.numberOfBedrooms = new Label("Number Of Bedrooms : ");
         this.propertyType = new Label("Property Type : ");
         this.description = new Label("Description : ");
-        this.image = new Label("Upload image(png) : ");
+        this.image = new Label("Upload image(jpg) : ");
         this.lastMaintenanceDate = new Label("Last Maintenance Date : ");
 
         this.groupPropertyType = new ToggleGroup();
@@ -144,7 +144,7 @@ public class AddPropertyUI {
         imageInput.setOnAction(event -> {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Select image resource");
-            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files (*.png)", "*.png"));
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files (*.jpg)", "*.jpg"));
             selectedFile = fileChooser.showOpenDialog(new Stage());
         });
 

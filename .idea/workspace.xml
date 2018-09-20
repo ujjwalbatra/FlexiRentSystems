@@ -3,6 +3,14 @@
   <component name="ChangeListManager">
     <list default="true" id="0952388f-f5fb-4cfe-96c8-64452ed31645" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controller/AddPropertyBtnHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/AddPropertyBtnHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controller/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controller/PropertyDataRequestHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/DataRequestHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/PropertyFinder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/PropertyFinder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/RentalProperty.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/RentalProperty.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utility/exception/InvalidInpuException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utility/exception/InvalidInpuException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/view/AddPropertyUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/AddPropertyUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/view/MainUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/MainUI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/view/ViewProperty.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/ViewProperty.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -54,7 +62,7 @@
         <counts>
           <entry key="css" value="1320" />
           <entry key="dummy" value="36" />
-          <entry key="java" value="28561" />
+          <entry key="java" value="29752" />
           <entry key="sql" value="309" />
           <entry key="txt" value="49" />
         </counts>
@@ -62,9 +70,9 @@
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="CSS" value="1320" />
-          <entry key="JAVA" value="28543" />
+          <entry key="JAVA" value="29733" />
           <entry key="PLAIN_TEXT" value="85" />
-          <entry key="SQL" value="327" />
+          <entry key="SQL" value="328" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -72,7 +80,7 @@
           <entry key="RENTALPROPERTY" value="6" />
           <entry key="RENTALRECORD" value="1" />
           <entry key="css" value="7" />
-          <entry key="java" value="131" />
+          <entry key="java" value="145" />
           <entry key="log" value="2" />
           <entry key="properties" value="1" />
           <entry key="script" value="2" />
@@ -83,7 +91,7 @@
         <counts>
           <entry key="CSS" value="7" />
           <entry key="Database Element" value="7" />
-          <entry key="JAVA" value="131" />
+          <entry key="JAVA" value="145" />
           <entry key="PLAIN_TEXT" value="4" />
           <entry key="Properties" value="1" />
           <entry key="Scratch" value="4" />
@@ -98,13 +106,12 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/model/PropertyFinder.java">
+        <entry file="file://$PROJECT_DIR$/src/view/ViewProperty.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="355">
-              <caret line="216" column="22" selection-start-line="216" selection-start-column="22" selection-end-line="216" selection-end-column="22" />
+            <state relative-caret-position="-517">
+              <caret line="70" column="114" selection-start-line="70" selection-start-column="114" selection-end-line="70" selection-end-column="114" />
               <folding>
-                <element signature="e#5444#5445#0" expanded="true" />
-                <element signature="e#5517#5518#0" expanded="true" />
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -114,20 +121,7 @@
         <entry file="file://$PROJECT_DIR$/src/controller/FlexiRentSystem.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="211">
-              <caret line="97" column="25" selection-start-line="97" selection-start-column="25" selection-end-line="97" selection-end-column="25" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/utility/DateTime.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="259">
-              <caret line="32" selection-start-line="32" selection-end-line="32" />
-              <folding>
-                <element signature="e#673#674#0" expanded="true" />
-                <element signature="e#714#715#0" expanded="true" />
-              </folding>
+              <caret line="152" column="16" selection-start-line="152" selection-start-column="16" selection-end-line="152" selection-end-column="16" />
             </state>
           </provider>
         </entry>
@@ -135,13 +129,9 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/view/AddPropertyUI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-302">
-              <caret line="238" column="108" selection-start-line="238" selection-start-column="108" selection-end-line="238" selection-end-column="108" />
+            <state relative-caret-position="212">
+              <caret line="81" column="48" selection-start-line="81" selection-start-column="48" selection-end-line="81" selection-end-column="48" />
               <folding>
-                <element signature="class#3640:4331" />
-                <element signature="method#toString#0;class#3640:4331" />
-                <element signature="method#fromString#0;class#3640:4331" />
-                <element signature="e#4511#4831#0" />
                 <element signature="method#closeProcedure#0;class#AddPropertyUI#0" />
                 <element signature="method#getSelectedPropertyType#0;class#AddPropertyUI#0" />
                 <element signature="method#getSelectedNumberOfBed#0;class#AddPropertyUI#0" />
@@ -151,55 +141,121 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/model/RentalRecord.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-186">
+              <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/controller/AddPropertyBtnHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="446">
-              <caret line="134" column="65" selection-start-line="134" selection-start-column="65" selection-end-line="134" selection-end-column="65" />
+            <state relative-caret-position="161">
+              <caret line="94" column="54" selection-start-line="94" selection-start-column="54" selection-end-line="94" selection-end-column="54" />
               <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="method#AddPropertyBtnHandler#0;class#AddPropertyBtnHandler#0" />
+                <element signature="e#1262#1305#0" />
+                <element signature="method#wrapProperty#0;class#AddPropertyBtnHandler#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/controller/PropertyDataRequestHandler.java">
+        <entry file="file://$PROJECT_DIR$/src/model/RentalProperty.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="23" selection-start-line="23" selection-end-line="23" />
+            <state relative-caret-position="211">
+              <caret line="241" column="18" selection-start-line="241" selection-start-column="18" selection-end-line="241" selection-end-column="18" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#274#275#0" expanded="true" />
-                <element signature="e#310#311#0" expanded="true" />
+                <element signature="e#311#312#0" expanded="true" />
+                <element signature="e#344#345#0" expanded="true" />
+                <element signature="e#393#394#0" expanded="true" />
+                <element signature="e#437#438#0" expanded="true" />
+                <element signature="e#7155#7156#0" expanded="true" />
+                <element signature="e#7203#7204#0" expanded="true" />
+                <element signature="e#7255#7256#0" expanded="true" />
+                <element signature="e#7299#7300#0" expanded="true" />
+                <element signature="e#7343#7344#0" expanded="true" />
+                <element signature="e#7379#7380#0" expanded="true" />
+                <element signature="e#7440#7441#0" expanded="true" />
+                <element signature="e#7496#7497#0" expanded="true" />
+                <element signature="e#7560#7561#0" expanded="true" />
+                <element signature="e#7608#7609#0" expanded="true" />
+                <element signature="e#7667#7668#0" expanded="true" />
+                <element signature="e#7721#7722#0" expanded="true" />
+                <element signature="e#7775#7776#0" expanded="true" />
+                <element signature="e#7821#7822#0" expanded="true" />
+                <element signature="e#7871#7872#0" expanded="true" />
+                <element signature="e#7913#7914#0" expanded="true" />
+                <element signature="e#7951#7952#0" expanded="true" />
+                <element signature="e#7985#7986#0" expanded="true" />
+                <element signature="e#8021#8022#0" expanded="true" />
+                <element signature="e#8053#8054#0" expanded="true" />
+                <element signature="e#8089#8090#0" expanded="true" />
+                <element signature="e#8124#8125#0" expanded="true" />
+                <element signature="e#8161#8162#0" expanded="true" />
+                <element signature="e#8194#8195#0" expanded="true" />
+                <element signature="e#8227#8228#0" expanded="true" />
+                <element signature="e#8256#8257#0" expanded="true" />
+                <element signature="e#8296#8297#0" expanded="true" />
+                <element signature="e#8335#8336#0" expanded="true" />
+                <element signature="e#8374#8375#0" expanded="true" />
+                <element signature="e#8409#8410#0" expanded="true" />
+                <element signature="e#8465#8466#0" expanded="true" />
+                <element signature="e#8513#8514#0" expanded="true" />
+                <element signature="e#8560#8561#0" expanded="true" />
+                <element signature="e#8595#8596#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/model/PremiumSuit.java">
+        <entry file="file://$PROJECT_DIR$/src/controller/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="26" selection-start-line="26" selection-end-line="26" />
+            <state relative-caret-position="425">
+              <caret line="30" selection-start-line="30" selection-end-line="30" />
               <folding>
-                <element signature="method#PremiumSuit#0;class#PremiumSuit#0" />
-                <element signature="method#calculateLateFee#0;class#PremiumSuit#0" />
-                <element signature="method#checkRentingCondition#0;class#PremiumSuit#0" />
-                <element signature="method#completeMaintenance#0;class#PremiumSuit#0" />
-                <element signature="method#toString#0;class#PremiumSuit#0" />
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/view/ViewProperty.java">
+        <entry file="file://$PROJECT_DIR$/src/view/MainUI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="430">
-              <caret line="144" column="19" selection-start-line="144" selection-start-column="19" selection-end-line="144" selection-end-column="19" />
+            <state relative-caret-position="245">
+              <caret line="281" column="69" selection-start-line="281" selection-start-column="69" selection-end-line="281" selection-end-column="69" />
+              <folding>
+                <element signature="e#9613#9676#0" />
+                <element signature="e#9977#10115#0" />
+                <element signature="e#10163#10301#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/controller/DataRequestHandler.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="21" lean-forward="true" selection-start-column="21" selection-end-column="21" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/model/PropertyFinder.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="174">
+              <caret line="22" selection-start-line="22" selection-end-line="22" />
             </state>
           </provider>
         </entry>
@@ -217,12 +273,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>Flexirent\s</find>
-      <find>Flexirent\b</find>
-      <find>toupp</find>
-      <find>reformat</find>
-      <find>imagein</find>
-      <find>line</find>
       <find>inset</find>
       <find>stage</find>
       <find>back</find>
@@ -242,8 +292,17 @@
       <find>throw new inval</find>
       <find>image</find>
       <find>addproper</find>
-      <find>allproperties</find>
       <find>displa</find>
+      <find>allproperties</find>
+      <find>rentalproperty</find>
+      <find>invalid op</find>
+      <find>new invaL</find>
+      <find>catch</find>
+      <find>IncompleteInputException</find>
+      <find>ima</find>
+      <find>imagepa</find>
+      <find>filechoo</find>
+      <find>png</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -275,17 +334,18 @@
         <option value="$PROJECT_DIR$/src/model/PremiumSuit.java" />
         <option value="$PROJECT_DIR$/src/model/Apartment.java" />
         <option value="$PROJECT_DIR$/src/utility/DateTime.java" />
-        <option value="$PROJECT_DIR$/src/controller/Main.java" />
-        <option value="$PROJECT_DIR$/src/utility/exception/InvalidInpuException.java" />
         <option value="$PROJECT_DIR$/src/utility/exception/IncompleteInputException.java" />
-        <option value="$PROJECT_DIR$/src/model/RentalProperty.java" />
         <option value="$PROJECT_DIR$/src/controller/PropertyDataRequestHandler.java" />
-        <option value="$PROJECT_DIR$/src/controller/AddPropertyBtnHandler.java" />
-        <option value="$PROJECT_DIR$/src/view/AddPropertyUI.java" />
         <option value="$PROJECT_DIR$/src/view/TestClass.java" />
+        <option value="$PROJECT_DIR$/src/model/RentalProperty.java" />
         <option value="$PROJECT_DIR$/src/model/PropertyFinder.java" />
-        <option value="$PROJECT_DIR$/src/view/MainUI.java" />
         <option value="$PROJECT_DIR$/src/view/ViewProperty.java" />
+        <option value="$PROJECT_DIR$/src/controller/DataRequestHandler.java" />
+        <option value="$PROJECT_DIR$/src/utility/exception/InvalidInpuException.java" />
+        <option value="$PROJECT_DIR$/src/view/AddPropertyUI.java" />
+        <option value="$PROJECT_DIR$/src/controller/Main.java" />
+        <option value="$PROJECT_DIR$/src/controller/AddPropertyBtnHandler.java" />
+        <option value="$PROJECT_DIR$/src/view/MainUI.java" />
       </list>
     </option>
   </component>
@@ -390,7 +450,7 @@
     <property name="Repository.Attach.Sources" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1537412084457" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1537427588908" />
     <property name="database.console.LAST_STATE" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
@@ -479,7 +539,7 @@
       <workItem from="1537190847569" duration="765000" />
       <workItem from="1537230122938" duration="671000" />
       <workItem from="1537234764557" duration="13154000" />
-      <workItem from="1537255835627" duration="31093000" />
+      <workItem from="1537255835627" duration="37331000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <created>1536324868102</created>
@@ -492,7 +552,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="144824000" />
+    <option name="totallyTimeSpent" value="151062000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -516,7 +576,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32959184" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.30612245" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.30204082" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.41836736" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -584,9 +644,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="initial commit" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/723adb70-3a65-4985-b963-4c0fa0a16b6a/console.sql">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/../AddressBook/src/MainUI.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-962" />
@@ -803,16 +860,6 @@
     <entry file="file://$USER_HOME$/Downloads/AP_W8_Lecture/src/hsql_db/SelectQuery.java">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/controller/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="182">
-          <caret line="27" selection-start-line="27" selection-end-line="27" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/utility/exception/IncompleteInputException.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
@@ -826,27 +873,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/utility/exception/InvalidInpuException.java">
+    <entry file="file://$PROJECT_DIR$/src/view/TestClass.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="51" selection-start-line="7" selection-start-column="42" selection-end-line="7" selection-end-column="51" />
-          <folding>
-            <element signature="e#413#414#0" expanded="true" />
-            <element signature="e#441#442#0" expanded="true" />
-            <element signature="e#474#475#0" expanded="true" />
-            <element signature="e#503#504#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/utility/DateTime.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="259">
-          <caret line="32" selection-start-line="32" selection-end-line="32" />
-          <folding>
-            <element signature="e#673#674#0" expanded="true" />
-            <element signature="e#714#715#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="429">
+          <caret line="62" column="38" lean-forward="true" selection-start-line="62" selection-start-column="38" selection-end-line="62" selection-end-column="38" />
         </state>
       </provider>
     </entry>
@@ -864,89 +894,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/controller/AddPropertyBtnHandler.java">
+    <entry file="file://$PROJECT_DIR$/src/utility/DateTime.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="446">
-          <caret line="134" column="65" selection-start-line="134" selection-start-column="65" selection-end-line="134" selection-end-column="65" />
+        <state relative-caret-position="259">
+          <caret line="32" selection-start-line="32" selection-end-line="32" />
+          <folding>
+            <element signature="e#673#674#0" expanded="true" />
+            <element signature="e#714#715#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/view/ViewProperty.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-517">
+          <caret line="70" column="114" selection-start-line="70" selection-start-column="114" selection-end-line="70" selection-end-column="114" />
           <folding>
             <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/view/TestClass.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="429">
-          <caret line="62" column="38" lean-forward="true" selection-start-line="62" selection-start-column="38" selection-end-line="62" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/view/AddPropertyUI.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-302">
-          <caret line="238" column="108" selection-start-line="238" selection-start-column="108" selection-end-line="238" selection-end-column="108" />
-          <folding>
-            <element signature="class#3640:4331" />
-            <element signature="method#toString#0;class#3640:4331" />
-            <element signature="method#fromString#0;class#3640:4331" />
-            <element signature="e#4511#4831#0" />
-            <element signature="method#closeProcedure#0;class#AddPropertyUI#0" />
-            <element signature="method#getSelectedPropertyType#0;class#AddPropertyUI#0" />
-            <element signature="method#getSelectedNumberOfBed#0;class#AddPropertyUI#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/view/MainUI.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-625">
-          <caret line="265" selection-start-line="265" selection-end-line="265" />
-          <folding>
-            <element signature="class#8346:8957" />
-            <element signature="method#changed#0;class#8346:8957" />
-            <element signature="e#9028#9122#0" />
-            <element signature="e#9160#9254#0" />
-            <element signature="e#9266#9329#0" />
-            <element signature="e#9422#9545#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/controller/PropertyDataRequestHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="23" selection-start-line="23" selection-end-line="23" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#274#275#0" expanded="true" />
-            <element signature="e#310#311#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/model/PropertyFinder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="355">
-          <caret line="216" column="22" selection-start-line="216" selection-start-column="22" selection-end-line="216" selection-end-column="22" />
-          <folding>
-            <element signature="e#5444#5445#0" expanded="true" />
-            <element signature="e#5517#5518#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/model/RentalProperty.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-257">
-          <caret line="196" selection-start-line="196" selection-end-line="196" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#7391#7392#0" expanded="true" />
-            <element signature="e#7439#7440#0" expanded="true" />
-            <element signature="e#7702#7703#0" expanded="true" />
-            <element signature="e#7744#7745#0" expanded="true" />
-            <element signature="e#8058#8059#0" expanded="true" />
-            <element signature="e#8087#8088#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -954,16 +918,137 @@
     <entry file="file://$PROJECT_DIR$/src/controller/FlexiRentSystem.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="211">
-          <caret line="97" column="25" selection-start-line="97" selection-start-column="25" selection-end-line="97" selection-end-column="25" />
+          <caret line="152" column="16" selection-start-line="152" selection-start-column="16" selection-end-line="152" selection-end-column="16" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/view/ViewProperty.java">
+    <entry file="file://$PROJECT_DIR$/src/model/RentalRecord.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="430">
-          <caret line="144" column="19" selection-start-line="144" selection-start-column="19" selection-end-line="144" selection-end-column="19" />
+        <state relative-caret-position="-186">
+          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/utility/exception/InvalidInpuException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="32" selection-start-line="11" selection-start-column="32" selection-end-line="11" selection-end-column="32" />
+          <folding>
+            <element signature="e#413#414#0" expanded="true" />
+            <element signature="e#441#442#0" expanded="true" />
+            <element signature="e#474#475#0" expanded="true" />
+            <element signature="e#503#504#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/view/AddPropertyUI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="212">
+          <caret line="81" column="48" selection-start-line="81" selection-start-column="48" selection-end-line="81" selection-end-column="48" />
+          <folding>
+            <element signature="method#closeProcedure#0;class#AddPropertyUI#0" />
+            <element signature="method#getSelectedPropertyType#0;class#AddPropertyUI#0" />
+            <element signature="method#getSelectedNumberOfBed#0;class#AddPropertyUI#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/model/PropertyFinder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="174">
+          <caret line="22" selection-start-line="22" selection-end-line="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/controller/DataRequestHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="21" lean-forward="true" selection-start-column="21" selection-end-column="21" />
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/model/RentalProperty.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="211">
+          <caret line="241" column="18" selection-start-line="241" selection-start-column="18" selection-end-line="241" selection-end-column="18" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#311#312#0" expanded="true" />
+            <element signature="e#344#345#0" expanded="true" />
+            <element signature="e#393#394#0" expanded="true" />
+            <element signature="e#437#438#0" expanded="true" />
+            <element signature="e#7155#7156#0" expanded="true" />
+            <element signature="e#7203#7204#0" expanded="true" />
+            <element signature="e#7255#7256#0" expanded="true" />
+            <element signature="e#7299#7300#0" expanded="true" />
+            <element signature="e#7343#7344#0" expanded="true" />
+            <element signature="e#7379#7380#0" expanded="true" />
+            <element signature="e#7440#7441#0" expanded="true" />
+            <element signature="e#7496#7497#0" expanded="true" />
+            <element signature="e#7560#7561#0" expanded="true" />
+            <element signature="e#7608#7609#0" expanded="true" />
+            <element signature="e#7667#7668#0" expanded="true" />
+            <element signature="e#7721#7722#0" expanded="true" />
+            <element signature="e#7775#7776#0" expanded="true" />
+            <element signature="e#7821#7822#0" expanded="true" />
+            <element signature="e#7871#7872#0" expanded="true" />
+            <element signature="e#7913#7914#0" expanded="true" />
+            <element signature="e#7951#7952#0" expanded="true" />
+            <element signature="e#7985#7986#0" expanded="true" />
+            <element signature="e#8021#8022#0" expanded="true" />
+            <element signature="e#8053#8054#0" expanded="true" />
+            <element signature="e#8089#8090#0" expanded="true" />
+            <element signature="e#8124#8125#0" expanded="true" />
+            <element signature="e#8161#8162#0" expanded="true" />
+            <element signature="e#8194#8195#0" expanded="true" />
+            <element signature="e#8227#8228#0" expanded="true" />
+            <element signature="e#8256#8257#0" expanded="true" />
+            <element signature="e#8296#8297#0" expanded="true" />
+            <element signature="e#8335#8336#0" expanded="true" />
+            <element signature="e#8374#8375#0" expanded="true" />
+            <element signature="e#8409#8410#0" expanded="true" />
+            <element signature="e#8465#8466#0" expanded="true" />
+            <element signature="e#8513#8514#0" expanded="true" />
+            <element signature="e#8560#8561#0" expanded="true" />
+            <element signature="e#8595#8596#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/controller/AddPropertyBtnHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="161">
+          <caret line="94" column="54" selection-start-line="94" selection-start-column="54" selection-end-line="94" selection-end-column="54" />
+          <folding>
+            <element signature="method#AddPropertyBtnHandler#0;class#AddPropertyBtnHandler#0" />
+            <element signature="e#1262#1305#0" />
+            <element signature="method#wrapProperty#0;class#AddPropertyBtnHandler#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/controller/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="30" selection-start-line="30" selection-end-line="30" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/view/MainUI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="245">
+          <caret line="281" column="69" selection-start-line="281" selection-start-column="69" selection-end-line="281" selection-end-column="69" />
+          <folding>
+            <element signature="e#9613#9676#0" />
+            <element signature="e#9977#10115#0" />
+            <element signature="e#10163#10301#0" />
           </folding>
         </state>
       </provider>

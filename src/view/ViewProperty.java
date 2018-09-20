@@ -68,7 +68,7 @@ public class ViewProperty {
         Label streetName = new Label(String.format("%-50s%s", "Street name:", this.rentalProperty.getStreetName()));
         Label suburb = new Label(String.format("%-50s%s", "Suburb:", this.rentalProperty.getSuburb()));
         Label numberOfBedrooms = new Label(String.format("%-50s%s", "Number of Bedrooms:", this.rentalProperty.getNumberOfBedrooms()));
-        Label description = new Label(String.format("%-50s%s", "Description:", this.rentalProperty.getDescription()));
+        Label description = new Label(String.format("%-50s%s", "Description:", this.rentalProperty.getPropertyID()));
         Label lastMaintenanceDate;
 
 

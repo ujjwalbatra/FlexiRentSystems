@@ -7,7 +7,7 @@
 package view;
 
 import controller.ExitBtnHandler;
-import controller.PropertyDataRequestHandler;
+import controller.DataRequestHandler;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -56,7 +56,6 @@ public class MainUI {
     private TextField searchInput;
     private VBox allContent;
     private Scene scene;
-    private FlowPane allProperties;
     private FlowPane optionsPane;
     private FlowPane filterPropertyType;
     private FlowPane filterNumberOfBedRooms;
@@ -215,35 +214,29 @@ public class MainUI {
         this.borderPane.setCenter(this.allContent);
 
         //handle apartment checkbox event
-        this.apartmentFilter.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if (newValue == true) {
+        this.apartmentFilter.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
 
-                    oneBedroomFilter.setDisable(false);
-                    twoBedroomFilter.setDisable(false);
-                    threeBedroomFilter.setDisable(false);
-                } else {
-                    oneBedroomFilter.setDisable(true);
-                    twoBedroomFilter.setDisable(true);
-                    threeBedroomFilter.setDisable(true);
-                }
+                oneBedroomFilter.setDisable(false);
+                twoBedroomFilter.setDisable(false);
+                threeBedroomFilter.setDisable(false);
+            } else {
+
+                oneBedroomFilter.setDisable(true);
+                twoBedroomFilter.setDisable(true);
+                threeBedroomFilter.setDisable(true);
             }
         });
 
         this.deleteData.setOnAction(event -> {
-            PropertyDataRequestHandler propertyDataRequestHandler = new PropertyDataRequestHandler(this);
-            propertyDataRequestHandler.deleteDataRequest();
+            DataRequestHandler dataRequestHandler = new DataRequestHandler();
+            dataRequestHandler.deleteDataRequest(this);
         });
 
         //defining exit procedure
-        this.exitBtn.setOnAction(event -> {
-            ExitBtnHandler.getInstance().getConfirmDialogBoxMainUI(this);
-        });
+        this.exitBtn.setOnAction(event -> ExitBtnHandler.getInstance().getConfirmDialogBoxMainUI(this));
 
-        this.exitMenu.setOnAction(event -> {
-            ExitBtnHandler.getInstance().getConfirmDialogBoxMainUI(this);
-        });
+        this.exitMenu.setOnAction(event -> ExitBtnHandler.getInstance().getConfirmDialogBoxMainUI(this));
 
         //Not allowing user to close program from the red cross button.
         //And giving user choice b/w, to close or not.
@@ -286,16 +279,23 @@ public class MainUI {
         VBox propertyDetails = new VBox(4);
         VBox propertyWithLink = new VBox(30);
 
-        String imagePath = "/" + rentalProperty.getImagePath();
+        String imagePath =  rentalProperty.getImagePath();
 
         Image image = new Image(this.getClass().getResource("images/sampleHouse1.png").toString(), 200, 200, true, true);
         ImageView imageView = new ImageView(image);
 
-        Button view = new Button("View");
+        Button viewPropertyBtn = new Button("View");
 
-        view.setOnAction(event -> {
+        viewPropertyBtn.setOnAction(event -> {
             ViewProperty viewProperty = new ViewProperty(rentalProperty);
             viewProperty.generateViewPropertyUI();
+
+            //load view property pane with rental records in another thread
+            Runnable runnable = () -> {
+                DataRequestHandler dataRequestHandler = new DataRequestHandler();
+                dataRequestHandler.requestRentalRecords(rentalProperty.getPropertyID());
+            };
+            runnable.run();
         });
 
         Label type = new Label(rentalProperty.getPropertyType().toUpperCase());
@@ -314,7 +314,7 @@ public class MainUI {
         propertyDetails.getChildren().add(rentalRate);
 
 
-        propertyWithLink.getChildren().addAll(propertyDetails, view);
+        propertyWithLink.getChildren().addAll(propertyDetails, viewPropertyBtn);
 
         propertyContent.getChildren().addAll(imageView, propertyWithLink);
         propertyContent.setPrefWidth(380);
@@ -324,7 +324,7 @@ public class MainUI {
         propertyContent.setAlignment(Pos.CENTER);
         propertyWithLink.setAlignment(Pos.CENTER);
         propertyDetails.setAlignment(Pos.CENTER_LEFT);
-        view.setAlignment(Pos.CENTER);
+        viewPropertyBtn.setAlignment(Pos.CENTER);
 
         propertyContent.setPadding(new Insets(10, 10, 10, 10));
 
@@ -334,16 +334,16 @@ public class MainUI {
     public void populatePropertiesFlowPane(Map<Integer, RentalProperty> propertiesToShow) {
 
         //initialising a new pane every time there are changes in visible properties. to update it dynamically
-        this.allProperties = new FlowPane();
-        this.propertyScrollPane.setContent(this.allProperties);
+        FlowPane allProperties = new FlowPane();
+        this.propertyScrollPane.setContent(allProperties);
 
-        this.allProperties.prefWidthProperty().bind(Bindings.add(-5, this.propertyScrollPane.widthProperty()));
-        this.allProperties.prefHeightProperty().bind(Bindings.add(-5, this.propertyScrollPane.heightProperty()));
+        allProperties.prefWidthProperty().bind(Bindings.add(-5, this.propertyScrollPane.widthProperty()));
+        allProperties.prefHeightProperty().bind(Bindings.add(-5, this.propertyScrollPane.heightProperty()));
 
         //adding all received properties to flow pane
         if (propertiesToShow != null) {
             for (RentalProperty property : propertiesToShow.values()) {
-                this.allProperties.getChildren().add(generatePropertySummary(property));
+                allProperties.getChildren().add(generatePropertySummary(property));
             }
         }
 

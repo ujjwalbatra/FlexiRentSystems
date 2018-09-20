@@ -72,6 +72,8 @@ public class PropertyFinder {
                         resultSet.getString("suburb"), resultSet.getInt("numberOfBedrooms"),
                         resultSet.getString("description"), resultSet.getString("imagePath"));
 
+                rentalProperty.setPropertyID(resultSet.getInt("propertyID"));
+
                 this.propertiesFound.put(resultSet.getInt("propertyID"), rentalProperty);
             }
 
@@ -100,6 +102,8 @@ public class PropertyFinder {
                         resultSet.getString("suburb"), resultSet.getInt("numberOfBedrooms"),
                         resultSet.getString("description"), resultSet.getString("imagePath"));
 
+                rentalProperty.setPropertyID(resultSet.getInt("propertyID"));
+
                 this.propertiesFound.put(resultSet.getInt("propertyID"), rentalProperty);
             }
 
@@ -126,6 +130,8 @@ public class PropertyFinder {
                 rentalProperty = new Apartment(resultSet.getInt("streetNumber"), resultSet.getString("streetName"),
                         resultSet.getString("suburb"), resultSet.getInt("numberOfBedrooms"),
                         resultSet.getString("description"), resultSet.getString("imagePath"));
+
+                rentalProperty.setPropertyID(resultSet.getInt("propertyID"));
 
                 this.propertiesFound.put(resultSet.getInt("propertyID"), rentalProperty);
             }
@@ -154,6 +160,8 @@ public class PropertyFinder {
                         resultSet.getString("suburb"), new DateTime(resultSet.getDate("lastMaintenanceDate")),
                         resultSet.getString("description"), resultSet.getString("imagePath"));
 
+                rentalProperty.setPropertyID(resultSet.getInt("propertyID"));
+
                 this.propertiesFound.put(resultSet.getInt("propertyID"), rentalProperty);
             }
 
@@ -163,10 +171,10 @@ public class PropertyFinder {
     }
 
     /*
-    *
-    * Deleting all properties from database
-    *
-    */
+     *
+     * Deleting all properties from database
+     *
+     */
     public void deleteAllProperties() {
         try {
             PreparedStatement preparedStatement;
