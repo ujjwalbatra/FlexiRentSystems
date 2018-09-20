@@ -94,7 +94,6 @@ public class MainUI {
         this.searchBtn = new Button("Search");
         this.scene = new Scene(this.borderPane, 1200, 700);
         this.searchInput = new TextField();
-        this.allProperties = new FlowPane();
         this.allContent = new VBox();
         this.filterPropertyType = new FlowPane();
         this.filterNumberOfBedRooms = new FlowPane();
@@ -141,7 +140,7 @@ public class MainUI {
 
 
         //adding all menu items to menu and menu to menubar
-        this.fileMenu.getItems().addAll(this.importData, this.exportData,this.deleteData, this.exitMenu);
+        this.fileMenu.getItems().addAll(this.importData, this.exportData, this.deleteData, this.exitMenu);
         this.toolsMenu.getItems().addAll(this.addPropertyMenuBtn);
         this.menuBar.getMenus().addAll(this.fileMenu, this.toolsMenu);
 
@@ -166,10 +165,9 @@ public class MainUI {
         this.welcomePane.setSpacing(20);
 
         //setting up property scroll pane
-        this.propertyScrollPane.setContent(this.allProperties);
         this.propertyScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         this.propertyScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
-        this.propertyScrollPane.setPrefSize(115, 350);
+        this.propertyScrollPane.setPrefSize(115, 750);
 
         //setting up propertyStatusFilter pane
         this.propertyStatusFilter = FXCollections.observableArrayList(
@@ -256,12 +254,12 @@ public class MainUI {
 
         //config for add property button
         this.addPropertyBtn.setOnAction(event -> {
-            AddPropertyUI addPropertyUI = new AddPropertyUI();
+            AddPropertyUI addPropertyUI = new AddPropertyUI(this);
             addPropertyUI.generateAddpropertyUI();
         });
 
         this.addPropertyMenuBtn.setOnAction(event -> {
-            AddPropertyUI addPropertyUI = new AddPropertyUI();
+            AddPropertyUI addPropertyUI = new AddPropertyUI(this);
             addPropertyUI.generateAddpropertyUI();
         });
 
@@ -283,52 +281,66 @@ public class MainUI {
         this.stage.close();
     }
 
-    private HBox generatePropertySummary (RentalProperty rentalProperty) {
+    private HBox generatePropertySummary(RentalProperty rentalProperty) {
         HBox propertyContent = new HBox(10);
         VBox propertyDetails = new VBox(4);
         VBox propertyWithLink = new VBox(30);
 
         String imagePath = "/" + rentalProperty.getImagePath();
 
-        Image image = new Image(this.getClass().getResource("images/sampleHouse1.png").toString(), 300, 300, true, true);
+        Image image = new Image(this.getClass().getResource("images/sampleHouse1.png").toString(), 200, 200, true, true);
         ImageView imageView = new ImageView(image);
 
         Button view = new Button("View");
+
+        view.setOnAction(event -> {
+            ViewProperty viewProperty = new ViewProperty(rentalProperty);
+            viewProperty.generateViewPropertyUI();
+        });
 
         Label type = new Label(rentalProperty.getPropertyType().toUpperCase());
         Label streetNumber = new Label("Street Number : " + rentalProperty.getStreetNumber());
         Label streetName = new Label("Street Name : " + rentalProperty.getStreetName());
         Label suburb = new Label("Suburb : " + rentalProperty.getSuburb());
-        Label numberOfBedrooms = new Label("Number Of Bedrooms : " + rentalProperty.getNumberOfBedrooms() );
+        Label numberOfBedrooms;
+        Label rentalRate = new Label("Rental rate : $" + rentalProperty.getRentalRate());
 
-        propertyDetails.getChildren().addAll(type, streetNumber, streetName,suburb, numberOfBedrooms);
+        propertyDetails.getChildren().addAll(type, streetNumber, streetName, suburb);
 
         if (rentalProperty.getPropertyType().equals("apartment")) {
-            numberOfBedrooms = new Label("Street Number : " + rentalProperty.getStreetNumber());
+            numberOfBedrooms = new Label("Number of Bedrooms : " + rentalProperty.getNumberOfBedrooms());
             propertyDetails.getChildren().add(numberOfBedrooms);
         }
+        propertyDetails.getChildren().add(rentalRate);
+
 
         propertyWithLink.getChildren().addAll(propertyDetails, view);
 
         propertyContent.getChildren().addAll(imageView, propertyWithLink);
-        propertyContent.setPrefWidth(550);
+        propertyContent.setPrefWidth(380);
         propertyContent.setPrefHeight(200);
 
-        allProperties.prefWidthProperty().bind(Bindings.add(-5, propertyScrollPane.widthProperty()));
-        allProperties.prefHeightProperty().bind(Bindings.add(-5, propertyScrollPane.heightProperty()));
 
         propertyContent.setAlignment(Pos.CENTER);
         propertyWithLink.setAlignment(Pos.CENTER);
         propertyDetails.setAlignment(Pos.CENTER_LEFT);
         view.setAlignment(Pos.CENTER);
 
-        propertyContent.setPadding(new Insets(20,20,20,20));
+        propertyContent.setPadding(new Insets(10, 10, 10, 10));
 
         return propertyContent;
     }
 
     public void populatePropertiesFlowPane(Map<Integer, RentalProperty> propertiesToShow) {
 
+        //initialising a new pane every time there are changes in visible properties. to update it dynamically
+        this.allProperties = new FlowPane();
+        this.propertyScrollPane.setContent(this.allProperties);
+
+        this.allProperties.prefWidthProperty().bind(Bindings.add(-5, this.propertyScrollPane.widthProperty()));
+        this.allProperties.prefHeightProperty().bind(Bindings.add(-5, this.propertyScrollPane.heightProperty()));
+
+        //adding all received properties to flow pane
         if (propertiesToShow != null) {
             for (RentalProperty property : propertiesToShow.values()) {
                 this.allProperties.getChildren().add(generatePropertySummary(property));

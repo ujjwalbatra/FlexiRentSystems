@@ -18,6 +18,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import model.PremiumSuit;
+import model.RentalProperty;
 
 /*
  * this class is used to generate view property UI, when
@@ -32,8 +34,10 @@ public class ViewProperty {
     private VBox functionBtns;
     private HBox topHalfPage;
     private Button closeBtn;
+    private RentalProperty rentalProperty;
 
-    public ViewProperty() {
+    public ViewProperty(RentalProperty rentalProperty) {
+        this.rentalProperty = rentalProperty;
         this.stage = new Stage();
         this.completeUI = new VBox();
         this.functionBtns = new VBox();
@@ -55,17 +59,19 @@ public class ViewProperty {
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
         scrollPane.setPrefSize(700, 200);
 
-        Image image = new Image(this.getClass().getResource("view/images/sampleHouse1.png").toString(), 400, 400, true, true);
+        Image image = new Image(this.getClass().getResource("images/sampleHouse1.png").toString(), 350, 350, true, true);
         ImageView imageView = new ImageView(image);
 
-        Label streetNumber = new Label("Street Number : ");
-        Label streetName = new Label("Street Name : ");
-        Label suburb = new Label("Suburb : ");
-        Label numberOfBedrooms = new Label("Number Of Bedrooms : ");
-        Label propertyType = new Label("Property Type : ");
-        Label description = new Label("Description : ");
-        Label lastMaintenanceDate = new Label("Last Maintenance Date : ");
-        Label propertyStatus = new Label("Property Status : ");
+        Label streetNumber = new Label("Street Number : " + this.rentalProperty.getStreetNumber());
+        Label streetName = new Label("Street Name : " + this.rentalProperty.getStreetName());
+        Label suburb = new Label("Suburb : " + this.rentalProperty.getSuburb());
+        Label numberOfBedrooms = new Label("Number Of Bedrooms : " + this.rentalProperty.getNumberOfBedrooms());
+        Label propertyType = new Label("Property - " + this.rentalProperty.getPropertyType());
+        Label description = new Label("Description : " + this.rentalProperty.getDescription());
+        Label lastMaintenanceDate;
+
+
+        Label propertyStatus = new Label("Property Status : " + this.rentalProperty.getPropertyStatus());
 
         Label rentalrec1 = new Label("record : ");
         Label rentalrec2 = new Label("record : ");
@@ -97,7 +103,11 @@ public class ViewProperty {
         rentalPropertyDetails.add(propertyType, 0, 8, 2, 1);
         rentalPropertyDetails.add(description, 0, 9, 2, 2);
         rentalPropertyDetails.add(propertyStatus, 0, 11, 2, 1);
-        rentalPropertyDetails.add(lastMaintenanceDate, 0, 12, 2, 1);
+
+        if (this.rentalProperty instanceof PremiumSuit) {
+            lastMaintenanceDate = new Label("Last Maintenance Date : " + ((PremiumSuit) this.rentalProperty).getLastMaintenanceDate());
+            rentalPropertyDetails.add(lastMaintenanceDate, 0, 12, 2, 1);
+        }
 
         this.functionBtns.getChildren().addAll(rentBtn, returnPropertyBtn, performMaintenanceBtn, completeMaintenanceBtn);
         this.functionBtns.setSpacing(10);
@@ -106,6 +116,10 @@ public class ViewProperty {
         returnPropertyBtn.setMaxWidth(Double.MAX_VALUE);
         performMaintenanceBtn.setMaxWidth(Double.MAX_VALUE);
         completeMaintenanceBtn.setMaxWidth(Double.MAX_VALUE);
+
+        this.closeBtn.setOnAction(event -> {
+            this.stage.close();
+        });
 
         this.topHalfPage.getChildren().addAll(imageView,this.functionBtns);
         this.topHalfPage.setSpacing(50);

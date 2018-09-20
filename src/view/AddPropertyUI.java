@@ -7,6 +7,7 @@ package view;/*
 
 
 import controller.AddPropertyBtnHandler;
+import controller.Main;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -55,13 +56,16 @@ public class AddPropertyUI {
     private ToggleButton oneBed;
     private ToggleButton twoBed;
     private ToggleButton threeBed;
+    private MainUI mainUI;
 
     private Button addPropertyBtn;
 
     private File selectedFile;
 
 
-    public AddPropertyUI() {
+    public AddPropertyUI(MainUI mainUI) {
+        this.mainUI = mainUI;
+
         this.dialog = new Dialog();
         this.streetNumberInput = new TextField();
         this.streetNameInput = new TextField();
@@ -232,7 +236,7 @@ public class AddPropertyUI {
                 ActionEvent.ACTION,
                 event -> {
                     try {
-                        AddPropertyBtnHandler addPropertyBtnHandler = new AddPropertyBtnHandler(this);
+                        AddPropertyBtnHandler addPropertyBtnHandler = new AddPropertyBtnHandler(this, mainUI);
                         addPropertyBtnHandler.verifyProcessInput();
                         closeProcedure();
                         close();

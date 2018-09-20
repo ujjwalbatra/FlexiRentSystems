@@ -16,7 +16,6 @@ public class PropertyFinder {
 
     private MainUI mainUI;
     private Map<Integer, RentalProperty> propertiesFound;
-    private RentalProperty rentalProperty;
     private static Connection connection;
 
     static {
@@ -60,6 +59,8 @@ public class PropertyFinder {
      */
     private void getAllOneBedRoomApartments() {
         try {
+            RentalProperty rentalProperty;
+
             PreparedStatement preparedStatement;
 
             preparedStatement = connection.prepareStatement("SELECT * FROM RentalProperty WHERE propertyType = 'apartment' AND numberOfBedrooms = 1;");
@@ -67,11 +68,11 @@ public class PropertyFinder {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                this.rentalProperty = new Apartment(resultSet.getInt("streetNumber"), resultSet.getString("streetName"),
+                rentalProperty = new Apartment(resultSet.getInt("streetNumber"), resultSet.getString("streetName"),
                         resultSet.getString("suburb"), resultSet.getInt("numberOfBedrooms"),
                         resultSet.getString("description"), resultSet.getString("imagePath"));
 
-                this.propertiesFound.put(resultSet.getInt("propertyID"), this.rentalProperty);
+                this.propertiesFound.put(resultSet.getInt("propertyID"), rentalProperty);
             }
 
         } catch (SQLException e) {
@@ -86,6 +87,8 @@ public class PropertyFinder {
      */
     private void getAllTwoBedRoomApartments() {
         try {
+            RentalProperty rentalProperty;
+
             PreparedStatement preparedStatement;
 
             preparedStatement = connection.prepareStatement("SELECT * FROM RentalProperty WHERE propertyType = 'apartment' AND numberOfBedrooms = 2;");
@@ -93,11 +96,11 @@ public class PropertyFinder {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                this.rentalProperty = new Apartment(resultSet.getInt("streetNumber"), resultSet.getString("streetName"),
+                rentalProperty = new Apartment(resultSet.getInt("streetNumber"), resultSet.getString("streetName"),
                         resultSet.getString("suburb"), resultSet.getInt("numberOfBedrooms"),
                         resultSet.getString("description"), resultSet.getString("imagePath"));
 
-                this.propertiesFound.put(resultSet.getInt("propertyID"), this.rentalProperty);
+                this.propertiesFound.put(resultSet.getInt("propertyID"), rentalProperty);
             }
 
         } catch (SQLException e) {
@@ -112,6 +115,7 @@ public class PropertyFinder {
      */
     private void getAllThreeBedRoomApartments() {
         try {
+            RentalProperty rentalProperty;
             PreparedStatement preparedStatement;
 
             preparedStatement = connection.prepareStatement("SELECT * FROM RentalProperty WHERE propertyType = 'apartment' AND numberOfBedrooms = 3;");
@@ -119,11 +123,11 @@ public class PropertyFinder {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                this.rentalProperty = new Apartment(resultSet.getInt("streetNumber"), resultSet.getString("streetName"),
+                rentalProperty = new Apartment(resultSet.getInt("streetNumber"), resultSet.getString("streetName"),
                         resultSet.getString("suburb"), resultSet.getInt("numberOfBedrooms"),
                         resultSet.getString("description"), resultSet.getString("imagePath"));
 
-                this.propertiesFound.put(resultSet.getInt("propertyID"), this.rentalProperty);
+                this.propertiesFound.put(resultSet.getInt("propertyID"), rentalProperty);
             }
 
         } catch (SQLException e) {
@@ -138,6 +142,7 @@ public class PropertyFinder {
      */
     private void getAllPremiumSuits() {
         try {
+            RentalProperty rentalProperty;
             PreparedStatement preparedStatement;
 
             preparedStatement = connection.prepareStatement("SELECT * FROM RentalProperty WHERE propertyType = 'premium suit';");
@@ -145,11 +150,11 @@ public class PropertyFinder {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                this.rentalProperty = new PremiumSuit(resultSet.getInt("streetNumber"), resultSet.getString("streetName"),
+                rentalProperty = new PremiumSuit(resultSet.getInt("streetNumber"), resultSet.getString("streetName"),
                         resultSet.getString("suburb"), new DateTime(resultSet.getDate("lastMaintenanceDate")),
                         resultSet.getString("description"), resultSet.getString("imagePath"));
 
-                this.propertiesFound.put(resultSet.getInt("propertyID"), this.rentalProperty);
+                this.propertiesFound.put(resultSet.getInt("propertyID"), rentalProperty);
             }
 
         } catch (SQLException e) {
@@ -181,6 +186,41 @@ public class PropertyFinder {
         }
 
 
+    }
+
+    public void addPropertyToDB(RentalProperty rentalProperty) {
+        try (Connection connection = DriverManager.getConnection("jdbc:hsqldb:file:database/localhost", "SA", "")) {
+
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO RentalProperty " +
+                    "(streetNumber, streetName, suburb, propertyType, numberOfBedrooms, rentalRate, propertyStatus, lastMaintenanceDate, description, imagePath )" +
+                    " VALUES (?,?,?,?,?,?,?,?,?,?);");
+
+            preparedStatement.setInt(1, rentalProperty.getStreetNumber());
+            preparedStatement.setString(2, rentalProperty.getStreetName());
+            preparedStatement.setString(3, rentalProperty.getSuburb());
+            preparedStatement.setString(4, rentalProperty.getPropertyType());
+            preparedStatement.setInt(5, rentalProperty.getNumberOfBedrooms());
+            preparedStatement.setDouble(6, rentalProperty.getRentalRate());
+            preparedStatement.setString(7, rentalProperty.getPropertyStatus());
+
+            if (rentalProperty.getPropertyType().equals("premium suit"))
+                preparedStatement.setDate(8, ((PremiumSuit) rentalProperty).getLastMaintenanceDate().toSqlDate());
+            else if (rentalProperty.getPropertyType().equals("apartment"))
+                preparedStatement.setNull(8, Types.DATE);
+
+            preparedStatement.setString(9, rentalProperty.getDescription());
+            preparedStatement.setString(10, rentalProperty.getImagePath());
+
+
+            preparedStatement.executeUpdate();
+            System.out.println(preparedStatement);
+            System.err.println("RentalPropterty inserted into the table");
+
+            getAllProperties();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 

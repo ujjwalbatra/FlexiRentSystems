@@ -25,21 +25,6 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         MainUI mainUI = new MainUI();
 
-        try (
-                Connection connection = DriverManager.getConnection("jdbc:hsqldb:file:database/localhost", "SA", "");
-                Statement statement = connection.createStatement()
-        ) {
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM RentalProperty WHERE propertyType = 'apartment';");
-
-            while (resultSet.next()) {
-                System.out.println(resultSet.getInt("propertyID"));
-                System.out.println(resultSet.getString("propertyType"));
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
         //populating the main page in another thread
         Runnable runnable = new Runnable() {
             @Override

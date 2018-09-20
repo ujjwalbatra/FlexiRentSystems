@@ -195,39 +195,6 @@ public abstract class RentalProperty {
         }
     }
 
-    public void addPropertyToDB() {
-        try (Connection connection = DriverManager.getConnection("jdbc:hsqldb:file:database/localhost", "SA", "")) {
-
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO RentalProperty " +
-                    "(streetNumber, streetName, suburb, propertyType, numberOfBedrooms, rentalRate, propertyStatus, lastMaintenanceDate, description, imagePath )" +
-                    " VALUES (?,?,?,?,?,?,?,?,?,?);");
-
-            preparedStatement.setInt(1, this.getStreetNumber());
-            preparedStatement.setString(2, this.getStreetName());
-            preparedStatement.setString(3, this.getSuburb());
-            preparedStatement.setString(4, this.getPropertyType());
-            preparedStatement.setInt(5, this.getNumberOfBedrooms());
-            preparedStatement.setDouble(6, this.getRentalRate());
-            preparedStatement.setString(7, this.getPropertyStatus());
-
-            if (this.propertyType.equals("premium suit"))
-                preparedStatement.setDate(8, ((PremiumSuit) this).getLastMaintenanceDate().toSqlDate());
-            else if (this.propertyType.equals("apartment"))
-                preparedStatement.setNull(8, Types.DATE);
-
-            preparedStatement.setString(9, this.getDescription());
-            preparedStatement.setString(10, this.getImagePath());
-
-
-            preparedStatement.executeUpdate();
-            System.out.println("RentalPropterty inserted into the table");
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-
     public void setStreetNumber(int streetNumber) {
         this.streetNumber = streetNumber;
     }

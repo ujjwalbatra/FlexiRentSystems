@@ -6,6 +6,7 @@ package controller;/*
  */
 
 import model.PropertyFinder;
+import model.RentalProperty;
 import view.MainUI;
 
 public class PropertyDataRequestHandler {
@@ -19,4 +20,6 @@ public class PropertyDataRequestHandler {
         PropertyFinder propertyFinder = new PropertyFinder(this.mainUI);
         propertyFinder.deleteAllProperties();
     }
+
+
 }

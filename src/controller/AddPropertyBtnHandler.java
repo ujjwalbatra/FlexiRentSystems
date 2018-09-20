@@ -10,11 +10,13 @@ package controller;
 
 import model.Apartment;
 import model.PremiumSuit;
+import model.PropertyFinder;
 import model.RentalProperty;
 import utility.DateTime;
 import utility.exception.IncompleteInputException;
 import utility.exception.InvalidInpuException;
 import view.AddPropertyUI;
+import view.MainUI;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,6 +27,7 @@ import java.nio.file.Paths;
 
 public class AddPropertyBtnHandler {
 
+    private MainUI mainUI;
     private AddPropertyUI addPropertyUI;
     private RentalProperty rentalProperty;
     private int streetNumber;
@@ -34,8 +37,9 @@ public class AddPropertyBtnHandler {
     private static int propertyIdentifier = 0;
 
 
-    public AddPropertyBtnHandler(AddPropertyUI addPropertyUI) throws InvalidInpuException, IncompleteInputException {
+    public AddPropertyBtnHandler(AddPropertyUI addPropertyUI, MainUI mainUI) throws InvalidInpuException, IncompleteInputException {
         this.addPropertyUI = addPropertyUI;
+        this.mainUI = mainUI;
     }
 
     /*
@@ -94,7 +98,7 @@ public class AddPropertyBtnHandler {
                 Files.copy(from, to);
             } catch (IOException e) {
                 e.printStackTrace();
-                //                throw new InvalidInpuException("Error","Image not found","THe file attached was not found please attach another");
+//                throw new InvalidInpuException("Error", "Image not found", "THe file attached was not found please attach another");
             }
 
         } else {
@@ -127,7 +131,9 @@ public class AddPropertyBtnHandler {
             this.rentalProperty = new PremiumSuit(this.streetNumber, this.addPropertyUI.getStreetNameInput().trim(), this.addPropertyUI.getSuburbInput().trim(), new DateTime(day, month, year), this.addPropertyUI.getDescriptionInput().trim(), this.imagePath.trim());
 
         }
-        this.rentalProperty.addPropertyToDB();
+
+        PropertyFinder propertyFinder = new PropertyFinder(mainUI);
+        propertyFinder.addPropertyToDB(this.rentalProperty);
     }
 
 }
