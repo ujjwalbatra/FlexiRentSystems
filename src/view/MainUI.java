@@ -6,11 +6,9 @@
  */
 package view;
 
-import controller.ExitBtnHandler;
 import controller.DataRequestHandler;
+import controller.ExitBtnHandler;
 import javafx.beans.binding.Bindings;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -279,10 +277,19 @@ public class MainUI {
         VBox propertyDetails = new VBox(4);
         VBox propertyWithLink = new VBox(30);
 
-        String imagePath =  rentalProperty.getImagePath();
+        String imagePath = rentalProperty.getImagePath();
 
-        Image image = new Image(this.getClass().getResource(imagePath).toString(), 200, 200, true, true);
-        ImageView imageView = new ImageView(image);
+        Image image;
+        ImageView imageView;
+
+        try {
+            image = new Image(this.getClass().getResource(imagePath).toString(), 200, 200, true, true);
+            imageView = new ImageView(image);
+        } catch (NullPointerException e) {
+            image = new Image(this.getClass().getResource("images/sample.jpg").toString(), 200, 200, true, true);
+            imageView = new ImageView(image);
+        }
+
 
         Button viewPropertyBtn = new Button("View");
 

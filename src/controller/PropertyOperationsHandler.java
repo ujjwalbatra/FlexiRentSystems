@@ -25,17 +25,16 @@ public class PropertyOperationsHandler {
 
     public void verifyRentPropertyInput() throws IncompleteInputException {
 
-        if (this.propertyOperationsUI.getEstimatedReturnDateInput().getEditor().getText().equals(""))
+        if (this.propertyOperationsUI.getEstimatedReturnDateInput().getEditor().getText().trim().equals(""))
             throw new IncompleteInputException("Error", "Incomplete Date Input", "Please fill all input fields");
 
-        if (this.propertyOperationsUI.getRentDateInput().getEditor().getText().equals(""))
+        if (this.propertyOperationsUI.getRentDateInput().getEditor().getText().trim().equals(""))
             throw new IncompleteInputException("Error", "Incomplete Date Input", "Please fill all input fields");
 
-        if (this.propertyOperationsUI.getCustIDinput().getText().equals(""))
+        if (this.propertyOperationsUI.getCustIDinput().getText().trim().equals(""))
             throw new IncompleteInputException("Error", "Incomplete Date Input", "Please set customer ID");
 
 
-        Runnable runnable = () -> {
             RentalRecordManager rentalRecordManager = new RentalRecordManager(propertyOperationsUI);
             try {
                 rentalRecordManager.rentProperty();
@@ -46,8 +45,6 @@ public class PropertyOperationsHandler {
                 AlertBox alertBox = new AlertBox();
                 alertBox.generateWarningAlertBox(e.getTitle(), e.getHeader(), e.getMessage());
             }
-        };
-        runnable.run();
 
     }
 

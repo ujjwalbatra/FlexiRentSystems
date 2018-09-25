@@ -94,8 +94,6 @@ public class AddPropertyUI {
     public void generateAddpropertyUI() {
 
 
-        String dateFormat = "yyyy-MM-dd";
-
         this.dialog.setTitle("Add Property");
         this.dialog.setHeaderText("Add new property");
 
@@ -112,29 +110,6 @@ public class AddPropertyUI {
         form.setHgap(10);
         form.setVgap(10);
         form.setPadding(new Insets(20, 20, 20, 20));
-
-        this.lastMaintenanceDateInput.setConverter(new StringConverter<LocalDate>() {
-
-            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(dateFormat);
-
-            @Override
-            public String toString(LocalDate date) {
-                if (date != null) {
-                    return dateTimeFormatter.format(date);
-                } else {
-                    return "";
-                }
-            }
-
-            @Override
-            public LocalDate fromString(String string) {
-                if (string != null && !string.isEmpty()) {
-                    return LocalDate.parse(string, dateTimeFormatter);
-                } else {
-                    return null;
-                }
-            }
-        });
 
         //getting image input
         Button imageInput = new Button("Upload Image");
@@ -187,6 +162,31 @@ public class AddPropertyUI {
         lastMaintenanceDateInput.opacityProperty().set(0);
         numberOfBedrooms.opacityProperty().set(0);
         numberOfBedroomInput.opacityProperty().set(0);
+
+        String dateFormat = "dd/MM/yyyy";
+
+        this.lastMaintenanceDateInput.setConverter(new StringConverter<LocalDate>() {
+
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(dateFormat);
+
+            @Override
+            public String toString(LocalDate date) {
+                if (date != null) {
+                    return dateTimeFormatter.format(date);
+                } else {
+                    return "";
+                }
+            }
+
+            @Override
+            public LocalDate fromString(String string) {
+                if (string != null && !string.isEmpty()) {
+                    return LocalDate.parse(string, dateTimeFormatter);
+                } else {
+                    return null;
+                }
+            }
+        });
 
         //listener for toggle button
         groupPropertyType.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {

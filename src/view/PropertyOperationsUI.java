@@ -65,7 +65,7 @@ public class PropertyOperationsUI {
         gridPane.add(custIDinput, 1, 2);
         gridPane.setPadding(new Insets(10, 10, 10, 10));
 
-        String dateFormat = "yyyy-MM-dd";
+        String dateFormat = "dd-MM-yyyy";
 
         rentDateInput.setConverter(new StringConverter<LocalDate>() {
 

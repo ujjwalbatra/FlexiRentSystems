@@ -16,10 +16,10 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class RentalRecordManager {
-    PropertyOperationsUI propertyOperationsUI;
-    DateTime rentDate;
-    DateTime estimatedReturnDate;
-    int numberOfDays;
+    private PropertyOperationsUI propertyOperationsUI;
+    private DateTime rentDate;
+    private DateTime estimatedReturnDate;
+    private int numberOfDays;
 
     public RentalRecordManager(PropertyOperationsUI propertyOperationsUI) {
         this.propertyOperationsUI = propertyOperationsUI;
@@ -30,17 +30,10 @@ public class RentalRecordManager {
     }
 
     public void rentProperty() throws InvaliOperationException, InvalidInpuException {
-        int year = Integer.parseInt(this.propertyOperationsUI.getEstimatedReturnDateInput().getEditor().getText().substring(0, 4));
-        int month = Integer.parseInt(this.propertyOperationsUI.getEstimatedReturnDateInput().getEditor().getText().substring(5, 7));
-        int day = Integer.parseInt(this.propertyOperationsUI.getEstimatedReturnDateInput().getEditor().getText().substring(8, 10));
 
-        DateTime estimatedReturnDate = new DateTime(day, month, year);
+        DateTime estimatedReturnDate = new DateTime(this.propertyOperationsUI.getEstimatedReturnDateInput().getEditor().getText());
 
-        year = Integer.parseInt(this.propertyOperationsUI.getRentDateInput().getEditor().getText().substring(0, 4));
-        month = Integer.parseInt(this.propertyOperationsUI.getRentDateInput().getEditor().getText().substring(5, 7));
-        day = Integer.parseInt(this.propertyOperationsUI.getRentDateInput().getEditor().getText().substring(8, 10));
-
-        rentDate = new DateTime(day, month, year);
+        rentDate = new DateTime(this.propertyOperationsUI.getRentDateInput().getEditor().getText());
 
         numberOfDays = DateTime.diffDays(estimatedReturnDate, rentDate);
 
@@ -109,44 +102,42 @@ public class RentalRecordManager {
     }
 
     private void addRecordToDB(RentalRecord rentalRecord) {
-        Runnable runnable = () -> {
-            try (Connection connection = DriverManager.getConnection("jdbc:hsqldb:file:database/localhost", "SA", "")) {
 
-                PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO RentalRecord " +
-                        "(properTyID, rentDate, estimatedReturnDate, actualReturnDate, rentalFee, lateFee, , custID)" +
-                        " VALUES (?,?,?,?,?,?,?);");
+        try (Connection connection = DriverManager.getConnection("jdbc:hsqldb:file:database/localhost", "SA", "")) {
 
-                preparedStatement.setInt(1, this.propertyOperationsUI.getRentalProperty().getPropertyID());
-                preparedStatement.setDate(2, rentalRecord.getRentDate().toSqlDate());
-                preparedStatement.setDate(3, rentalRecord.getEstimatedReturnDate().toSqlDate());
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO RentalRecord " +
+                    "(properTyID, rentDate, estimatedReturnDate, actualReturnDate, rentalFee, lateFee, custID)" +
+                    " VALUES (?,?,?,?,?,?,?);");
 
-                if (this.propertyOperationsUI.getRentalProperty().getPropertyStatus().equals("available")) {
+            preparedStatement.setInt(1, this.propertyOperationsUI.getRentalProperty().getPropertyID());
+            preparedStatement.setString(2, rentalRecord.getRentDate().toString());
+            preparedStatement.setString(3, rentalRecord.getEstimatedReturnDate().toString());
 
-                    preparedStatement.setNull(4, Types.NULL);
-                    preparedStatement.setNull(5, Types.NULL);
-                    preparedStatement.setNull(6, Types.NULL);
+            if (this.propertyOperationsUI.getRentalProperty().getPropertyStatus().equals("available")) {
 
-                } else if (this.propertyOperationsUI.getRentalProperty().getPropertyStatus().equals("rented")) {
+                preparedStatement.setNull(4, Types.NULL);
+                preparedStatement.setNull(5, Types.NULL);
+                preparedStatement.setNull(6, Types.NULL);
 
-                    preparedStatement.setDate(4, rentalRecord.getActualReturnDate().toSqlDate());
-                    preparedStatement.setDouble(5, rentalRecord.getRentalFee());
-                    preparedStatement.setDouble(6, rentalRecord.getLateFee());
+            } else if (this.propertyOperationsUI.getRentalProperty().getPropertyStatus().equals("rented")) {
 
-                }
-                preparedStatement.setString(7, rentalRecord.getCustID());
+                preparedStatement.setString(4, rentalRecord.getActualReturnDate().toString());
+                preparedStatement.setDouble(5, rentalRecord.getRentalFee());
+                preparedStatement.setDouble(6, rentalRecord.getLateFee());
 
-                preparedStatement.executeUpdate();
-
-                System.out.println(preparedStatement);
-                System.err.println("RentalRecord inserted into the table");
-
-
-            } catch (SQLException e) {
-                e.printStackTrace();
             }
+            preparedStatement.setString(7, rentalRecord.getCustID());
 
-        };
-        runnable.run();
+            preparedStatement.executeUpdate();
+
+            System.out.println(preparedStatement);
+            System.err.println("RentalRecord inserted into the table");
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private void updateView() {

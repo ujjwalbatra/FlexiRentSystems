@@ -127,10 +127,7 @@ public class AddPropertyBtnHandler {
 
         } else if (this.addPropertyUI.getSelectedPropertyType().equals("premium suit")) {
 
-            int year = Integer.parseInt(this.addPropertyUI.getLastMaintenanceDateInput().substring(0, 4));
-            int month = Integer.parseInt(this.addPropertyUI.getLastMaintenanceDateInput().substring(5, 7));
-            int day = Integer.parseInt(this.addPropertyUI.getLastMaintenanceDateInput().substring(8, 10));
-            this.rentalProperty = new PremiumSuit(this.streetNumber, this.addPropertyUI.getStreetNameInput().trim(), this.addPropertyUI.getSuburbInput().trim(), new DateTime(day, month, year), this.addPropertyUI.getDescriptionInput().trim(), this.imagePath.trim());
+            this.rentalProperty = new PremiumSuit(this.streetNumber, this.addPropertyUI.getStreetNameInput().trim(), this.addPropertyUI.getSuburbInput().trim(), new DateTime(this.addPropertyUI.getLastMaintenanceDateInput()), this.addPropertyUI.getDescriptionInput().trim(), this.imagePath.trim());
 
         }
 

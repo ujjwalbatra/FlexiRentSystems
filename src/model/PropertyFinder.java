@@ -157,7 +157,7 @@ public class PropertyFinder {
 
             while (resultSet.next()) {
                 rentalProperty = new PremiumSuit(resultSet.getInt("streetNumber"), resultSet.getString("streetName"),
-                        resultSet.getString("suburb"), new DateTime(resultSet.getDate("lastMaintenanceDate")),
+                        resultSet.getString("suburb"), new DateTime(resultSet.getString("lastMaintenanceDate")),
                         resultSet.getString("description"), resultSet.getString("imagePath"));
 
                 rentalProperty.setPropertyID(resultSet.getInt("propertyID"));
@@ -213,12 +213,12 @@ public class PropertyFinder {
 
             if (rentalProperty.getPropertyType().equals("premium suit")) {
                 //todo : handle this date problem
-                System.out.println(((PremiumSuit) rentalProperty).getLastMaintenanceDate().toSqlDate().toString());
-                preparedStatement.setDate(8, ((PremiumSuit) rentalProperty).getLastMaintenanceDate().toSqlDate());
+                System.out.println(((PremiumSuit) rentalProperty).getLastMaintenanceDate().toString());
+                preparedStatement.setString(8, ((PremiumSuit) rentalProperty).getLastMaintenanceDate().toString());
 
             }
             else if (rentalProperty.getPropertyType().equals("apartment"))
-                preparedStatement.setNull(8, Types.DATE);
+                preparedStatement.setNull(8, Types.NULL);
 
 
             preparedStatement.setString(9, rentalProperty.getDescription());

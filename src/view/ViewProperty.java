@@ -75,8 +75,15 @@ public class ViewProperty {
 
         String imagePath = rentalProperty.getImagePath();
 
-        Image image = new Image(this.getClass().getResource(imagePath).toString(), 350, 350, true, true);
-        ImageView imageView = new ImageView(image);
+        ImageView imageView;
+        Image image;
+        try {
+            image = new Image(this.getClass().getResource(imagePath).toString(), 350, 350, true, true);
+            imageView = new ImageView(image);
+        } catch (NullPointerException e) {
+            image = new Image(this.getClass().getResource("images/sample.jpg").toString(), 200, 200, true, true);
+            imageView = new ImageView(image);
+        }
 
         Label streetNumber = new Label(String.format("%s : %s", "Street Number", this.rentalProperty.getStreetNumber()));
         Label streetName = new Label(String.format("%s : %s", "Street name", this.rentalProperty.getStreetName()));

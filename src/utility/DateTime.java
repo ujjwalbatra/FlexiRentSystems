@@ -1,5 +1,7 @@
 package utility;
 
+import utility.exception.IncompleteInputException;
+
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -27,9 +29,8 @@ public class DateTime {
         setDate(day, month, year);
     }
 
-    public DateTime(Date date) {
-        this(Integer.parseInt(date.toString().substring(8,10)),Integer.parseInt(date.toString().substring(5,7)),Integer.parseInt(date.toString().substring(0,4)));
-
+    public DateTime(String date) {
+        this(Integer.parseInt(date.substring(0,2)),Integer.parseInt(date.substring(3,5)), Integer.parseInt(date.substring(6,10)));
     }
 
 

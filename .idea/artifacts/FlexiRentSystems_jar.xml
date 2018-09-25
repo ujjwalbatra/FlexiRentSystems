@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="FlexiRentSystems:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/FlexiRentSystems_jar</output-path>
+    <root id="archive" name="FlexiRentSystems.jar">
+      <element id="module-output" name="FlexiRentSystems" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/hsqldb-2.4.1/hsqldb/lib/hsqldb.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
