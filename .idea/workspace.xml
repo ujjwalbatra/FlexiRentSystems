@@ -8,11 +8,7 @@
   <component name="ChangeListManager">
     <list default="true" id="0952388f-f5fb-4cfe-96c8-64452ed31645" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controller/DataRequestHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/DataRequestHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controller/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controller/RentalRecordsOperationsHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/RentalRecordsOperationsHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/model/RentalRecordManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/RentalRecordManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/view/PropertyOperationsUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/PropertyOperationsUI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/view/ViewProperty.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/ViewProperty.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -46,11 +42,11 @@
     <session id="-522107651">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="33" />
+          <entry key="project.closed" value="34" />
           <entry key="project.open.time.0" value="6" />
           <entry key="project.open.time.1" value="8" />
           <entry key="project.open.time.10" value="3" />
-          <entry key="project.open.time.11" value="3" />
+          <entry key="project.open.time.11" value="4" />
           <entry key="project.open.time.12" value="3" />
           <entry key="project.open.time.13" value="1" />
           <entry key="project.open.time.15" value="1" />
@@ -59,14 +55,14 @@
           <entry key="project.open.time.7" value="1" />
           <entry key="project.open.time.8" value="2" />
           <entry key="project.open.time.9" value="3" />
-          <entry key="project.opened" value="36" />
+          <entry key="project.opened" value="37" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="css" value="1320" />
           <entry key="dummy" value="40" />
-          <entry key="java" value="38251" />
+          <entry key="java" value="38340" />
           <entry key="script" value="1" />
           <entry key="sql" value="309" />
           <entry key="txt" value="49" />
@@ -75,7 +71,7 @@
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="CSS" value="1320" />
-          <entry key="JAVA" value="38226" />
+          <entry key="JAVA" value="38315" />
           <entry key="PLAIN_TEXT" value="90" />
           <entry key="SQL" value="334" />
         </counts>
@@ -112,11 +108,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/view/ViewProperty.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="249">
-              <caret line="160" column="33" selection-start-line="160" selection-start-column="33" selection-end-line="160" selection-end-column="33" />
+            <state relative-caret-position="229">
+              <caret line="77" column="70" selection-start-line="77" selection-start-column="70" selection-end-line="77" selection-end-column="70" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -124,11 +120,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/controller/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-967">
-              <caret line="32" lean-forward="true" selection-start-line="32" selection-end-line="32" />
+            <state relative-caret-position="323">
+              <caret line="32" selection-start-line="32" selection-end-line="32" />
             </state>
           </provider>
         </entry>
@@ -136,18 +132,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/view/PropertyOperationsUI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="173">
+            <state relative-caret-position="391">
               <caret line="37" selection-start-line="37" selection-end-line="37" />
               <folding>
                 <element signature="method#PropertyOperationsUI#0;class#PropertyOperationsUI#0" />
-                <element signature="e#965#966#0" expanded="true" />
-                <element signature="class#2019:2710" />
-                <element signature="method#toString#0;class#2019:2710" />
-                <element signature="method#fromString#0;class#2019:2710" />
-                <element signature="class#2769:3460" />
-                <element signature="method#toString#0;class#2769:3460" />
-                <element signature="method#fromString#0;class#2769:3460" />
-                <element signature="e#3905#4501#0" />
+                <element signature="e#996#997#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -156,8 +145,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/controller/RentalRecordsOperationsHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="419">
-              <caret line="42" selection-start-line="42" selection-end-line="42" />
+            <state relative-caret-position="306">
+              <caret line="30" selection-start-line="30" selection-end-line="30" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -168,12 +157,12 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/model/RentalRecordManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="505">
-              <caret line="136" selection-start-line="136" selection-end-line="136" />
+            <state relative-caret-position="2023">
+              <caret line="177" column="20" selection-start-line="177" selection-start-column="20" selection-end-line="177" selection-end-column="20" />
               <folding>
+                <element signature="method#RentalRecordManager#0;class#RentalRecordManager#0" />
+                <element signature="method#checkApartmentCondition#0;class#RentalRecordManager#0" />
                 <element signature="method#checkPremiumSuitCondtition#0;class#RentalRecordManager#0" />
-                <element signature="method#showAllRecords#0;class#RentalRecordManager#0" />
-                <element signature="e#0#47#0" />
               </folding>
             </state>
           </provider>
@@ -182,7 +171,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/model/RentalRecord.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="241">
+            <state relative-caret-position="374">
               <caret line="29" selection-start-line="29" selection-end-line="29" />
               <folding>
                 <element signature="method#getDetails#0;class#RentalRecord#0" />
@@ -288,11 +277,11 @@
         <option value="$PROJECT_DIR$/src/view/MainUI.java" />
         <option value="$PROJECT_DIR$/src/controller/RentalRecordsOperationsHandler.java" />
         <option value="$PROJECT_DIR$/src/controller/DataRequestHandler.java" />
-        <option value="$PROJECT_DIR$/src/view/ViewProperty.java" />
         <option value="$PROJECT_DIR$/src/view/PropertyOperationsUI.java" />
         <option value="$PROJECT_DIR$/src/model/RentalProperty.java" />
         <option value="$PROJECT_DIR$/src/model/RentalRecordManager.java" />
         <option value="$PROJECT_DIR$/src/controller/Main.java" />
+        <option value="$PROJECT_DIR$/src/view/ViewProperty.java" />
       </list>
     </option>
   </component>
@@ -321,8 +310,6 @@
     </navigator>
     <panes>
       <pane id="Scope" />
-      <pane id="PackagesPane" />
-      <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -376,6 +363,8 @@
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
+      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -386,7 +375,7 @@
     <property name="SearchEverywhereHistoryKey" value="view&#9;FILE&#9;file:///Users/ujjwalbatra/projects/FlexiRentSystems/src/view/ViewProperty.java&#10;date&#9;FILE&#9;file:///Users/ujjwalbatra/projects/FlexiRentSystems/src/utility/DateTime.java&#10;pro&#9;FILE&#9;file:///Users/ujjwalbatra/projects/FlexiRentSystems/src/view/ViewProperty.java" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1538059301439" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1538060138880" />
     <property name="database.console.LAST_STATE" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
@@ -489,7 +478,8 @@
       <workItem from="1537934117304" duration="3460000" />
       <workItem from="1538018814524" duration="1645000" />
       <workItem from="1538024431241" duration="3043000" />
-      <workItem from="1538053948216" duration="3851000" />
+      <workItem from="1538053948216" duration="4775000" />
+      <workItem from="1538060500736" duration="257000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <created>1536324868102</created>
@@ -502,7 +492,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="208422000" />
+    <option name="totallyTimeSpent" value="209603000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -515,8 +505,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49828178" visible="true" weight="0.24236874" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49828178" visible="true" weight="0.24542125" />
       <window_info id="Structure" order="1" sideWeight="0.5017182" side_tool="true" weight="0.21733822" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -525,8 +516,8 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32959184" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.20204082" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.422449" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.26632652" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.02755102" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.23469388" />
@@ -537,7 +528,6 @@
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
       <window_info anchor="bottom" id="Database Console" order="12" weight="0.32959184" />
       <window_info anchor="bottom" id="SQL Generator" order="13" weight="0.5510204" />
-      <window_info anchor="right" x="0" y="0" width="370" height="850" id="Documentation" side_tool="true" weight="0.32967034" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -548,6 +538,7 @@
       <window_info anchor="right" id="Palette&#9;" order="7" />
       <window_info anchor="right" id="Maven Projects" order="8" weight="0.32967034" />
       <window_info anchor="right" id="Coverage" order="9" side_tool="true" weight="0.32967034" />
+      <window_info anchor="right" x="0" y="0" width="370" height="850" id="Documentation" order="10" side_tool="true" weight="0.32967034" />
     </layout>
     <layout-to-restore>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49828178" visible="true" weight="0.1910867" />
@@ -604,7 +595,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/model/RentalRecordManager.java</url>
-          <line>112</line>
+          <line>114</line>
           <properties />
           <option name="timeStamp" value="26" />
         </line-breakpoint>
@@ -943,45 +934,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/controller/DataRequestHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="23" column="91" selection-start-line="23" selection-start-column="91" selection-end-line="23" selection-end-column="91" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/view/ViewProperty.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="249">
-          <caret line="160" column="33" selection-start-line="160" selection-start-column="33" selection-end-line="160" selection-end-column="33" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/model/RentalProperty.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
           <caret line="31" column="40" lean-forward="true" selection-start-line="31" selection-start-column="40" selection-end-line="31" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/view/PropertyOperationsUI.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="173">
-          <caret line="37" selection-start-line="37" selection-end-line="37" />
-          <folding>
-            <element signature="method#PropertyOperationsUI#0;class#PropertyOperationsUI#0" />
-            <element signature="e#965#966#0" expanded="true" />
-            <element signature="class#2019:2710" />
-            <element signature="method#toString#0;class#2019:2710" />
-            <element signature="method#fromString#0;class#2019:2710" />
-            <element signature="class#2769:3460" />
-            <element signature="method#toString#0;class#2769:3460" />
-            <element signature="method#fromString#0;class#2769:3460" />
-            <element signature="e#3905#4501#0" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -992,20 +948,38 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/model/RentalRecord.java">
+    <entry file="file://$PROJECT_DIR$/src/view/ViewProperty.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="241">
-          <caret line="29" selection-start-line="29" selection-end-line="29" />
+        <state relative-caret-position="229">
+          <caret line="77" column="70" selection-start-line="77" selection-start-column="70" selection-end-line="77" selection-end-column="70" />
           <folding>
-            <element signature="method#getDetails#0;class#RentalRecord#0" />
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/controller/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="32" selection-start-line="32" selection-end-line="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/view/PropertyOperationsUI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="37" selection-start-line="37" selection-end-line="37" />
+          <folding>
+            <element signature="method#PropertyOperationsUI#0;class#PropertyOperationsUI#0" />
+            <element signature="e#996#997#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/controller/RentalRecordsOperationsHandler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="419">
-          <caret line="42" selection-start-line="42" selection-end-line="42" />
+        <state relative-caret-position="306">
+          <caret line="30" selection-start-line="30" selection-end-line="30" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1014,20 +988,30 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/model/RentalRecordManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="505">
-          <caret line="136" selection-start-line="136" selection-end-line="136" />
+        <state relative-caret-position="2023">
+          <caret line="177" column="20" selection-start-line="177" selection-start-column="20" selection-end-line="177" selection-end-column="20" />
           <folding>
+            <element signature="method#RentalRecordManager#0;class#RentalRecordManager#0" />
+            <element signature="method#checkApartmentCondition#0;class#RentalRecordManager#0" />
             <element signature="method#checkPremiumSuitCondtition#0;class#RentalRecordManager#0" />
-            <element signature="method#showAllRecords#0;class#RentalRecordManager#0" />
-            <element signature="e#0#47#0" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/controller/Main.java">
+    <entry file="file://$PROJECT_DIR$/src/model/RentalRecord.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-967">
-          <caret line="32" lean-forward="true" selection-start-line="32" selection-end-line="32" />
+        <state relative-caret-position="374">
+          <caret line="29" selection-start-line="29" selection-end-line="29" />
+          <folding>
+            <element signature="method#getDetails#0;class#RentalRecord#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/controller/DataRequestHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="23" column="91" selection-start-line="23" selection-start-column="91" selection-end-line="23" selection-end-column="91" />
         </state>
       </provider>
     </entry>

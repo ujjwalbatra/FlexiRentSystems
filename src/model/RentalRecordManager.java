@@ -52,6 +52,8 @@ public class RentalRecordManager {
         RentalRecord rentalRecord = this.wrapRecord();
 
         this.addRecordToDB(rentalRecord);
+
+        this.updateView();
     }
 
     private RentalRecord wrapRecord() {
@@ -148,7 +150,7 @@ public class RentalRecordManager {
 
     private void updateView() {
         //todo : update table
-        viewProperty = null;
+        viewProperty.updateView(null);
     }
 
     /*
@@ -173,7 +175,7 @@ public class RentalRecordManager {
                 rentalRecord = new RentalRecord(resultSet.getString("custID"),new DateTime(resultSet.getString("rentDate")), new DateTime(resultSet.getString("estimatedReturnDate")));
 
                 //if the record has actual return date, then add all fee
-                if (!resultSet.getString("actualReturnDate").equals(null)) {
+                if (resultSet.getString("actualReturnDate") != null) {
                     rentalRecord.setActualReturnDate(new DateTime(resultSet.getString("actualReturnDate")));
                     rentalRecord.setRentalFee(resultSet.getDouble("rentalFee"));
                     rentalRecord.setLateFee(resultSet.getDouble("lateFee"));

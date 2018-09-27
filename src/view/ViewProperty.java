@@ -65,6 +65,7 @@ public class ViewProperty {
         this.custID = new TableColumn("Customer ID");
         this.scrollPane = new ScrollPane();
         this.rentalPropertyDetails = new GridPane();
+        this.propertyTypeAndStatus = new Label();
     }
 
     public void generateViewPropertyUI() {
@@ -74,6 +75,7 @@ public class ViewProperty {
         this.stage.setTitle("Property Viewer");
 
         this.scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+        this.scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         this.scrollPane.setPrefSize(700, 200);
 
         updateView(null);
@@ -83,7 +85,7 @@ public class ViewProperty {
         ImageView imageView;
         Image image;
         try {
-            image = new Image(this.getClass().getResource(imagePath).toString(), 600, 600, true, true);
+            image = new Image(this.getClass().getResource(imagePath).toString(), 500, 500, true, true);
             imageView = new ImageView(image);
         } catch (NullPointerException e) {
             image = new Image(this.getClass().getResource("images/sample.jpg").toString(), 200, 200, true, true);
@@ -185,7 +187,8 @@ public class ViewProperty {
 
     public void updateView(ResultSet resultSet){
 
-        Label propertyTypeAndStatus = new Label(this.rentalProperty.getPropertyType().toUpperCase() + " - " + this.rentalProperty.getPropertyStatus().toUpperCase());
+        propertyTypeAndStatus.setText("");
+        propertyTypeAndStatus = new Label(this.rentalProperty.getPropertyType().toUpperCase() + " - " + this.rentalProperty.getPropertyStatus().toUpperCase());
         rentalPropertyDetails.add(propertyTypeAndStatus, 0, 4, 4, 1);
 
 
@@ -194,7 +197,7 @@ public class ViewProperty {
         //making rental record table
         this.rentalRecords.getColumns().addAll(rentDate, estimatedReturnDate, actualReturnDate, rentalFee, lateFee, custID);
         this.rentalRecords.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        rentalRecords.prefWidthProperty().bind(Bindings.add(-5, scrollPane.widthProperty()));
+        rentalRecords.prefWidthProperty().bind(Bindings.add(-15, scrollPane.widthProperty()));
         scrollPane.setContent(rentalRecords);
 
         if (resultSet != null){
