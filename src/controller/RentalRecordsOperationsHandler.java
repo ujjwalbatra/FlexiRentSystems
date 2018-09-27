@@ -14,16 +14,19 @@ import utility.exception.InvaliOperationException;
 import utility.exception.InvalidInpuException;
 import view.AlertBox;
 import view.PropertyOperationsUI;
+import view.ViewProperty;
 
 
 public class RentalRecordsOperationsHandler {
     private PropertyOperationsUI propertyOperationsUI;
+    private ViewProperty viewProperty;
 
-    public RentalRecordsOperationsHandler(PropertyOperationsUI propertyOperationsUI) {
+    public RentalRecordsOperationsHandler(ViewProperty viewProperty, PropertyOperationsUI propertyOperationsUI) {
         this.propertyOperationsUI = propertyOperationsUI;
+        this.viewProperty = viewProperty;
     }
 
-    public void verifyRentPropertyInput() throws IncompleteInputException {
+    public void verifyAndProcessRentPropertyInput() throws IncompleteInputException {
 
         if (this.propertyOperationsUI.getEstimatedReturnDateInput().getEditor().getText().trim().equals(""))
             throw new IncompleteInputException("Error", "Incomplete Date Input", "Please fill all input fields");
@@ -35,7 +38,7 @@ public class RentalRecordsOperationsHandler {
             throw new IncompleteInputException("Error", "Incomplete Date Input", "Please set customer ID");
 
 
-            RentalRecordManager rentalRecordManager = new RentalRecordManager(propertyOperationsUI);
+            RentalRecordManager rentalRecordManager = new RentalRecordManager(viewProperty, propertyOperationsUI);
             try {
                 rentalRecordManager.rentProperty();
             } catch (InvaliOperationException e) {

@@ -46,6 +46,8 @@ public class ViewProperty {
     private TableColumn lateFee;
     private TableColumn custID;
     private ScrollPane scrollPane;
+    private Label propertyTypeAndStatus;
+    private GridPane rentalPropertyDetails;
 
 
     public ViewProperty(RentalProperty rentalProperty) {
@@ -62,6 +64,7 @@ public class ViewProperty {
         this.lateFee = new TableColumn("Late Fee");
         this.custID = new TableColumn("Customer ID");
         this.scrollPane = new ScrollPane();
+        this.rentalPropertyDetails = new GridPane();
     }
 
     public void generateViewPropertyUI() {
@@ -70,10 +73,8 @@ public class ViewProperty {
         this.stage.initModality(Modality.APPLICATION_MODAL);
         this.stage.setTitle("Property Viewer");
 
-        GridPane rentalPropertyDetails = new GridPane();
-
-        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
-        scrollPane.setPrefSize(700, 200);
+        this.scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+        this.scrollPane.setPrefSize(700, 200);
 
         updateView(null);
 
@@ -97,14 +98,12 @@ public class ViewProperty {
         Label description = new Label(String.format("%s : %s", "Description", this.rentalProperty.getDescription()));
         Label lastMaintenanceDate;
 
-        Label propertyTypeAndStatus = new Label(this.rentalProperty.getPropertyType().toUpperCase() + " - " + this.rentalProperty.getPropertyStatus().toUpperCase());
 
         Button rentBtn = new Button("Rent Property");
         Button returnPropertyBtn = new Button("Return Property");
         Button performMaintenanceBtn = new Button("Perform Maintenance");
         Button completeMaintenanceBtn = new Button("Complete Maintenance");
 
-        rentalPropertyDetails.add(propertyTypeAndStatus, 0, 4, 4, 1);
         rentalPropertyDetails.add(propertyID, 0, 5, 4, 1);
         rentalPropertyDetails.add(streetNumber, 0, 6, 4, 1);
         rentalPropertyDetails.add(streetName, 0, 7, 4, 1);
@@ -158,8 +157,8 @@ public class ViewProperty {
         }
 
         rentBtn.setOnAction(event -> {
-            PropertyOperationsUI propertyOperationsUI = new PropertyOperationsUI(this.rentalProperty);
-            propertyOperationsUI.rentPropertyUI();
+            PropertyOperationsUI propertyOperationsUI = new PropertyOperationsUI(this);
+            propertyOperationsUI.rentPropertyUI(this.rentalProperty);
         });
 
         this.topHalfPage.getChildren().addAll(imageView, this.functionBtns);
@@ -185,6 +184,10 @@ public class ViewProperty {
     }
 
     public void updateView(ResultSet resultSet){
+
+        Label propertyTypeAndStatus = new Label(this.rentalProperty.getPropertyType().toUpperCase() + " - " + this.rentalProperty.getPropertyStatus().toUpperCase());
+        rentalPropertyDetails.add(propertyTypeAndStatus, 0, 4, 4, 1);
+
 
         this.rentalRecords = new TableView();
 

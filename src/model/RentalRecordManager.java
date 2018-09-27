@@ -27,25 +27,17 @@ public class RentalRecordManager {
     private Map<String, RentalRecord> recordsFound;
 
 
-    public RentalRecordManager(PropertyOperationsUI propertyOperationsUI) {
+    public RentalRecordManager(ViewProperty viewProperty, PropertyOperationsUI propertyOperationsUI) {
         this.propertyOperationsUI = propertyOperationsUI;
-    }
-
-    public RentalRecordManager(ViewProperty viewProperty) {
         this.viewProperty = viewProperty;
         this.recordsFound = new HashMap<>();
     }
 
-
-    public void returnProperty() {
-        //todo : return property every condition
-    }
-
     public void rentProperty() throws InvaliOperationException, InvalidInpuException {
 
-        DateTime estimatedReturnDate = new DateTime(this.propertyOperationsUI.getEstimatedReturnDateInput().getEditor().getText());
 
         rentDate = new DateTime(this.propertyOperationsUI.getRentDateInput().getEditor().getText());
+        estimatedReturnDate = new DateTime(this.propertyOperationsUI.getEstimatedReturnDateInput().getEditor().getText());
 
         numberOfDays = DateTime.diffDays(estimatedReturnDate, rentDate);
 
@@ -54,6 +46,7 @@ public class RentalRecordManager {
         } else if (this.propertyOperationsUI.getRentalProperty().getPropertyType().equals("premium suit")) {
             checkPremiumSuitCondtition();
         }
+
         this.propertyOperationsUI.getRentalProperty().setPropertyStatus("rented");
 
         RentalRecord rentalRecord = this.wrapRecord();
@@ -127,16 +120,17 @@ public class RentalRecordManager {
 
             if (this.propertyOperationsUI.getRentalProperty().getPropertyStatus().equals("available")) {
 
-                preparedStatement.setNull(4, Types.NULL);
-                preparedStatement.setNull(5, Types.NULL);
-                preparedStatement.setNull(6, Types.NULL);
-
-            } else if (this.propertyOperationsUI.getRentalProperty().getPropertyStatus().equals("rented")) {
-
                 preparedStatement.setString(4, rentalRecord.getActualReturnDate().toString());
                 preparedStatement.setDouble(5, rentalRecord.getRentalFee());
                 preparedStatement.setDouble(6, rentalRecord.getLateFee());
 
+
+
+            } else if (this.propertyOperationsUI.getRentalProperty().getPropertyStatus().equals("rented")) {
+
+                preparedStatement.setNull(4, Types.NULL);
+                preparedStatement.setNull(5, Types.NULL);
+                preparedStatement.setNull(6, Types.NULL);
             }
             preparedStatement.setString(7, rentalRecord.getCustID());
 
@@ -154,7 +148,7 @@ public class RentalRecordManager {
 
     private void updateView() {
         //todo : update table
-
+        viewProperty = null;
     }
 
     /*

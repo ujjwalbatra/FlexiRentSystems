@@ -21,7 +21,7 @@ public class DataRequestHandler {
     }
 
     public void requestAllRentalRecords(ViewProperty viewProperty, String propertyID) {
-        RentalRecordManager rentalRecordManager = new RentalRecordManager(viewProperty);
+        RentalRecordManager rentalRecordManager = new RentalRecordManager(viewProperty,null);
         rentalRecordManager.showAllRecords(propertyID);
     }
 

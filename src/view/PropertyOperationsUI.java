@@ -23,13 +23,14 @@ public class PropertyOperationsUI {
     private Dialog<RentalRecord> dialog;
     private DatePicker estimatedReturnDateInput;
     private DatePicker rentDateInput;
-    private RentalProperty rentalProperty;
     private TextField custIDinput;
+    private ViewProperty viewProperty;
+    private RentalProperty rentalProperty;
 
 
-    public PropertyOperationsUI(RentalProperty rentalProperty) {
+    public PropertyOperationsUI(ViewProperty viewProperty) {
         this.dialog = new Dialog();
-        this.rentalProperty = rentalProperty;
+        this.viewProperty = viewProperty;
     }
 
 
@@ -37,7 +38,9 @@ public class PropertyOperationsUI {
         return custIDinput;
     }
 
-    public void rentPropertyUI() {
+    public void rentPropertyUI(RentalProperty rentalProperty) {
+
+        this.rentalProperty = rentalProperty;
 
         this.dialog.setTitle("Rent Property");
 
@@ -45,12 +48,12 @@ public class PropertyOperationsUI {
         Label rentDate = new Label("Rent Date : ");
         Label estimatedReturnDate = new Label("Estimated Return Date :");
         Label custID = new Label("Enter customer ID :");
-        rentDateInput = new DatePicker();
-        estimatedReturnDateInput = new DatePicker();
-        custIDinput = new TextField();
+        this.rentDateInput = new DatePicker();
+        this.estimatedReturnDateInput = new DatePicker();
+        this.custIDinput = new TextField();
 
-        estimatedReturnDateInput.setEditable(false);
-        rentDateInput.setEditable(false);
+        this.estimatedReturnDateInput.setEditable(false);
+        this.rentDateInput.setEditable(false);
 
         GridPane gridPane = new GridPane();
 
@@ -58,16 +61,16 @@ public class PropertyOperationsUI {
         gridPane.setVgap(10);
 
         gridPane.add(rentDate, 0, 0);
-        gridPane.add(rentDateInput, 1, 0);
+        gridPane.add(this.rentDateInput, 1, 0);
         gridPane.add(estimatedReturnDate, 0, 1);
-        gridPane.add(estimatedReturnDateInput, 1, 1);
+        gridPane.add(this.estimatedReturnDateInput, 1, 1);
         gridPane.add(custID, 0, 2);
-        gridPane.add(custIDinput, 1, 2);
+        gridPane.add(this.custIDinput, 1, 2);
         gridPane.setPadding(new Insets(10, 10, 10, 10));
 
-        String dateFormat = "dd-MM-yyyy";
+        String dateFormat = "dd/MM/yyyy";
 
-        rentDateInput.setConverter(new StringConverter<LocalDate>() {
+        this.rentDateInput.setConverter(new StringConverter<LocalDate>() {
 
             DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(dateFormat);
 
@@ -90,7 +93,7 @@ public class PropertyOperationsUI {
             }
         });
 
-        estimatedReturnDateInput.setConverter(new StringConverter<LocalDate>() {
+        this.estimatedReturnDateInput.setConverter(new StringConverter<LocalDate>() {
 
             DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(dateFormat);
 
@@ -125,8 +128,8 @@ public class PropertyOperationsUI {
                 ActionEvent.ACTION,
                 event -> {
                     try {
-                        RentalRecordsOperationsHandler rentalRecordsOperationsHandler = new RentalRecordsOperationsHandler(this);
-                        rentalRecordsOperationsHandler.verifyRentPropertyInput();
+                        RentalRecordsOperationsHandler rentalRecordsOperationsHandler = new RentalRecordsOperationsHandler(this.viewProperty,this);
+                        rentalRecordsOperationsHandler.verifyAndProcessRentPropertyInput();
                         this.dialog.close();
                     } catch (IncompleteInputException e) {
                         event.consume();
