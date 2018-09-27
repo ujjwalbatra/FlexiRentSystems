@@ -85,6 +85,7 @@ public class ViewProperty {
             imageView = new ImageView(image);
         }
 
+        Label propertyID = new Label(String.format("%s : %s", "Property ID", this.rentalProperty.getPropertyID()));
         Label streetNumber = new Label(String.format("%s : %s", "Street Number", this.rentalProperty.getStreetNumber()));
         Label streetName = new Label(String.format("%s : %s", "Street name", this.rentalProperty.getStreetName()));
         Label suburb = new Label(String.format("%s : %s", "Suburb", this.rentalProperty.getSuburb()));
@@ -100,15 +101,16 @@ public class ViewProperty {
         Button completeMaintenanceBtn = new Button("Complete Maintenance");
 
         rentalPropertyDetails.add(propertyTypeAndStatus, 0, 4, 4, 1);
-        rentalPropertyDetails.add(streetNumber, 0, 5, 4, 1);
-        rentalPropertyDetails.add(streetName, 0, 6, 4, 1);
-        rentalPropertyDetails.add(suburb, 0, 7, 4, 1);
-        rentalPropertyDetails.add(numberOfBedrooms, 0, 8, 4, 1);
-        rentalPropertyDetails.add(description, 0, 10, 4, 3);
+        rentalPropertyDetails.add(propertyID, 0, 5, 4, 1);
+        rentalPropertyDetails.add(streetNumber, 0, 6, 4, 1);
+        rentalPropertyDetails.add(streetName, 0, 7, 4, 1);
+        rentalPropertyDetails.add(suburb, 0, 8, 4, 1);
+        rentalPropertyDetails.add(numberOfBedrooms, 0, 9, 4, 1);
+        rentalPropertyDetails.add(description, 0, 11, 4, 3);
 
         if (this.rentalProperty instanceof PremiumSuit) {
             lastMaintenanceDate = new Label(String.format("%s : %s", "Last Maintenance Date:", ((PremiumSuit) this.rentalProperty).getLastMaintenanceDate().toString()));
-            rentalPropertyDetails.add(lastMaintenanceDate, 0, 13, 4, 1);
+            rentalPropertyDetails.add(lastMaintenanceDate, 0, 14, 4, 1);
         }
 
         this.functionBtns.getChildren().addAll(rentBtn, returnPropertyBtn, performMaintenanceBtn, completeMaintenanceBtn);

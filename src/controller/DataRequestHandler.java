@@ -19,7 +19,7 @@ public class DataRequestHandler {
         propertyFinder.deleteAllProperties();
     }
 
-    public void requestRentalRecords(int propertyID) {
+    public void requestRentalRecords(String propertyID) {
 //todo : call property finder send all records to view property window and add a table view there
     }
 

@@ -15,7 +15,7 @@ import java.util.Map;
 public class PropertyFinder {
 
     private MainUI mainUI;
-    private Map<Integer, RentalProperty> propertiesFound;
+    private Map<String, RentalProperty> propertiesFound;
     private static Connection connection;
 
     static {
@@ -72,9 +72,9 @@ public class PropertyFinder {
                         resultSet.getString("suburb"), resultSet.getInt("numberOfBedrooms"),
                         resultSet.getString("description"), resultSet.getString("imagePath"));
 
-                rentalProperty.setPropertyID(resultSet.getInt("propertyID"));
+                rentalProperty.setPropertyID(resultSet.getString("propertyID"));
 
-                this.propertiesFound.put(resultSet.getInt("propertyID"), rentalProperty);
+                this.propertiesFound.put(resultSet.getString("propertyID"), rentalProperty);
             }
 
         } catch (SQLException e) {
@@ -102,9 +102,9 @@ public class PropertyFinder {
                         resultSet.getString("suburb"), resultSet.getInt("numberOfBedrooms"),
                         resultSet.getString("description"), resultSet.getString("imagePath"));
 
-                rentalProperty.setPropertyID(resultSet.getInt("propertyID"));
+                rentalProperty.setPropertyID(resultSet.getString("propertyID"));
 
-                this.propertiesFound.put(resultSet.getInt("propertyID"), rentalProperty);
+                this.propertiesFound.put(resultSet.getString("propertyID"), rentalProperty);
             }
 
         } catch (SQLException e) {
@@ -131,9 +131,9 @@ public class PropertyFinder {
                         resultSet.getString("suburb"), resultSet.getInt("numberOfBedrooms"),
                         resultSet.getString("description"), resultSet.getString("imagePath"));
 
-                rentalProperty.setPropertyID(resultSet.getInt("propertyID"));
+                rentalProperty.setPropertyID(resultSet.getString("propertyID"));
 
-                this.propertiesFound.put(resultSet.getInt("propertyID"), rentalProperty);
+                this.propertiesFound.put(resultSet.getString("propertyID"), rentalProperty);
             }
 
         } catch (SQLException e) {
@@ -160,9 +160,9 @@ public class PropertyFinder {
                         resultSet.getString("suburb"), new DateTime(resultSet.getString("lastMaintenanceDate")),
                         resultSet.getString("description"), resultSet.getString("imagePath"));
 
-                rentalProperty.setPropertyID(resultSet.getInt("propertyID"));
+                rentalProperty.setPropertyID(resultSet.getString("propertyID"));
 
-                this.propertiesFound.put(resultSet.getInt("propertyID"), rentalProperty);
+                this.propertiesFound.put(resultSet.getString("propertyID"), rentalProperty);
             }
 
         } catch (SQLException e) {
@@ -228,7 +228,26 @@ public class PropertyFinder {
             preparedStatement.executeUpdate();
 
             System.out.println(preparedStatement);
-            System.err.println("RentalPropterty inserted into the table");
+
+            //adding property ID to the property
+            preparedStatement = connection.prepareStatement("UPDATE RentalProperty " +
+                    "SET propertyID = ? " +
+                    "WHERE streetNumber = ? " +
+                    "AND streetName = ? " +
+                    "AND suburb = ?;");
+
+            char propertyTypeChar = rentalProperty.getPropertyType().toUpperCase().charAt(0);
+
+            preparedStatement.setString(1,propertyTypeChar + "_" +  rentalProperty.getStreetNumber()
+                    + "_" + rentalProperty.getStreetName() + "_" + rentalProperty.getSuburb());
+
+            preparedStatement.setInt(2, rentalProperty.getStreetNumber());
+            preparedStatement.setString(3, rentalProperty.getStreetName());
+            preparedStatement.setString(4, rentalProperty.getSuburb());
+
+            preparedStatement.executeUpdate();
+
+            System.err.println("RentalProperty inserted into the table");
 
             getAllProperties();
 

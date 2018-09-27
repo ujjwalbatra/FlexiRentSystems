@@ -338,7 +338,7 @@ public class MainUI {
         return propertyContent;
     }
 
-    public void populatePropertiesFlowPane(Map<Integer, RentalProperty> propertiesToShow) {
+    public void populatePropertiesFlowPane(Map<String, RentalProperty> propertiesToShow) {
 
         //initialising a new pane every time there are changes in visible properties. to update it dynamically
         FlowPane allProperties = new FlowPane();

@@ -109,7 +109,7 @@ public class RentalRecordManager {
                     "(properTyID, rentDate, estimatedReturnDate, actualReturnDate, rentalFee, lateFee, custID)" +
                     " VALUES (?,?,?,?,?,?,?);");
 
-            preparedStatement.setInt(1, this.propertyOperationsUI.getRentalProperty().getPropertyID());
+            preparedStatement.setString(1, this.propertyOperationsUI.getRentalProperty().getPropertyID());
             preparedStatement.setString(2, rentalRecord.getRentDate().toString());
             preparedStatement.setString(3, rentalRecord.getEstimatedReturnDate().toString());
 

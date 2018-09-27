@@ -12,13 +12,13 @@ import utility.exception.InvalidInputException;
 import utility.exception.InvalidOperationException;
 
 public abstract class RentalProperty {
-    private int propertyID;
+    private String propertyID;
 
-    public int getPropertyID() {
+    public String getPropertyID() {
         return propertyID;
     }
 
-    public void setPropertyID(int propertyID) {
+    public void setPropertyID(String propertyID) {
         this.propertyID = propertyID;
     }
 
