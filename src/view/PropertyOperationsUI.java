@@ -5,7 +5,7 @@ package view;/*
  *
  */
 
-import controller.PropertyOperationsHandler;
+import controller.RentalRecordsOperationsHandler;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -125,8 +125,8 @@ public class PropertyOperationsUI {
                 ActionEvent.ACTION,
                 event -> {
                     try {
-                        PropertyOperationsHandler propertyOperationsHandler = new PropertyOperationsHandler(this);
-                        propertyOperationsHandler.verifyRentPropertyInput();
+                        RentalRecordsOperationsHandler rentalRecordsOperationsHandler = new RentalRecordsOperationsHandler(this);
+                        rentalRecordsOperationsHandler.verifyRentPropertyInput();
                         this.dialog.close();
                     } catch (IncompleteInputException e) {
                         event.consume();

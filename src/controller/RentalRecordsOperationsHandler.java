@@ -16,10 +16,10 @@ import view.AlertBox;
 import view.PropertyOperationsUI;
 
 
-public class PropertyOperationsHandler {
+public class RentalRecordsOperationsHandler {
     private PropertyOperationsUI propertyOperationsUI;
 
-    public PropertyOperationsHandler(PropertyOperationsUI propertyOperationsUI) {
+    public RentalRecordsOperationsHandler(PropertyOperationsUI propertyOperationsUI) {
         this.propertyOperationsUI = propertyOperationsUI;
     }
 

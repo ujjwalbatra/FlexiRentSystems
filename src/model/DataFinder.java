@@ -7,12 +7,13 @@ package model;/*
 
 import utility.DateTime;
 import view.MainUI;
+import view.ViewProperty;
 
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PropertyFinder {
+public class DataFinder {
 
     private MainUI mainUI;
     private Map<String, RentalProperty> propertiesFound;
@@ -30,10 +31,11 @@ public class PropertyFinder {
         }
     }
 
-    public PropertyFinder(MainUI mainUI) {
+    public DataFinder(MainUI mainUI) {
         this.mainUI = mainUI;
         this.propertiesFound = new HashMap<>();
     }
+
 
     /*
      *
@@ -42,7 +44,7 @@ public class PropertyFinder {
      * all the properties to display
      *
      */
-    public void getAllProperties() {
+    public void showAllProperties() {
 
         this.getAllOneBedRoomApartments();
         this.getAllTwoBedRoomApartments();
@@ -196,6 +198,11 @@ public class PropertyFinder {
 
     }
 
+    /*
+     *
+     * adding the property to database and intialising it's row ID (auto increment) and a property ID.
+     *
+     */
     public void addPropertyToDB(RentalProperty rentalProperty) {
         try (Connection connection = DriverManager.getConnection("jdbc:hsqldb:file:database/localhost", "SA", "")) {
 
@@ -212,12 +219,10 @@ public class PropertyFinder {
             preparedStatement.setString(7, rentalProperty.getPropertyStatus());
 
             if (rentalProperty.getPropertyType().equals("premium suit")) {
-                //todo : handle this date problem
                 System.out.println(((PremiumSuit) rentalProperty).getLastMaintenanceDate().toString());
                 preparedStatement.setString(8, ((PremiumSuit) rentalProperty).getLastMaintenanceDate().toString());
 
-            }
-            else if (rentalProperty.getPropertyType().equals("apartment"))
+            } else if (rentalProperty.getPropertyType().equals("apartment"))
                 preparedStatement.setNull(8, Types.NULL);
 
 
@@ -238,7 +243,7 @@ public class PropertyFinder {
 
             char propertyTypeChar = rentalProperty.getPropertyType().toUpperCase().charAt(0);
 
-            preparedStatement.setString(1,propertyTypeChar + "_" +  rentalProperty.getStreetNumber()
+            preparedStatement.setString(1, propertyTypeChar + "_" + rentalProperty.getStreetNumber()
                     + "_" + rentalProperty.getStreetName() + "_" + rentalProperty.getSuburb());
 
             preparedStatement.setInt(2, rentalProperty.getStreetNumber());
@@ -249,7 +254,7 @@ public class PropertyFinder {
 
             System.err.println("RentalProperty inserted into the table");
 
-            getAllProperties();
+            showAllProperties();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -265,4 +270,5 @@ public class PropertyFinder {
     private void updateView() {
         mainUI.populatePropertiesFlowPane(this.propertiesFound);
     }
+
 }

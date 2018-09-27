@@ -5,9 +5,10 @@ package controller;/*
  *
  */
 
-import model.PropertyFinder;
-import model.RentalProperty;
+import model.DataFinder;
+import model.RentalRecordManager;
 import view.MainUI;
+import view.ViewProperty;
 
 public class DataRequestHandler {
 
@@ -15,12 +16,14 @@ public class DataRequestHandler {
     }
 
     public void deleteDataRequest(MainUI mainUI) {
-        PropertyFinder propertyFinder = new PropertyFinder(mainUI);
-        propertyFinder.deleteAllProperties();
+        DataFinder dataFinder = new DataFinder(mainUI);
+        dataFinder.deleteAllProperties();
     }
 
-    public void requestRentalRecords(String propertyID) {
-//todo : call property finder send all records to view property window and add a table view there
+    public void requestAllRentalRecords(ViewProperty viewProperty, String propertyID) {
+        RentalRecordManager rentalRecordManager = new RentalRecordManager(viewProperty);
+        rentalRecordManager.showAllRecords(propertyID);
     }
+
 
 }

@@ -10,7 +10,7 @@ package controller;
 
 import model.Apartment;
 import model.PremiumSuit;
-import model.PropertyFinder;
+import model.DataFinder;
 import model.RentalProperty;
 import utility.DateTime;
 import utility.exception.IncompleteInputException;
@@ -131,9 +131,9 @@ public class AddPropertyBtnHandler {
 
         }
 
-        PropertyFinder propertyFinder = new PropertyFinder(mainUI);
+        DataFinder dataFinder = new DataFinder(mainUI);
 
-        Runnable runnable = () -> propertyFinder.addPropertyToDB(rentalProperty);
+        Runnable runnable = () -> dataFinder.addPropertyToDB(rentalProperty);
 
         runnable.run();
     }

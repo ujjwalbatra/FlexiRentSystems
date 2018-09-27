@@ -9,21 +9,33 @@ import utility.DateTime;
 import utility.exception.InvaliOperationException;
 import utility.exception.InvalidInpuException;
 import view.PropertyOperationsUI;
+import view.ViewProperty;
 
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 public class RentalRecordManager {
     private PropertyOperationsUI propertyOperationsUI;
     private DateTime rentDate;
     private DateTime estimatedReturnDate;
     private int numberOfDays;
+    private ViewProperty viewProperty;
+    private Map<String, RentalRecord> recordsFound;
+
 
     public RentalRecordManager(PropertyOperationsUI propertyOperationsUI) {
         this.propertyOperationsUI = propertyOperationsUI;
     }
+
+    public RentalRecordManager(ViewProperty viewProperty) {
+        this.viewProperty = viewProperty;
+        this.recordsFound = new HashMap<>();
+    }
+
 
     public void returnProperty() {
         //todo : return property every condition
@@ -142,6 +154,44 @@ public class RentalRecordManager {
 
     private void updateView() {
         //todo : update table
+
+    }
+
+    /*
+     *
+     * find all rental records for a rental property
+     *
+     */
+    public void showAllRecords (String propertyID)
+    {
+        try (Connection connection = DriverManager.getConnection("jdbc:hsqldb:file:database/localhost", "SA", "")) {
+
+            RentalRecord rentalRecord;
+            PreparedStatement preparedStatement;
+
+            preparedStatement = connection.prepareStatement("SELECT * FROM RentalRecord WHERE propertyID = ?;");
+
+            preparedStatement.setString(1, propertyID);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                rentalRecord = new RentalRecord(resultSet.getString("custID"),new DateTime(resultSet.getString("rentDate")), new DateTime(resultSet.getString("estimatedReturnDate")));
+
+                //if the record has actual return date, then add all fee
+                if (!resultSet.getString("actualReturnDate").equals(null)) {
+                    rentalRecord.setActualReturnDate(new DateTime(resultSet.getString("actualReturnDate")));
+                    rentalRecord.setRentalFee(resultSet.getDouble("rentalFee"));
+                    rentalRecord.setLateFee(resultSet.getDouble("lateFee"));
+                    rentalRecord.setRecordID(propertyID + "_" + resultSet.getString("custID") + "_" + resultSet.getString("rentDate"));
+                }
+
+                recordsFound.put(rentalRecord.getRecordID(),rentalRecord);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 }

@@ -284,11 +284,11 @@ public class MainUI {
 
         try {
             image = new Image(this.getClass().getResource(imagePath).toString(), 200, 200, true, true);
-            imageView = new ImageView(image);
         } catch (NullPointerException e) {
             image = new Image(this.getClass().getResource("images/sample.jpg").toString(), 200, 200, true, true);
-            imageView = new ImageView(image);
         }
+
+        imageView = new ImageView(image);
 
 
         Button viewPropertyBtn = new Button("View");
@@ -300,7 +300,7 @@ public class MainUI {
             //load view property pane with rental records in another thread
             Runnable runnable = () -> {
                 DataRequestHandler dataRequestHandler = new DataRequestHandler();
-                dataRequestHandler.requestRentalRecords(rentalProperty.getPropertyID());
+                dataRequestHandler.requestAllRentalRecords(viewProperty, rentalProperty.getPropertyID());
             };
             runnable.run();
         });
