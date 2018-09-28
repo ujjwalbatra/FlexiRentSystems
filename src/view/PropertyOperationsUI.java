@@ -34,8 +34,8 @@ public class PropertyOperationsUI {
     }
 
 
-    public TextField getCustIDinput() {
-        return custIDinput;
+    public String getCustIDinput() {
+        return custIDinput.getText();
     }
 
     public void rentPropertyUI(RentalProperty rentalProperty) {

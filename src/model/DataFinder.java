@@ -71,7 +71,7 @@ public class DataFinder {
 
             while (resultSet.next()) {
                 rentalProperty = new Apartment(resultSet.getInt("streetNumber"), resultSet.getString("streetName"),
-                        resultSet.getString("suburb"), resultSet.getInt("numberOfBedrooms"),
+                        resultSet.getString("suburb"),resultSet.getString("propertyStatus") ,resultSet.getInt("numberOfBedrooms"),
                         resultSet.getString("description"), resultSet.getString("imagePath"));
 
                 rentalProperty.setPropertyID(resultSet.getString("propertyID"));
@@ -101,7 +101,7 @@ public class DataFinder {
 
             while (resultSet.next()) {
                 rentalProperty = new Apartment(resultSet.getInt("streetNumber"), resultSet.getString("streetName"),
-                        resultSet.getString("suburb"), resultSet.getInt("numberOfBedrooms"),
+                        resultSet.getString("suburb"), resultSet.getString("propertyStatus"),resultSet.getInt("numberOfBedrooms"),
                         resultSet.getString("description"), resultSet.getString("imagePath"));
 
                 rentalProperty.setPropertyID(resultSet.getString("propertyID"));
@@ -130,7 +130,7 @@ public class DataFinder {
 
             while (resultSet.next()) {
                 rentalProperty = new Apartment(resultSet.getInt("streetNumber"), resultSet.getString("streetName"),
-                        resultSet.getString("suburb"), resultSet.getInt("numberOfBedrooms"),
+                        resultSet.getString("suburb"),resultSet.getString("propertyStatus"), resultSet.getInt("numberOfBedrooms"),
                         resultSet.getString("description"), resultSet.getString("imagePath"));
 
                 rentalProperty.setPropertyID(resultSet.getString("propertyID"));
@@ -159,7 +159,7 @@ public class DataFinder {
 
             while (resultSet.next()) {
                 rentalProperty = new PremiumSuit(resultSet.getInt("streetNumber"), resultSet.getString("streetName"),
-                        resultSet.getString("suburb"), new DateTime(resultSet.getString("lastMaintenanceDate")),
+                        resultSet.getString("suburb"),resultSet.getString("propertyStatus"), new DateTime(resultSet.getString("lastMaintenanceDate")),
                         resultSet.getString("description"), resultSet.getString("imagePath"));
 
                 rentalProperty.setPropertyID(resultSet.getString("propertyID"));

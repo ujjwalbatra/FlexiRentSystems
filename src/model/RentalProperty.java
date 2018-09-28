@@ -11,6 +11,8 @@ import utility.DateTime;
 import utility.exception.InvalidInputException;
 import utility.exception.InvalidOperationException;
 
+import java.util.Scanner;
+
 public abstract class RentalProperty {
     private String propertyID;
 
@@ -37,13 +39,13 @@ public abstract class RentalProperty {
     //stores number of rental records for this instance of property exists
 
 
-    protected RentalProperty(int streetNumber, String streetName, String suburb, int numberOfBedrooms, String description, String imagePath) {
+    protected RentalProperty(int streetNumber, String streetName, String suburb, String propertyStatus, int numberOfBedrooms, String description, String imagePath) {
         this.streetNumber = streetNumber;
         this.streetName = streetName;
         this.suburb = suburb;
         this.numberOfBedrooms = numberOfBedrooms;
         this.rentalRecord = new RentalRecord[10];
-        this.propertyStatus = "available";
+        this.propertyStatus = propertyStatus;
         this.isAvailable = true;
         this.description = description;
         this.imagePath = imagePath;

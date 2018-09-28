@@ -52,12 +52,14 @@ public class RentalRecordManager {
             //adding property ID to the property
             PreparedStatement preparedStatement = connection.prepareStatement("UPDATE RentalProperty " +
                     "SET propertyStatus = ? " +
-                    "WHERE suburb = ?;");
+                    "WHERE propertyID = ?;");
 
             preparedStatement.setString(1,"rented");
             preparedStatement.setString(2,this.propertyOperationsUI.getRentalProperty().getPropertyID());
 
             preparedStatement.executeUpdate();
+
+            System.out.println(preparedStatement);
             System.out.println("property " +this.propertyOperationsUI.getRentalProperty().getPropertyID() +" rented");
 
         } catch (SQLException e) {

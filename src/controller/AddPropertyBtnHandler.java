@@ -123,11 +123,11 @@ public class AddPropertyBtnHandler {
             if (this.addPropertyUI.getSelectedNumberOfBed().equals("one")) this.numberOfBedrooms = 1;
             if (this.addPropertyUI.getSelectedNumberOfBed().equals("two")) this.numberOfBedrooms = 2;
             if (this.addPropertyUI.getSelectedNumberOfBed().equals("three")) this.numberOfBedrooms = 3;
-            this.rentalProperty = new Apartment(this.streetNumber, this.addPropertyUI.getStreetNameInput().trim(), this.addPropertyUI.getSuburbInput().trim(), this.numberOfBedrooms, this.addPropertyUI.getDescriptionInput().trim(), this.imagePath.trim());
+            this.rentalProperty = new Apartment(this.streetNumber, this.addPropertyUI.getStreetNameInput().trim(), this.addPropertyUI.getSuburbInput().trim(),"available", this.numberOfBedrooms, this.addPropertyUI.getDescriptionInput().trim(), this.imagePath.trim());
 
         } else if (this.addPropertyUI.getSelectedPropertyType().equals("premium suit")) {
 
-            this.rentalProperty = new PremiumSuit(this.streetNumber, this.addPropertyUI.getStreetNameInput().trim(), this.addPropertyUI.getSuburbInput().trim(), new DateTime(this.addPropertyUI.getLastMaintenanceDateInput()), this.addPropertyUI.getDescriptionInput().trim(), this.imagePath.trim());
+            this.rentalProperty = new PremiumSuit(this.streetNumber, this.addPropertyUI.getStreetNameInput().trim(), this.addPropertyUI.getSuburbInput().trim(),"available", new DateTime(this.addPropertyUI.getLastMaintenanceDateInput()), this.addPropertyUI.getDescriptionInput().trim(), this.imagePath.trim());
 
         }
 

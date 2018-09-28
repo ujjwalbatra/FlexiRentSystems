@@ -17,8 +17,8 @@ public class PremiumSuit extends RentalProperty {
     private final double PREMIUM_RENTAL_RATE = 554;
     private DateTime lastMaintenanceDate;
 
-    public PremiumSuit(int streetNumber, String streetName, String suburb, DateTime lastMaintenanceDate, String description, String imagePath) {
-        super(streetNumber, streetName, suburb, 3,  description,imagePath);
+    public PremiumSuit(int streetNumber, String streetName, String suburb, String propertyStatus, DateTime lastMaintenanceDate, String description, String imagePath) {
+        super(streetNumber, streetName, suburb, propertyStatus, 3,  description,imagePath);
         this.setRentalRate(this.PREMIUM_RENTAL_RATE);
         this.setPropertyType("premium suit");
         this.lastMaintenanceDate = lastMaintenanceDate;

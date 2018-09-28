@@ -12,10 +12,7 @@ import javafx.stage.Stage;
 import model.DataFinder;
 import view.MainUI;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class Main extends Application {
     private DataFinder dataFinder;
@@ -143,6 +140,28 @@ public class Main extends Application {
             //
             //            preparedStatement.executeUpdate();
             //            System.out.println("RentalPropterty inserted into the table");
+
+
+            PreparedStatement preparedStatement1 = connection.prepareStatement("Select * from RentalProperty");
+            PreparedStatement preparedStatement2 = connection.prepareStatement("Select * from RentalRecord");
+
+            ResultSet resultSet1 = preparedStatement1.executeQuery();
+            ResultSet resultSet2 = preparedStatement2.executeQuery();
+
+            while (resultSet1.next()) {
+                System.out.println(resultSet1.getString("propertyID"));
+                System.out.println(resultSet1.getString("propertyStatus"));
+                System.out.println();
+                System.out.println();
+            }
+
+            while (resultSet2.next()) {
+                System.out.println(resultSet2.getString("recordID"));
+                System.out.println(resultSet2.getString("custID"));
+                System.out.println();
+                System.out.println();
+            }
+
 
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();

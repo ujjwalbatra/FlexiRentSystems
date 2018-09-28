@@ -300,7 +300,4 @@ public class ViewProperty {
 
     }
 
-    public RentalProperty getRentalProperty() {
-        return rentalProperty;
-    }
 }
