@@ -26,16 +26,22 @@ public class RentalRecordsOperationsHandler {
         this.viewProperty = viewProperty;
     }
 
+    /*
+    *
+    * takes rent property input from UI.
+    * Verifirs the input and then adds it to db
+    *
+    */
     public void verifyAndProcessRentPropertyInput() throws IncompleteInputException {
 
         if (this.propertyOperationsUI.getEstimatedReturnDateInput().getEditor().getText().trim().equals(""))
-            throw new IncompleteInputException("Error", "Incomplete Date Input", "Please fill all input fields");
+            throw new IncompleteInputException("Error", "Incomplete Input", "Please fill all input fields");
 
         if (this.propertyOperationsUI.getRentDateInput().getEditor().getText().trim().equals(""))
-            throw new IncompleteInputException("Error", "Incomplete Date Input", "Please fill all input fields");
+            throw new IncompleteInputException("Error", "Incomplete Input", "Please fill all input fields");
 
         if (this.propertyOperationsUI.getCustIDinput().trim().equals(""))
-            throw new IncompleteInputException("Error", "Incomplete Date Input", "Please set customer ID");
+            throw new IncompleteInputException("Error", "Incomplete Input", "Please set customer ID");
 
 
             RentalRecordManager rentalRecordManager = new RentalRecordManager(viewProperty, propertyOperationsUI);
@@ -49,6 +55,22 @@ public class RentalRecordsOperationsHandler {
                 alertBox.generateWarningAlertBox(e.getTitle(), e.getHeader(), e.getMessage());
             }
 
+    }
+
+    public void verifyAndProcessReturnPropertyInput() throws IncompleteInputException {
+        if (this.propertyOperationsUI.getActualReturnDateInput().getEditor().getText().trim().equals(""))
+            throw new IncompleteInputException("Error", "Incomplete Date Input", "Please enter actual return date fields");
+
+        RentalRecordManager rentalRecordManager = new RentalRecordManager(viewProperty, propertyOperationsUI);
+        try {
+            rentalRecordManager.returnProperty();
+        } catch (InvaliOperationException e) {
+            AlertBox alertBox = new AlertBox();
+            alertBox.generateWarningAlertBox(e.getTitle(), e.getHeader(), e.getMessage());
+        } catch (InvalidInpuException e) {
+            AlertBox alertBox = new AlertBox();
+            alertBox.generateWarningAlertBox(e.getTitle(), e.getHeader(), e.getMessage());
+        }
     }
 
 }

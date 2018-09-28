@@ -23,6 +23,7 @@ public class PropertyOperationsUI {
     private Dialog<RentalRecord> dialog;
     private DatePicker estimatedReturnDateInput;
     private DatePicker rentDateInput;
+    private DatePicker actualReturnDateInput;
     private TextField custIDinput;
     private ViewProperty viewProperty;
     private RentalProperty rentalProperty;
@@ -33,11 +34,12 @@ public class PropertyOperationsUI {
         this.viewProperty = viewProperty;
     }
 
-
-    public String getCustIDinput() {
-        return custIDinput.getText();
-    }
-
+    /*
+     *
+     *display UI for rent property, verify and send the data to
+     * RentalRecordsOperationsHandler to adding to db
+     *
+     */
     public void rentPropertyUI(RentalProperty rentalProperty) {
 
         this.rentalProperty = rentalProperty;
@@ -55,6 +57,9 @@ public class PropertyOperationsUI {
         this.estimatedReturnDateInput.setEditable(false);
         this.rentDateInput.setEditable(false);
 
+        this.setDateFormat(this.estimatedReturnDateInput);
+        this.setDateFormat(this.rentDateInput);
+
         GridPane gridPane = new GridPane();
 
         gridPane.setHgap(10);
@@ -68,54 +73,6 @@ public class PropertyOperationsUI {
         gridPane.add(this.custIDinput, 1, 2);
         gridPane.setPadding(new Insets(10, 10, 10, 10));
 
-        String dateFormat = "dd/MM/yyyy";
-
-        this.rentDateInput.setConverter(new StringConverter<LocalDate>() {
-
-            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(dateFormat);
-
-            @Override
-            public String toString(LocalDate date) {
-                if (date != null) {
-                    return dateTimeFormatter.format(date);
-                } else {
-                    return "";
-                }
-            }
-
-            @Override
-            public LocalDate fromString(String string) {
-                if (string != null && !string.isEmpty()) {
-                    return LocalDate.parse(string, dateTimeFormatter);
-                } else {
-                    return null;
-                }
-            }
-        });
-
-        this.estimatedReturnDateInput.setConverter(new StringConverter<LocalDate>() {
-
-            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(dateFormat);
-
-            @Override
-            public String toString(LocalDate date) {
-                if (date != null) {
-                    return dateTimeFormatter.format(date);
-                } else {
-                    return "";
-                }
-            }
-
-            @Override
-            public LocalDate fromString(String string) {
-                if (string != null && !string.isEmpty()) {
-                    return LocalDate.parse(string, dateTimeFormatter);
-                } else {
-                    return null;
-                }
-            }
-        });
-
         ButtonType rentBtnType = new ButtonType("Rent", ButtonBar.ButtonData.OK_DONE);
         ButtonType closeBtnType = new ButtonType("Close", ButtonBar.ButtonData.CANCEL_CLOSE);
 
@@ -128,7 +85,7 @@ public class PropertyOperationsUI {
                 ActionEvent.ACTION,
                 event -> {
                     try {
-                        RentalRecordsOperationsHandler rentalRecordsOperationsHandler = new RentalRecordsOperationsHandler(this.viewProperty,this);
+                        RentalRecordsOperationsHandler rentalRecordsOperationsHandler = new RentalRecordsOperationsHandler(this.viewProperty, this);
                         rentalRecordsOperationsHandler.verifyAndProcessRentPropertyInput();
                         this.dialog.close();
                     } catch (IncompleteInputException e) {
@@ -144,6 +101,89 @@ public class PropertyOperationsUI {
 
     }
 
+    public void returnPropertyUI(RentalProperty rentalProperty) {
+        this.rentalProperty = rentalProperty;
+
+        this.dialog.setTitle("Return Property");
+
+        Label actualReturnDate = new Label("Actual Return Date : ");
+
+        this.actualReturnDateInput = new DatePicker();
+
+        this.actualReturnDateInput.setEditable(false);
+
+        this.setDateFormat(this.actualReturnDateInput);
+
+        GridPane gridPane = new GridPane();
+
+        gridPane.setHgap(10);
+        gridPane.setVgap(10);
+
+        gridPane.add(actualReturnDate, 0, 0);
+        gridPane.add(this.actualReturnDateInput, 1, 0);
+        gridPane.setPadding(new Insets(10, 10, 10, 10));
+
+        ButtonType returnBtnType = new ButtonType("Return", ButtonBar.ButtonData.OK_DONE);
+        ButtonType closeBtnType = new ButtonType("Close", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        this.dialog.getDialogPane().getButtonTypes().addAll(returnBtnType, closeBtnType);
+
+        Button returnBtn = (Button) dialog.getDialogPane().lookupButton(returnBtnType);
+
+        returnBtn.addEventFilter(
+                ActionEvent.ACTION,
+                event -> {
+                    try {
+                        RentalRecordsOperationsHandler rentalRecordsOperationsHandler = new RentalRecordsOperationsHandler(this.viewProperty, this);
+                        rentalRecordsOperationsHandler.verifyAndProcessReturnPropertyInput();
+                        this.dialog.close();
+                    } catch (IncompleteInputException e) {
+                        event.consume();
+                        AlertBox alertBox = new AlertBox();
+                        alertBox.generateWarningAlertBox(e.getTitle(), e.getHeader(), e.getMessage());
+                    }
+                }
+        );
+
+        dialog.getDialogPane().setContent(gridPane);
+        dialog.showAndWait();
+
+    }
+
+    /*
+     *
+     * set date format to dd/MM/yyyy
+     *
+     */
+    private void setDateFormat(DatePicker datePicker) {
+
+        String dateFormat = "dd/MM/yyyy";
+
+        datePicker.setConverter(new StringConverter<LocalDate>() {
+
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(dateFormat);
+
+            @Override
+            public String toString(LocalDate date) {
+                if (date != null) {
+                    return dateTimeFormatter.format(date);
+                } else {
+                    return "";
+                }
+            }
+
+            @Override
+            public LocalDate fromString(String string) {
+                if (string != null && !string.isEmpty()) {
+                    return LocalDate.parse(string, dateTimeFormatter);
+                } else {
+                    return null;
+                }
+            }
+        });
+
+    }
+
     public DatePicker getEstimatedReturnDateInput() {
         return estimatedReturnDateInput;
     }
@@ -152,7 +192,15 @@ public class PropertyOperationsUI {
         return rentDateInput;
     }
 
+    public DatePicker getActualReturnDateInput() {
+        return actualReturnDateInput;
+    }
+
     public RentalProperty getRentalProperty() {
         return rentalProperty;
+    }
+
+    public String getCustIDinput() {
+        return custIDinput.getText();
     }
 }

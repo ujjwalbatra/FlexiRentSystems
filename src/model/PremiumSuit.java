@@ -31,25 +31,14 @@ public class PremiumSuit extends RentalProperty {
     * save it tp rental record and return the fee. it will return 0 if there is no late fee.
     */
     @Override
-    public double calculateLateFee() {
-        int diffDays;  //to store difference in actual return date and estimated return date.
+    public double calculateLateFee(int numOfDays) {
         int totalLateFee; //to store late fee for all delayed days
         final int lateFeePerDay = 662;
 
-        DateTime actualReturnDate;
-        DateTime estimatedReturnDate;
-
-        actualReturnDate = getRentalRecord()[0].getActualReturnDate();
-        estimatedReturnDate = getRentalRecord()[0].getEstimatedReturnDate();
-        diffDays = DateTime.diffDays(actualReturnDate, estimatedReturnDate);
-
-        if (diffDays > 0) totalLateFee = diffDays * lateFeePerDay;
+        if (numOfDays > 0) totalLateFee = numOfDays * lateFeePerDay;
         else totalLateFee = 0;
 
-        getRentalRecord()[0].setLateFee(totalLateFee);
-
         return totalLateFee;
-
     }
 
     public void checkRentingCondition(DateTime rentDate, int numOfDays) throws InvalidOperationException, InvalidInputException {

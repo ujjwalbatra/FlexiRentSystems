@@ -10,19 +10,21 @@ package controller;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import model.DataFinder;
+import utility.DateTime;
 import view.MainUI;
 
 import java.sql.*;
 
 public class Main extends Application {
     private DataFinder dataFinder;
+
     //    public static void main(String[] args) {
     //        FlexiRentSystem flexiRentSystem = new FlexiRentSystem();
     //        flexiRentSystem.displaySystemMenu();
     //    }
     //
     @Override
-    public void start(Stage primaryStage){
+    public void start(Stage primaryStage) {
         MainUI mainUI = new MainUI();
 
         //used to create tables in the first time.
@@ -53,13 +55,13 @@ public class Main extends Application {
 
             //drop table used only when table already exist
 
-            String dropTable = "drop table RentalRecord";
+            String dropTable = "drop table RentalRecord;";
             result = statement.executeUpdate(dropTable);
 
             if (result == 0)
                 System.err.println("rental record table dropped");
 
-            String dropTable2 = "drop table RentalProperty";
+            String dropTable2 = "drop table RentalProperty;";
             result = statement.executeUpdate(dropTable2);
 
             if (result == 0)
@@ -105,45 +107,44 @@ public class Main extends Application {
             if (result == 0)
                 System.err.println("rental record table created");
 
-            //            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO RentalRecord " +
-            //                    "(propertyID, rentDate, estimatedReturnDate, actualReturnDate, rentalFee, lateFee, custID, lastMaintenanceDate)" +
-            //                    " VALUES (?,?,?,?,?,?,?,?);");
-            //
-            //            preparedStatement.setInt(1, 113);
-            //            preparedStatement.setDate(2, new DateTime(12, 12, 1212).toSqlDate());
-            //            preparedStatement.setDate(3, new DateTime(12, 12, 1212).toSqlDate());
-            //            preparedStatement.setDate(4, new DateTime(12, 12, 1212).toSqlDate());
-            //            preparedStatement.setDouble(5, 2324.0);
-            //            preparedStatement.setDouble(6, 325.0);
-            //            preparedStatement.setString(7, "available");
-            //            preparedStatement.setDate(8, new DateTime(12, 12, 1212).toSqlDate());
-            //
-            //            preparedStatement.executeUpdate();
-            //            System.out.println("RentalRecord inserted into the table");
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO RentalRecord " +
+                    "(propertyID, rentDate, estimatedReturnDate, actualReturnDate, rentalFee, lateFee, custID)" +
+                    " VALUES (?,?,?,?,?,?,?);");
 
-            //
-            //            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO RentalProperty " +
-            //                    "(streetNumber, streetName, suburb, propertyType, numberOfBedrooms, rentalRate, propertyStatus, lastMaintenanceDate, description, imagePath )" +
-            //                    " VALUES (?,?,?,?,?,?,?,?,?,?);");
-            //
-            //            preparedStatement.setInt(1, 118);
-            //            preparedStatement.setString(2, "Bouverie st");
-            //            preparedStatement.setString(3, "Carlton");
-            //            preparedStatement.setString(4, "apartment");
-            //            preparedStatement.setInt(5, 3);
-            //            preparedStatement.setDouble(6, 325.0);
-            //            preparedStatement.setString(7, "available");
-            //            preparedStatement.setNull(8, Types.DATE);
-            //            preparedStatement.setString(9, "Just trying");
-            //            preparedStatement.setString(10, "resources/images/334dfsf.png");
-            //
-            //
-            //            preparedStatement.executeUpdate();
-            //            System.out.println("RentalPropterty inserted into the table");
+//            preparedStatement.setInt(1, 113);
+//            preparedStatement.setDate(2, new DateTime(12, 12, 1212).toSqlDate());
+//            preparedStatement.setDate(3, new DateTime(12, 12, 1212).toSqlDate());
+//            preparedStatement.setDate(4, new DateTime(12, 12, 1212).toSqlDate());
+//            preparedStatement.setDouble(5, 2324.0);
+//            preparedStatement.setDouble(6, 325.0);
+//            preparedStatement.setString(7, "available");
+//
+//            preparedStatement.executeUpdate();
+//            System.out.println("RentalRecord inserted into the table");
+//
+//
+//             preparedStatement = connection.prepareStatement("INSERT INTO RentalProperty " +
+//                    "(streetNumber, streetName, suburb, propertyType, numberOfBedrooms, rentalRate, propertyStatus, lastMaintenanceDate, description, imagePath )" +
+//                    " VALUES (?,?,?,?,?,?,?,?,?,?);");
+//
+//            preparedStatement.setInt(1, 118);
+//            preparedStatement.setString(2, "Bouverie st");
+//            preparedStatement.setString(3, "Carlton");
+//            preparedStatement.setString(4, "apartment");
+//            preparedStatement.setInt(5, 3);
+//            preparedStatement.setDouble(6, 325.0);
+//            preparedStatement.setString(7, "available");
+//            preparedStatement.setNull(8, Types.DATE);
+//            preparedStatement.setString(9, "Just trying");
+//            preparedStatement.setString(10, "resources/images/334dfsf.png");
+//
+//
+//            preparedStatement.executeUpdate();
+//            System.out.println("RentalPropterty inserted into the table");
 
 
-            PreparedStatement preparedStatement1 = connection.prepareStatement("Select * from RentalProperty");
-            PreparedStatement preparedStatement2 = connection.prepareStatement("Select * from RentalRecord");
+            PreparedStatement preparedStatement1 = connection.prepareStatement("Select * from RentalProperty;");
+            PreparedStatement preparedStatement2 = connection.prepareStatement("Select * from RentalRecord;");
 
             ResultSet resultSet1 = preparedStatement1.executeQuery();
             ResultSet resultSet2 = preparedStatement2.executeQuery();

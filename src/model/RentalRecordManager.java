@@ -22,9 +22,10 @@ public class RentalRecordManager {
     private PropertyOperationsUI propertyOperationsUI;
     private DateTime rentDate;
     private DateTime estimatedReturnDate;
-    private int numberOfDays;
+    private DateTime actualReturnDate;
     private ViewProperty viewProperty;
     private Map<String, RentalRecord> recordsFound;
+    private int numberOfDays;
 
 
     public RentalRecordManager(ViewProperty viewProperty, PropertyOperationsUI propertyOperationsUI) {
@@ -35,11 +36,10 @@ public class RentalRecordManager {
 
     public void rentProperty() throws InvaliOperationException, InvalidInpuException {
 
-
         rentDate = new DateTime(this.propertyOperationsUI.getRentDateInput().getEditor().getText());
         estimatedReturnDate = new DateTime(this.propertyOperationsUI.getEstimatedReturnDateInput().getEditor().getText());
 
-        numberOfDays = DateTime.diffDays(estimatedReturnDate, rentDate);
+        int numberOfDays = DateTime.diffDays(estimatedReturnDate, rentDate);
 
         if (this.propertyOperationsUI.getRentalProperty().getPropertyType().equals("apartment")) {
             checkApartmentCondition();
@@ -54,13 +54,13 @@ public class RentalRecordManager {
                     "SET propertyStatus = ? " +
                     "WHERE propertyID = ?;");
 
-            preparedStatement.setString(1,"rented");
-            preparedStatement.setString(2,this.propertyOperationsUI.getRentalProperty().getPropertyID());
+            preparedStatement.setString(1, "rented");
+            preparedStatement.setString(2, this.propertyOperationsUI.getRentalProperty().getPropertyID());
 
             preparedStatement.executeUpdate();
 
             System.out.println(preparedStatement);
-            System.out.println("property " +this.propertyOperationsUI.getRentalProperty().getPropertyID() +" rented");
+            System.out.println("property " + this.propertyOperationsUI.getRentalProperty().getPropertyID() + " rented");
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -75,13 +75,78 @@ public class RentalRecordManager {
 
     }
 
+    public void returnProperty() throws InvaliOperationException, InvalidInpuException {
+
+        actualReturnDate = new DateTime(this.propertyOperationsUI.getActualReturnDateInput().getEditor().getText());
+
+        try (Connection connection = DriverManager.getConnection("jdbc:hsqldb:file:database/localhost", "SA", "")) {
+
+            //adding property ID to the property
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT  * FROM RentalRecord " +
+                    "WHERE actualReturnDate = ?" +
+                    "AND propertyID = ?;");
+
+            preparedStatement.setString(1, "none");
+            preparedStatement.setString(2, this.propertyOperationsUI.getRentalProperty().getPropertyID());
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+
+            estimatedReturnDate = new DateTime(resultSet.getString("estimatedReturnDate"));
+            rentDate = new DateTime(resultSet.getString("rentDate"));
+
+            System.out.println(preparedStatement);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        int numOfRentalDays = DateTime.diffDays(estimatedReturnDate, rentDate);
+        int numOfLateDays = DateTime.diffDays(actualReturnDate, estimatedReturnDate);
+
+        Double rentalFee;
+        Double lateFee;
+
+        rentalFee = this.propertyOperationsUI.getRentalProperty().calculateRentalFee(numOfRentalDays);
+        lateFee = this.propertyOperationsUI.getRentalProperty().calculateLateFee(numOfLateDays);
+
+        try (Connection connection = DriverManager.getConnection("jdbc:hsqldb:file:database/localhost", "SA", "")) {
+
+            //adding property ID to the property
+            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE RentalRecord " +
+                    "SET actualReturnDate = ? " +
+                    "AND rentalFee = ? " +
+                    "AND lateFee = ? " +
+                    "WHERE propertyID = ?" +
+                    "AND actualReturnDate = ?;");
+
+            preparedStatement.setString(1, actualReturnDate.toString());
+            preparedStatement.setDouble(2, rentalFee);
+            preparedStatement.setDouble(3, lateFee);
+            preparedStatement.setString(4, this.propertyOperationsUI.getRentalProperty().getPropertyID());
+            preparedStatement.setString(5, "none");
+
+            preparedStatement.executeUpdate();
+
+
+            System.out.println(preparedStatement);
+            System.out.println("property " + this.propertyOperationsUI.getRentalProperty().getPropertyID() + " returned");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        this.showAllRecords(this.propertyOperationsUI.getRentalProperty().getPropertyID());
+
+    }
+
     private RentalRecord wrapRecord() {
         RentalRecord rentalRecord = new RentalRecord(this.propertyOperationsUI.getCustIDinput(), this.rentDate, this.estimatedReturnDate);
         return rentalRecord;
     }
 
+    //todo : move these to rental property
     private void checkApartmentCondition() throws InvaliOperationException {
-
 
         int dayOfWeek = 0;
 

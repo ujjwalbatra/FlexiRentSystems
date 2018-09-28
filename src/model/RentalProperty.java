@@ -11,8 +11,6 @@ import utility.DateTime;
 import utility.exception.InvalidInputException;
 import utility.exception.InvalidOperationException;
 
-import java.util.Scanner;
-
 public abstract class RentalProperty {
     private String propertyID;
 
@@ -51,7 +49,7 @@ public abstract class RentalProperty {
         this.imagePath = imagePath;
     }
 
-    public abstract double calculateLateFee();
+    public abstract double calculateLateFee(int numOfDays);
 
 
     //    checking all the renting conditions, if acceptable changing status and isAvailable for the property.
@@ -63,7 +61,7 @@ public abstract class RentalProperty {
         if (numOfDays <= 0) throw new InvalidInputException("Invalid Input - the number of days is less than 1");
 
         //      if renting conditions of a specific property is not satisfied exception bounces to caller
-//        checkRentingCondition(rentDate, numOfDays);
+        //        checkRentingCondition(rentDate, numOfDays);
 
         DateTime estimatedReturnDate = new DateTime(rentDate, numOfDays);
         RentalRecord newRecord;
@@ -82,22 +80,6 @@ public abstract class RentalProperty {
         setAvailable(false);
 
         if (numberOfRecords < 9) numberOfRecords++;     //can't let number of records stored exceed 10.
-
-    }
-
-    //checking returning condition, if matched then calculating late and rental fee. And also changing values of status and isAvailable;
-    public void returnProperty(DateTime returnDate) {
-
-        //setting actual return date
-        this.rentalRecord[0].setActualReturnDate(returnDate);
-
-        //calculating all fee, the values will be added to rental record in the method calls itself.
-        calculateLateFee();
-        calculateRentalFee();
-
-        //changing status and availability of property
-        this.propertyStatus = "available";
-        this.isAvailable = true;
 
     }
 
@@ -176,23 +158,11 @@ public abstract class RentalProperty {
 
 
     /*
-     *  calculateLateFee() will calculate the fee from date rented till estimated date,
-     * save it to rental record and return the fee.
+     *  calculateLateFee() will calculate the rental fee,
+     *  for given number of days
      */
-    private double calculateRentalFee() {
-        double rentalFee;
-        int daysRented;
-
-        DateTime estimatedReturnDate = this.rentalRecord[0].getEstimatedReturnDate();
-        DateTime rentDate = this.rentalRecord[0].getRentDate();
-
-
-        daysRented = DateTime.diffDays(estimatedReturnDate, rentDate);
-        rentalFee = daysRented * this.rentalRate;
-        this.rentalRecord[0].setRentalFee(rentalFee);
-
-        return rentalFee;
-
+    public double calculateRentalFee(int numOfDays) {
+        return rentalRate * numOfDays;
     }
 
     //    shift records to make room for new record
