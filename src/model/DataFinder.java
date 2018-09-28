@@ -181,7 +181,7 @@ public class DataFinder {
         try {
             PreparedStatement preparedStatement;
 
-            preparedStatement = connection.prepareStatement("DELETE FROM RentalProperty WHERE propertyID > 0;");
+            preparedStatement = connection.prepareStatement("DELETE FROM RentalProperty WHERE rowID > 0;");
 
             int result = preparedStatement.executeUpdate();
 

@@ -18,14 +18,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Main extends Application {
-
+    private DataFinder dataFinder;
     //    public static void main(String[] args) {
     //        FlexiRentSystem flexiRentSystem = new FlexiRentSystem();
     //        flexiRentSystem.displaySystemMenu();
     //    }
     //
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage){
         MainUI mainUI = new MainUI();
 
         //used to create tables in the first time.
@@ -33,7 +33,7 @@ public class Main extends Application {
 
         //populating the main page in another thread
         Runnable runnable = () -> {
-            DataFinder dataFinder = new DataFinder(mainUI);
+            dataFinder = new DataFinder(mainUI);
             dataFinder.showAllProperties();
         };
 
@@ -144,9 +144,7 @@ public class Main extends Application {
             //            preparedStatement.executeUpdate();
             //            System.out.println("RentalPropterty inserted into the table");
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
 

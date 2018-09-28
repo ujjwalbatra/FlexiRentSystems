@@ -7,7 +7,12 @@
 
 package view;
 
+import controller.DataRequestHandler;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -19,10 +24,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import model.PremiumSuit;
 import model.RentalProperty;
+import model.RentalRecord;
 
-import java.sql.ResultSet;
+import java.util.Map;
 
 /*
  * this class is used to generate view property UI, when
@@ -48,6 +55,10 @@ public class ViewProperty {
     private ScrollPane scrollPane;
     private Label propertyTypeAndStatus;
     private GridPane rentalPropertyDetails;
+    private Button rentBtn;
+    private Button returnPropertyBtn;
+    private Button performMaintenanceBtn;
+    private Button completeMaintenanceBtn;
 
 
     public ViewProperty(RentalProperty rentalProperty) {
@@ -66,6 +77,10 @@ public class ViewProperty {
         this.scrollPane = new ScrollPane();
         this.rentalPropertyDetails = new GridPane();
         this.propertyTypeAndStatus = new Label();
+        this.rentBtn = new Button("Rent Property");
+        this.returnPropertyBtn = new Button("Return Property");
+        this.performMaintenanceBtn = new Button("Perform Maintenance");
+        this.completeMaintenanceBtn = new Button("Complete Maintenance");
     }
 
     public void generateViewPropertyUI() {
@@ -78,7 +93,9 @@ public class ViewProperty {
         this.scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         this.scrollPane.setPrefSize(700, 200);
 
-        updateView(null);
+        //load view property pane with rental records in another thread
+        DataRequestHandler dataRequestHandler = new DataRequestHandler();
+        dataRequestHandler.requestAllRentalRecords(this, rentalProperty.getPropertyID());
 
         String imagePath = rentalProperty.getImagePath();
 
@@ -100,11 +117,6 @@ public class ViewProperty {
         Label description = new Label(String.format("%s : %s", "Description", this.rentalProperty.getDescription()));
         Label lastMaintenanceDate;
 
-
-        Button rentBtn = new Button("Rent Property");
-        Button returnPropertyBtn = new Button("Return Property");
-        Button performMaintenanceBtn = new Button("Perform Maintenance");
-        Button completeMaintenanceBtn = new Button("Complete Maintenance");
 
         rentalPropertyDetails.add(propertyID, 0, 5, 4, 1);
         rentalPropertyDetails.add(streetNumber, 0, 6, 4, 1);
@@ -129,6 +141,133 @@ public class ViewProperty {
 
         //configuring close button
         this.closeBtn.setOnAction(event -> this.stage.close());
+
+
+        rentBtn.setOnAction(event -> {
+            PropertyOperationsUI propertyOperationsUI = new PropertyOperationsUI(this);
+            propertyOperationsUI.rentPropertyUI(this.rentalProperty);
+        });
+
+        this.topHalfPage.getChildren().addAll(imageView, this.functionBtns);
+        this.topHalfPage.setSpacing(50);
+        this.topHalfPage.setAlignment(Pos.CENTER);
+
+        this.completeUI.setPadding(new Insets(20, 20, 20, 20));
+        this.completeUI.setSpacing(20);
+
+        rentalPropertyDetails.setVgap(5);
+
+        this.completeUI.getChildren().addAll(this.topHalfPage, rentalPropertyDetails, scrollPane, this.closeBtn);
+        this.completeUI.setAlignment(Pos.CENTER_RIGHT);
+        rentalPropertyDetails.setAlignment(Pos.CENTER_LEFT);
+
+        //styling the page
+        completeUI.getStylesheets().add(getClass().getResource("css/StyleUI.css").toExternalForm());
+        completeUI.getStyleClass().add("viewPropertyDialog-pane");
+
+        this.stage.setScene(new Scene(completeUI, 1050, 900));
+        this.stage.showAndWait();
+
+    }
+
+    public void updateView(Map<String, RentalRecord> recordsFound) {
+
+
+        propertyTypeAndStatus.setText("");
+        propertyTypeAndStatus = new Label(this.rentalProperty.getPropertyType().toUpperCase() + " - " + this.rentalProperty.getPropertyStatus().toUpperCase());
+        rentalPropertyDetails.add(propertyTypeAndStatus, 0, 4, 4, 1);
+
+
+        this.rentalRecords = new TableView();
+
+        TableColumn allColumns[] = {custID, rentDate, estimatedReturnDate, actualReturnDate, rentalFee, lateFee};
+
+        ObservableList<String> row = FXCollections.observableArrayList();
+        ObservableList<ObservableList> data = FXCollections.observableArrayList();
+
+
+
+        if (recordsFound != null) {
+            for (RentalRecord rentalRecord : recordsFound.values()) {
+
+                custID.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
+                    @Override
+                    public ObservableValue<String> call(TableColumn.CellDataFeatures<ObservableList, String> param) {
+                        return new SimpleStringProperty(rentalRecord.getCustID());
+                    }
+                });
+                rentDate.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
+                    @Override
+                    public ObservableValue<String> call(TableColumn.CellDataFeatures<ObservableList, String> param) {
+                        return new SimpleStringProperty(rentalRecord.getRentDate().toString());
+                    }
+                });
+                estimatedReturnDate.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
+                    @Override
+                    public ObservableValue<String> call(TableColumn.CellDataFeatures<ObservableList, String> param) {
+                        return new SimpleStringProperty(rentalRecord.getEstimatedReturnDate().toString());
+                    }
+                });
+
+
+                if (rentalRecord.getActualReturnDate() != null) {
+                    actualReturnDate.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
+                        @Override
+                        public ObservableValue<String> call(TableColumn.CellDataFeatures<ObservableList, String> param) {
+                            return new SimpleStringProperty(rentalRecord.getActualReturnDate().toString());
+                        }
+                    });
+                    rentalFee.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
+                        @Override
+                        public ObservableValue<String> call(TableColumn.CellDataFeatures<ObservableList, String> param) {
+                            return new SimpleStringProperty(Double.toString(rentalRecord.getRentalFee()));
+                        }
+                    });
+                    lateFee.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
+                        @Override
+                        public ObservableValue<String> call(TableColumn.CellDataFeatures<ObservableList, String> param) {
+                            return new SimpleStringProperty(Double.toString(rentalRecord.getLateFee()));
+                        }
+                    });
+
+                } else {
+
+                    actualReturnDate.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
+                        @Override
+                        public ObservableValue<String> call(TableColumn.CellDataFeatures<ObservableList, String> param) {
+                            return new SimpleStringProperty("none");
+                        }
+                    });
+                    rentalFee.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
+                        @Override
+                        public ObservableValue<String> call(TableColumn.CellDataFeatures<ObservableList, String> param) {
+                            return new SimpleStringProperty("none");
+                        }
+                    });
+                    lateFee.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
+                        @Override
+                        public ObservableValue<String> call(TableColumn.CellDataFeatures<ObservableList, String> param) {
+                            return new SimpleStringProperty("none");
+                        }
+                    });
+                }
+
+                data.add(row);
+                rentalRecords.setItems(data);
+
+            }
+
+        }
+        for (TableColumn column : allColumns) {
+
+
+        }
+
+        //making rental record table
+        this.rentalRecords.getColumns().addAll(custID, rentDate, estimatedReturnDate, actualReturnDate, rentalFee, lateFee);
+        this.rentalRecords.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        rentalRecords.prefWidthProperty().bind(Bindings.add(-15, scrollPane.widthProperty()));
+        scrollPane.setContent(rentalRecords);
 
         //disabling property function buttons on the basis of status
         switch (this.rentalProperty.getPropertyStatus()) {
@@ -158,51 +297,10 @@ public class ViewProperty {
                 break;
         }
 
-        rentBtn.setOnAction(event -> {
-            PropertyOperationsUI propertyOperationsUI = new PropertyOperationsUI(this);
-            propertyOperationsUI.rentPropertyUI(this.rentalProperty);
-        });
-
-        this.topHalfPage.getChildren().addAll(imageView, this.functionBtns);
-        this.topHalfPage.setSpacing(50);
-        this.topHalfPage.setAlignment(Pos.CENTER);
-
-        this.completeUI.setPadding(new Insets(20, 20, 20, 20));
-        this.completeUI.setSpacing(20);
-
-        rentalPropertyDetails.setVgap(5);
-
-        this.completeUI.getChildren().addAll(this.topHalfPage, rentalPropertyDetails, scrollPane, this.closeBtn);
-        this.completeUI.setAlignment(Pos.CENTER_RIGHT);
-        rentalPropertyDetails.setAlignment(Pos.CENTER_LEFT);
-
-        //styling the page
-        completeUI.getStylesheets().add(getClass().getResource("css/StyleUI.css").toExternalForm());
-        completeUI.getStyleClass().add("viewPropertyDialog-pane");
-
-        this.stage.setScene(new Scene(completeUI, 1050, 900));
-        this.stage.showAndWait();
 
     }
 
-    public void updateView(ResultSet resultSet){
-
-        propertyTypeAndStatus.setText("");
-        propertyTypeAndStatus = new Label(this.rentalProperty.getPropertyType().toUpperCase() + " - " + this.rentalProperty.getPropertyStatus().toUpperCase());
-        rentalPropertyDetails.add(propertyTypeAndStatus, 0, 4, 4, 1);
-
-
-        this.rentalRecords = new TableView();
-
-        //making rental record table
-        this.rentalRecords.getColumns().addAll(rentDate, estimatedReturnDate, actualReturnDate, rentalFee, lateFee, custID);
-        this.rentalRecords.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        rentalRecords.prefWidthProperty().bind(Bindings.add(-15, scrollPane.widthProperty()));
-        scrollPane.setContent(rentalRecords);
-
-        if (resultSet != null){
-
-        }
-
+    public RentalProperty getRentalProperty() {
+        return rentalProperty;
     }
 }

@@ -32,7 +32,7 @@ public class AddPropertyBtnHandler {
     private RentalProperty rentalProperty;
     private int streetNumber;
     private int numberOfBedrooms;
-    String imagePath;
+    private String imagePath;
 
 
     public AddPropertyBtnHandler(AddPropertyUI addPropertyUI, MainUI mainUI) {

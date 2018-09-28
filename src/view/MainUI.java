@@ -297,12 +297,7 @@ public class MainUI {
             ViewProperty viewProperty = new ViewProperty(rentalProperty);
             viewProperty.generateViewPropertyUI();
 
-            //load view property pane with rental records in another thread
-            Runnable runnable = () -> {
-                DataRequestHandler dataRequestHandler = new DataRequestHandler();
-                dataRequestHandler.requestAllRentalRecords(viewProperty, rentalProperty.getPropertyID());
-            };
-            runnable.run();
+
         });
 
         Label type = new Label(rentalProperty.getPropertyType().toUpperCase());
@@ -324,7 +319,7 @@ public class MainUI {
         propertyWithLink.getChildren().addAll(propertyDetails, viewPropertyBtn);
 
         propertyContent.getChildren().addAll(imageView, propertyWithLink);
-        propertyContent.setPrefWidth(380);
+        propertyContent.setPrefWidth(420);
         propertyContent.setPrefHeight(200);
 
 

@@ -47,17 +47,34 @@ public class RentalRecordManager {
             checkPremiumSuitCondtition();
         }
 
+        try (Connection connection = DriverManager.getConnection("jdbc:hsqldb:file:database/localhost", "SA", "")) {
+
+            //adding property ID to the property
+            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE RentalProperty " +
+                    "SET propertyStatus = ? " +
+                    "WHERE suburb = ?;");
+
+            preparedStatement.setString(1,"rented");
+            preparedStatement.setString(2,this.propertyOperationsUI.getRentalProperty().getPropertyID());
+
+            preparedStatement.executeUpdate();
+            System.out.println("property " +this.propertyOperationsUI.getRentalProperty().getPropertyID() +" rented");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         this.propertyOperationsUI.getRentalProperty().setPropertyStatus("rented");
 
         RentalRecord rentalRecord = this.wrapRecord();
 
         this.addRecordToDB(rentalRecord);
 
-        this.updateView();
+        this.showAllRecords(this.propertyOperationsUI.getRentalProperty().getPropertyID());
+
     }
 
     private RentalRecord wrapRecord() {
-        RentalRecord rentalRecord = new RentalRecord(this.propertyOperationsUI.getCustIDinput().toString(), this.rentDate, this.estimatedReturnDate);
+        RentalRecord rentalRecord = new RentalRecord(this.propertyOperationsUI.getCustIDinput(), this.rentDate, this.estimatedReturnDate);
         return rentalRecord;
     }
 
@@ -127,7 +144,6 @@ public class RentalRecordManager {
                 preparedStatement.setDouble(6, rentalRecord.getLateFee());
 
 
-
             } else if (this.propertyOperationsUI.getRentalProperty().getPropertyStatus().equals("rented")) {
 
                 preparedStatement.setNull(4, Types.NULL);
@@ -139,7 +155,7 @@ public class RentalRecordManager {
             preparedStatement.executeUpdate();
 
             System.out.println(preparedStatement);
-            System.err.println("RentalRecord inserted into the table");
+            System.err.println("RentalRecord inserted into the db");
 
 
         } catch (SQLException e) {
@@ -149,8 +165,7 @@ public class RentalRecordManager {
     }
 
     private void updateView() {
-        //todo : update table
-        viewProperty.updateView(null);
+        viewProperty.updateView(recordsFound);
     }
 
     /*
@@ -158,8 +173,7 @@ public class RentalRecordManager {
      * find all rental records for a rental property
      *
      */
-    public void showAllRecords (String propertyID)
-    {
+    public void showAllRecords(String propertyID) {
         try (Connection connection = DriverManager.getConnection("jdbc:hsqldb:file:database/localhost", "SA", "")) {
 
             RentalRecord rentalRecord;
@@ -172,7 +186,7 @@ public class RentalRecordManager {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                rentalRecord = new RentalRecord(resultSet.getString("custID"),new DateTime(resultSet.getString("rentDate")), new DateTime(resultSet.getString("estimatedReturnDate")));
+                rentalRecord = new RentalRecord(resultSet.getString("custID"), new DateTime(resultSet.getString("rentDate")), new DateTime(resultSet.getString("estimatedReturnDate")));
 
                 //if the record has actual return date, then add all fee
                 if (resultSet.getString("actualReturnDate") != null) {
@@ -182,8 +196,10 @@ public class RentalRecordManager {
                     rentalRecord.setRecordID(propertyID + "_" + resultSet.getString("custID") + "_" + resultSet.getString("rentDate"));
                 }
 
-                recordsFound.put(rentalRecord.getRecordID(),rentalRecord);
+                recordsFound.put(rentalRecord.getRecordID(), rentalRecord);
             }
+
+            this.updateView();
 
         } catch (SQLException e) {
             e.printStackTrace();

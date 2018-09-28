@@ -34,7 +34,7 @@ public class RentalRecordsOperationsHandler {
         if (this.propertyOperationsUI.getRentDateInput().getEditor().getText().trim().equals(""))
             throw new IncompleteInputException("Error", "Incomplete Date Input", "Please fill all input fields");
 
-        if (this.propertyOperationsUI.getCustIDinput().getText().trim().equals(""))
+        if (this.propertyOperationsUI.getCustIDinput().trim().equals(""))
             throw new IncompleteInputException("Error", "Incomplete Date Input", "Please set customer ID");
 
 
