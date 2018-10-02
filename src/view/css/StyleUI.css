@@ -64,6 +64,19 @@
     -fx-border-width: 1px;
 }
 
+.background {
+    -fx-background-color: #ffff;
+}
+
+.border {
+    -fx-border-color: #000;
+    -fx-border-width: 1px;
+}
+
+.bold {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
 
 
 

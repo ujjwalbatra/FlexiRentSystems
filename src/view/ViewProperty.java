@@ -9,7 +9,6 @@ package view;
 
 import controller.DataRequestHandler;
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -28,8 +27,6 @@ import model.PremiumSuit;
 import model.RentalProperty;
 import model.RentalRecord;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 /*
@@ -46,13 +43,13 @@ public class ViewProperty {
     private HBox topHalfPage;
     private Button closeBtn;
     private RentalProperty rentalProperty;
-    private TableView<RentalRecordInfo> rentalRecords;
-    private TableColumn<RentalRecordInfo, String> rentDate;
-    private TableColumn<RentalRecordInfo, String> estimatedReturnDate;
-    private TableColumn<RentalRecordInfo, String> actualReturnDate;
-    private TableColumn<RentalRecordInfo, String> rentalFee;
-    private TableColumn<RentalRecordInfo, String> lateFee;
-    private TableColumn<RentalRecordInfo, String> custID;
+    private TableView<RentalRecordTable> rentalRecords;
+    private TableColumn<RentalRecordTable, String> rentDate;
+    private TableColumn<RentalRecordTable, String> estimatedReturnDate;
+    private TableColumn<RentalRecordTable, String> actualReturnDate;
+    private TableColumn<RentalRecordTable, String> rentalFee;
+    private TableColumn<RentalRecordTable, String> lateFee;
+    private TableColumn<RentalRecordTable, String> custID;
     private ScrollPane scrollPane;
     private Label propertyTypeAndStatus;
     private GridPane rentalPropertyDetails;
@@ -196,31 +193,41 @@ public class ViewProperty {
         this.rentalRecords = new TableView();
 
 
-        ObservableList<RentalRecordInfo> data = FXCollections.observableArrayList();
+        ObservableList<RentalRecordTable> data = FXCollections.observableArrayList();
 
         TableColumn allColumns[] = {custID, rentDate, estimatedReturnDate, actualReturnDate, rentalFee, lateFee};
 
-        for (TableColumn column : allColumns) {
-            column.setCellValueFactory(new PropertyValueFactory<>(column.toString()));
-        }
+        custID.setCellValueFactory(new PropertyValueFactory<>("custID"));
+        rentDate.setCellValueFactory(new PropertyValueFactory<>("rentDate"));
+        estimatedReturnDate.setCellValueFactory(new PropertyValueFactory<>("estimatedReturnDate"));
+        actualReturnDate.setCellValueFactory(new PropertyValueFactory<>("actualReturnDate"));
+        rentalFee.setCellValueFactory(new PropertyValueFactory<>("rentalFee"));
+        lateFee.setCellValueFactory(new PropertyValueFactory<>("lateFee"));
 
+
+        RentalRecordTable rentalRecordTable = null;
         String none = "none";
+
         if (recordsFound != null) {
             for (RentalRecord rentalRecord : recordsFound.values()) {
-                if (rentalRecord.getActualReturnDate() != null)
-                    data.add(new RentalRecordInfo(rentalRecord.getCustID(), rentalRecord.getRentDate().toString(), rentalRecord.getEstimatedReturnDate().toString(),
-                            rentalRecord.getActualReturnDate().toString(), Double.toString(rentalRecord.getRentalFee()), Double.toString(rentalRecord.getLateFee())));
-                else
-                    data.add(new RentalRecordInfo(rentalRecord.getCustID(), rentalRecord.getRentDate().toString(), rentalRecord.getEstimatedReturnDate().toString(),
-                            none, none, none));
+
+                if (rentalRecord.getActualReturnDate() != null) {
+                    rentalRecordTable = new RentalRecordTable(rentalRecord.getCustID(), rentalRecord.getRentDate().toString(), rentalRecord.getEstimatedReturnDate().toString(),
+                            rentalRecord.getActualReturnDate().toString(), Double.toString(rentalRecord.getRentalFee()), Double.toString(rentalRecord.getLateFee()));
+                    data.add(rentalRecordTable);
+                } else {
+                    rentalRecordTable = new RentalRecordTable(rentalRecord.getCustID(), rentalRecord.getRentDate().toString(), rentalRecord.getEstimatedReturnDate().toString(),
+                            none, none, none);
+                    data.add(rentalRecordTable);
+                }
             }
         }
-
-        rentalRecords.setItems(data);
 
 
         //making rental record table
         this.rentalRecords.getColumns().addAll(custID, rentDate, estimatedReturnDate, actualReturnDate, rentalFee, lateFee);
+        rentalRecords.getItems().add(rentalRecordTable);
+
         this.rentalRecords.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         rentalRecords.prefWidthProperty().bind(Bindings.add(-15, scrollPane.widthProperty()));
         scrollPane.setContent(rentalRecords);
@@ -258,69 +265,4 @@ public class ViewProperty {
         }
     }
 
-    class RentalRecordInfo {
-        private SimpleStringProperty custID;
-        private SimpleStringProperty rentDate;
-        private SimpleStringProperty estimatedReturnDate;
-        private SimpleStringProperty actualReturnDate;
-        private SimpleStringProperty rentalFee;
-        private SimpleStringProperty lateFee;
-
-        public RentalRecordInfo(String custID, String rentDate, String estimatedReturnDate, String actualReturnDate, String rentalFee, String lateFee) {
-            this.custID = new SimpleStringProperty(custID);
-            this.rentDate = new SimpleStringProperty(estimatedReturnDate);
-            this.estimatedReturnDate = new SimpleStringProperty(actualReturnDate);
-            this.actualReturnDate = new SimpleStringProperty(rentalFee);
-            this.rentalFee = new SimpleStringProperty(lateFee);
-            this.lateFee = new SimpleStringProperty(rentDate);
-        }
-
-        public String getCustID() {
-            return custID.get();
-        }
-
-        public SimpleStringProperty custIDProperty() {
-            return custID;
-        }
-
-        public String getRentDate() {
-            return rentDate.get();
-        }
-
-        public SimpleStringProperty rentDateProperty() {
-            return rentDate;
-        }
-
-        public String getEstimatedReturnDate() {
-            return estimatedReturnDate.get();
-        }
-
-        public SimpleStringProperty estimatedReturnDateProperty() {
-            return estimatedReturnDate;
-        }
-
-        public String getActualReturnDate() {
-            return actualReturnDate.get();
-        }
-
-        public SimpleStringProperty actualReturnDateProperty() {
-            return actualReturnDate;
-        }
-
-        public String getRentalFee() {
-            return rentalFee.get();
-        }
-
-        public SimpleStringProperty rentalFeeProperty() {
-            return rentalFee;
-        }
-
-        public String getLateFee() {
-            return lateFee.get();
-        }
-
-        public SimpleStringProperty lateFeeProperty() {
-            return lateFee;
-        }
-    }
 }

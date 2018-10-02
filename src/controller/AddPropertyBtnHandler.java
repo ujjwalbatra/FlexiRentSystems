@@ -133,9 +133,8 @@ public class AddPropertyBtnHandler {
 
         DataFinder dataFinder = new DataFinder(mainUI);
 
-        Runnable runnable = () -> dataFinder.addPropertyToDB(rentalProperty);
+        dataFinder.addPropertyToDB(rentalProperty);
 
-        runnable.run();
     }
 
 }

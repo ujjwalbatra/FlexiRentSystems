@@ -21,6 +21,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.RentalProperty;
@@ -89,7 +90,7 @@ public class MainUI {
         this.addPropertyBtn = new Button("Add Property");
         this.exitBtn = new Button("Exit");
         this.searchBtn = new Button("Search");
-        this.scene = new Scene(this.borderPane, 1200, 700);
+        this.scene = new Scene(this.borderPane, 1350, 700);
         this.searchInput = new TextField();
         this.allContent = new VBox();
         this.filterPropertyType = new FlowPane();
@@ -277,6 +278,8 @@ public class MainUI {
         VBox propertyDetails = new VBox(4);
         VBox propertyWithLink = new VBox(30);
 
+
+
         String imagePath = rentalProperty.getImagePath();
 
         Image image;
@@ -309,6 +312,9 @@ public class MainUI {
 
         propertyDetails.getChildren().addAll(type, streetNumber, streetName, suburb);
 
+        type.getStylesheets().add(getClass().getResource("css/StyleUI.css").toExternalForm());
+        type.getStyleClass().add("bold");
+
         if (rentalProperty.getPropertyType().equals("apartment")) {
             numberOfBedrooms = new Label("Number of Bedrooms : " + rentalProperty.getNumberOfBedrooms());
             propertyDetails.getChildren().add(numberOfBedrooms);
@@ -321,7 +327,6 @@ public class MainUI {
         propertyContent.getChildren().addAll(imageView, propertyWithLink);
         propertyContent.setPrefWidth(420);
         propertyContent.setPrefHeight(200);
-
 
         propertyContent.setAlignment(Pos.CENTER);
         propertyWithLink.setAlignment(Pos.CENTER);
@@ -338,6 +343,8 @@ public class MainUI {
         //initialising a new pane every time there are changes in visible properties. to update it dynamically
         FlowPane allProperties = new FlowPane();
         this.propertyScrollPane.setContent(allProperties);
+        allProperties.getStylesheets().add(getClass().getResource("css/StyleUI.css").toExternalForm());
+        allProperties.getStyleClass().add("background");
 
         allProperties.prefWidthProperty().bind(Bindings.add(-5, this.propertyScrollPane.widthProperty()));
         allProperties.prefHeightProperty().bind(Bindings.add(-5, this.propertyScrollPane.heightProperty()));

@@ -10,7 +10,6 @@ package controller;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import model.DataFinder;
-import utility.DateTime;
 import view.MainUI;
 
 import java.sql.*;
@@ -28,17 +27,14 @@ public class Main extends Application {
         MainUI mainUI = new MainUI();
 
         //used to create tables in the first time.
-//        this.createTableRentalPropertyAndRecords();
+        //        this.createTableRentalPropertyAndRecords();
 
         //populating the main page in another thread
-        Runnable runnable = () -> {
-            dataFinder = new DataFinder(mainUI);
-            dataFinder.showAllProperties();
-        };
+        dataFinder = new DataFinder(mainUI);
+        dataFinder.showAllProperties();
 
-        runnable.run();
+
         mainUI.generateMainPage();
-
 
     }
 
@@ -111,36 +107,36 @@ public class Main extends Application {
                     "(propertyID, rentDate, estimatedReturnDate, actualReturnDate, rentalFee, lateFee, custID)" +
                     " VALUES (?,?,?,?,?,?,?);");
 
-//            preparedStatement.setInt(1, 113);
-//            preparedStatement.setDate(2, new DateTime(12, 12, 1212).toSqlDate());
-//            preparedStatement.setDate(3, new DateTime(12, 12, 1212).toSqlDate());
-//            preparedStatement.setDate(4, new DateTime(12, 12, 1212).toSqlDate());
-//            preparedStatement.setDouble(5, 2324.0);
-//            preparedStatement.setDouble(6, 325.0);
-//            preparedStatement.setString(7, "available");
-//
-//            preparedStatement.executeUpdate();
-//            System.out.println("RentalRecord inserted into the table");
-//
-//
-//             preparedStatement = connection.prepareStatement("INSERT INTO RentalProperty " +
-//                    "(streetNumber, streetName, suburb, propertyType, numberOfBedrooms, rentalRate, propertyStatus, lastMaintenanceDate, description, imagePath )" +
-//                    " VALUES (?,?,?,?,?,?,?,?,?,?);");
-//
-//            preparedStatement.setInt(1, 118);
-//            preparedStatement.setString(2, "Bouverie st");
-//            preparedStatement.setString(3, "Carlton");
-//            preparedStatement.setString(4, "apartment");
-//            preparedStatement.setInt(5, 3);
-//            preparedStatement.setDouble(6, 325.0);
-//            preparedStatement.setString(7, "available");
-//            preparedStatement.setNull(8, Types.DATE);
-//            preparedStatement.setString(9, "Just trying");
-//            preparedStatement.setString(10, "resources/images/334dfsf.png");
-//
-//
-//            preparedStatement.executeUpdate();
-//            System.out.println("RentalPropterty inserted into the table");
+            //            preparedStatement.setInt(1, 113);
+            //            preparedStatement.setDate(2, new DateTime(12, 12, 1212).toSqlDate());
+            //            preparedStatement.setDate(3, new DateTime(12, 12, 1212).toSqlDate());
+            //            preparedStatement.setDate(4, new DateTime(12, 12, 1212).toSqlDate());
+            //            preparedStatement.setDouble(5, 2324.0);
+            //            preparedStatement.setDouble(6, 325.0);
+            //            preparedStatement.setString(7, "available");
+            //
+            //            preparedStatement.executeUpdate();
+            //            System.out.println("RentalRecord inserted into the table");
+            //
+            //
+            //             preparedStatement = connection.prepareStatement("INSERT INTO RentalProperty " +
+            //                    "(streetNumber, streetName, suburb, propertyType, numberOfBedrooms, rentalRate, propertyStatus, lastMaintenanceDate, description, imagePath )" +
+            //                    " VALUES (?,?,?,?,?,?,?,?,?,?);");
+            //
+            //            preparedStatement.setInt(1, 118);
+            //            preparedStatement.setString(2, "Bouverie st");
+            //            preparedStatement.setString(3, "Carlton");
+            //            preparedStatement.setString(4, "apartment");
+            //            preparedStatement.setInt(5, 3);
+            //            preparedStatement.setDouble(6, 325.0);
+            //            preparedStatement.setString(7, "available");
+            //            preparedStatement.setNull(8, Types.DATE);
+            //            preparedStatement.setString(9, "Just trying");
+            //            preparedStatement.setString(10, "resources/images/334dfsf.png");
+            //
+            //
+            //            preparedStatement.executeUpdate();
+            //            System.out.println("RentalPropterty inserted into the table");
 
 
             PreparedStatement preparedStatement1 = connection.prepareStatement("Select * from RentalProperty;");

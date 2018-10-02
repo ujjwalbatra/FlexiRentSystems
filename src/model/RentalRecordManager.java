@@ -39,7 +39,7 @@ public class RentalRecordManager {
         rentDate = new DateTime(this.propertyOperationsUI.getRentDateInput().getEditor().getText());
         estimatedReturnDate = new DateTime(this.propertyOperationsUI.getEstimatedReturnDateInput().getEditor().getText());
 
-        int numberOfDays = DateTime.diffDays(estimatedReturnDate, rentDate);
+        numberOfDays = DateTime.diffDays(estimatedReturnDate, rentDate);
 
         if (this.propertyOperationsUI.getRentalProperty().getPropertyType().equals("apartment")) {
             checkApartmentCondition();
