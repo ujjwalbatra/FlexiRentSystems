@@ -22,16 +22,17 @@ public class RentalRecordManager {
     private PropertyOperationsUI propertyOperationsUI;
     private DateTime rentDate;
     private DateTime estimatedReturnDate;
-    private DateTime actualReturnDate;
     private ViewProperty viewProperty;
     private Map<String, RentalRecord> recordsFound;
     private int numberOfDays;
+    private RentalProperty rentalProperty;
 
 
     public RentalRecordManager(ViewProperty viewProperty, PropertyOperationsUI propertyOperationsUI) {
         this.propertyOperationsUI = propertyOperationsUI;
         this.viewProperty = viewProperty;
         this.recordsFound = new HashMap<>();
+        this.rentalProperty = this.viewProperty.getRentalProperty();
     }
 
     public void rentProperty() throws InvaliOperationException, InvalidInpuException {
@@ -41,9 +42,9 @@ public class RentalRecordManager {
 
         numberOfDays = DateTime.diffDays(estimatedReturnDate, rentDate);
 
-        if (this.propertyOperationsUI.getRentalProperty().getPropertyType().equals("apartment")) {
+        if (this.rentalProperty.getPropertyType().equals("apartment")) {
             checkApartmentCondition();
-        } else if (this.propertyOperationsUI.getRentalProperty().getPropertyType().equals("premium suit")) {
+        } else if (this.rentalProperty.getPropertyType().equals("premium suit")) {
             checkPremiumSuitCondtition();
         }
 
@@ -55,47 +56,41 @@ public class RentalRecordManager {
                     "WHERE propertyID = ?;");
 
             preparedStatement.setString(1, "rented");
-            preparedStatement.setString(2, this.propertyOperationsUI.getRentalProperty().getPropertyID());
+            preparedStatement.setString(2, this.rentalProperty.getPropertyID());
 
             preparedStatement.executeUpdate();
 
             System.out.println(preparedStatement);
-            System.out.println("property " + this.propertyOperationsUI.getRentalProperty().getPropertyID() + " rented");
+            System.out.println("property " + this.rentalProperty.getPropertyID() + " rented");
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        this.propertyOperationsUI.getRentalProperty().setPropertyStatus("rented");
+        this.rentalProperty.setPropertyStatus("rented");
 
         RentalRecord rentalRecord = this.wrapRecord();
 
         this.addRecordToDB(rentalRecord);
 
-        this.showAllRecords(this.propertyOperationsUI.getRentalProperty().getPropertyID());
+        this.showAllRecords(this.rentalProperty.getPropertyID());
 
     }
 
     public void returnProperty() throws InvaliOperationException, InvalidInpuException {
 
-        actualReturnDate = new DateTime(this.propertyOperationsUI.getActualReturnDateInput().getEditor().getText());
+        DateTime actualReturnDate = new DateTime(this.propertyOperationsUI.getActualReturnDateInput().getEditor().getText());
 
         try (Connection connection = DriverManager.getConnection("jdbc:hsqldb:file:database/localhost", "SA", "")) {
 
             //adding property ID to the property
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT  * FROM RentalRecord " +
-                    "WHERE actualReturnDate = ?" +
-                    "AND propertyID = ?;");
-
-            preparedStatement.setString(1, "none");
-            preparedStatement.setString(2, this.propertyOperationsUI.getRentalProperty().getPropertyID());
+                    "WHERE actualReturnDate IS NULL;");
 
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
 
             estimatedReturnDate = new DateTime(resultSet.getString("estimatedReturnDate"));
             rentDate = new DateTime(resultSet.getString("rentDate"));
-
-            System.out.println(preparedStatement);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -104,45 +99,125 @@ public class RentalRecordManager {
         int numOfRentalDays = DateTime.diffDays(estimatedReturnDate, rentDate);
         int numOfLateDays = DateTime.diffDays(actualReturnDate, estimatedReturnDate);
 
-        Double rentalFee;
-        Double lateFee;
+        double rentalFee;
+        double lateFee;
 
-        rentalFee = this.propertyOperationsUI.getRentalProperty().calculateRentalFee(numOfRentalDays);
-        lateFee = this.propertyOperationsUI.getRentalProperty().calculateLateFee(numOfLateDays);
+        rentalFee = this.rentalProperty.calculateRentalFee(numOfRentalDays);
+        lateFee = this.rentalProperty.calculateLateFee(numOfLateDays);
 
         try (Connection connection = DriverManager.getConnection("jdbc:hsqldb:file:database/localhost", "SA", "")) {
 
+
             //adding property ID to the property
             PreparedStatement preparedStatement = connection.prepareStatement("UPDATE RentalRecord " +
-                    "SET actualReturnDate = ? " +
-                    "AND rentalFee = ? " +
-                    "AND lateFee = ? " +
-                    "WHERE propertyID = ?" +
-                    "AND actualReturnDate = ?;");
+                    "SET actualReturnDate = ?, " +
+                    "rentalFee = ?, " +
+                    "lateFee = ? " +
+                    "WHERE actualReturnDate IS NULL;");
 
             preparedStatement.setString(1, actualReturnDate.toString());
             preparedStatement.setDouble(2, rentalFee);
             preparedStatement.setDouble(3, lateFee);
-            preparedStatement.setString(4, this.propertyOperationsUI.getRentalProperty().getPropertyID());
-            preparedStatement.setString(5, "none");
 
             preparedStatement.executeUpdate();
 
 
             System.out.println(preparedStatement);
-            System.out.println("property " + this.propertyOperationsUI.getRentalProperty().getPropertyID() + " returned");
+
+            //updating property status
+            preparedStatement = connection.prepareStatement("UPDATE RentalProperty " +
+                    "SET propertyStatus = ? " +
+                    "WHERE propertyID = ?;");
+
+            preparedStatement.setString(1, "available");
+            preparedStatement.setString(2, this.rentalProperty.getPropertyID());
+
+            preparedStatement.executeUpdate();
+
+            System.out.println(preparedStatement);
+            System.out.println("property " + this.rentalProperty.getPropertyID() + " returned");
+
+            this.rentalProperty.setPropertyStatus("available");
+
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        this.showAllRecords(this.propertyOperationsUI.getRentalProperty().getPropertyID());
+        this.showAllRecords(this.rentalProperty.getPropertyID());
+    }
+
+    public void preformMaintenance() {
+        try (Connection connection = DriverManager.getConnection("jdbc:hsqldb:file:database/localhost", "SA", "")) {
+
+            //adding property ID to the property
+            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE RentalProperty " +
+                    "SET propertyStatus = ? " +
+                    "WHERE propertyID = ?;");
+
+            preparedStatement.setString(1, "under maintenance");
+            preparedStatement.setString(2, this.rentalProperty.getPropertyID());
+
+            preparedStatement.executeUpdate();
+
+            System.out.println(preparedStatement);
+            System.out.println("property " + this.rentalProperty.getPropertyID() + " is now under maintenance");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        this.rentalProperty.setPropertyStatus("under maintenance");
+
+        this.showAllRecords(this.rentalProperty.getPropertyID());
+
+    }
+
+    public void completeMaintenance() {
+        try (Connection connection = DriverManager.getConnection("jdbc:hsqldb:file:database/localhost", "SA", "")) {
+
+            //adding property ID to the property
+            PreparedStatement preparedStatement;
+
+            //save maintenance date if it is a rental property
+            if (this.rentalProperty.getPropertyType().equals("premium suit")) {
+                ((PremiumSuit)this.rentalProperty).setLastMaintenanceDate(new DateTime(this.propertyOperationsUI.getMaintenanceDateInput().getEditor().getText()));
+
+                preparedStatement = connection.prepareStatement("UPDATE RentalProperty " +
+                        "SET propertyStatus = ?, lastMaintenanceDate = ? " +
+                        "WHERE propertyID = ?;");
+
+                preparedStatement.setString(1, "available");
+                preparedStatement.setString(2, this.propertyOperationsUI.getMaintenanceDateInput().getEditor().getText());
+                preparedStatement.setString(3, this.rentalProperty.getPropertyID());
+
+            } else {
+
+                preparedStatement = connection.prepareStatement("UPDATE RentalProperty " +
+                        "SET propertyStatus = ? " +
+                        "WHERE propertyID = ?;");
+                preparedStatement.setString(1, "available");
+                preparedStatement.setString(2, this.rentalProperty.getPropertyID());
+
+            }
+
+            preparedStatement.executeUpdate();
+
+            System.out.println(preparedStatement);
+            System.out.println("property " + this.rentalProperty.getPropertyID() + " is now available");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        this.rentalProperty.setPropertyStatus("available");
+
+        this.showAllRecords(this.rentalProperty.getPropertyID());
 
     }
 
     private RentalRecord wrapRecord() {
-        RentalRecord rentalRecord = new RentalRecord(this.propertyOperationsUI.getCustIDinput(), this.rentDate, this.estimatedReturnDate);
-        return rentalRecord;
+        return new RentalRecord(this.propertyOperationsUI.getRentalProperty().getPropertyID() + "_" + this.propertyOperationsUI.getCustIDinput() + "_" + this.rentDate,
+                this.propertyOperationsUI.getCustIDinput(), this.rentDate, this.estimatedReturnDate, null, -1, -1);
     }
 
     //todo : move these to rental property
@@ -178,7 +253,7 @@ public class RentalRecordManager {
         //true when property is rented on a maintenance day.
         boolean overlapsMaintenanceDay = false;
 
-        DateTime nextMaintenanceDate = new DateTime(((PremiumSuit) this.propertyOperationsUI.getRentalProperty()).getLastMaintenanceDate(), 10);
+        DateTime nextMaintenanceDate = new DateTime(((PremiumSuit) this.rentalProperty).getLastMaintenanceDate(), 10);
         DateTime testDate; //the day when the suit will be rented, testing if it overlaps with maintenance date.
 
         //if any of the dates when property is rented overlaps with maintenance date, overlapsMaintenanceDay is set as true and control is returned with false.
@@ -197,28 +272,28 @@ public class RentalRecordManager {
         try (Connection connection = DriverManager.getConnection("jdbc:hsqldb:file:database/localhost", "SA", "")) {
 
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO RentalRecord " +
-                    "(properTyID, rentDate, estimatedReturnDate, actualReturnDate, rentalFee, lateFee, custID)" +
-                    " VALUES (?,?,?,?,?,?,?);");
+                    "(recordID, properTyID, rentDate, estimatedReturnDate, actualReturnDate, rentalFee, lateFee, custID)" +
+                    " VALUES (?,?,?,?,?,?,?,?);");
 
-            preparedStatement.setString(1, this.propertyOperationsUI.getRentalProperty().getPropertyID());
-            preparedStatement.setString(2, rentalRecord.getRentDate().toString());
-            preparedStatement.setString(3, rentalRecord.getEstimatedReturnDate().toString());
+            preparedStatement.setString(1, rentalRecord.getRecordID());
+            preparedStatement.setString(2, this.propertyOperationsUI.getRentalProperty().getPropertyID());
+            preparedStatement.setString(3, rentalRecord.getRentDate().toString());
+            preparedStatement.setString(4, rentalRecord.getEstimatedReturnDate().toString());
 
             if (this.propertyOperationsUI.getRentalProperty().getPropertyStatus().equals("available")) {
 
-                preparedStatement.setString(4, rentalRecord.getActualReturnDate().toString());
-                preparedStatement.setDouble(5, rentalRecord.getRentalFee());
-                preparedStatement.setDouble(6, rentalRecord.getLateFee());
-
+                preparedStatement.setString(5, rentalRecord.getActualReturnDate().toString());
+                preparedStatement.setDouble(6, rentalRecord.getRentalFee());
+                preparedStatement.setDouble(7, rentalRecord.getLateFee());
 
             } else if (this.propertyOperationsUI.getRentalProperty().getPropertyStatus().equals("rented")) {
 
-                preparedStatement.setNull(4, Types.NULL);
                 preparedStatement.setNull(5, Types.NULL);
                 preparedStatement.setNull(6, Types.NULL);
-            }
-            preparedStatement.setString(7, rentalRecord.getCustID());
+                preparedStatement.setNull(7, Types.NULL);
 
+            }
+            preparedStatement.setString(8, rentalRecord.getCustID());
             preparedStatement.executeUpdate();
 
             System.out.println(preparedStatement);
@@ -253,14 +328,14 @@ public class RentalRecordManager {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                rentalRecord = new RentalRecord(resultSet.getString("custID"), new DateTime(resultSet.getString("rentDate")), new DateTime(resultSet.getString("estimatedReturnDate")));
 
                 //if the record has actual return date, then add all fee
-                if (resultSet.getString("actualReturnDate") != null) {
-                    rentalRecord.setActualReturnDate(new DateTime(resultSet.getString("actualReturnDate")));
-                    rentalRecord.setRentalFee(resultSet.getDouble("rentalFee"));
-                    rentalRecord.setLateFee(resultSet.getDouble("lateFee"));
-                    rentalRecord.setRecordID(propertyID + "_" + resultSet.getString("custID") + "_" + resultSet.getString("rentDate"));
+                if (resultSet.getString("actualReturnDate") == null) {
+                    rentalRecord = new RentalRecord(resultSet.getString("recordID"), resultSet.getString("custID"),
+                            new DateTime(resultSet.getString("rentDate")), new DateTime(resultSet.getString("estimatedReturnDate")), null, -1, -1);
+                } else {
+                    rentalRecord = new RentalRecord(resultSet.getString("recordID"), resultSet.getString("custID"), new DateTime(resultSet.getString("rentDate")), new DateTime(resultSet.getString("estimatedReturnDate")),
+                            new DateTime(resultSet.getString("actualReturnDate")), resultSet.getDouble("rentalFee"), resultSet.getDouble("lateFee"));
                 }
 
                 recordsFound.put(rentalRecord.getRecordID(), rentalRecord);
@@ -273,5 +348,6 @@ public class RentalRecordManager {
         }
 
     }
+
 }
 

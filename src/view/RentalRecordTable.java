@@ -19,11 +19,11 @@ public class RentalRecordTable {
 
     public RentalRecordTable(String custID, String rentDate, String estimatedReturnDate, String actualReturnDate, String rentalFee, String lateFee) {
         this.custID = new SimpleStringProperty(custID);
-        this.rentDate = new SimpleStringProperty(estimatedReturnDate);
-        this.estimatedReturnDate = new SimpleStringProperty(actualReturnDate);
-        this.actualReturnDate = new SimpleStringProperty(rentalFee);
-        this.rentalFee = new SimpleStringProperty(lateFee);
-        this.lateFee = new SimpleStringProperty(rentDate);
+        this.rentDate = new SimpleStringProperty(rentDate);
+        this.estimatedReturnDate = new SimpleStringProperty(estimatedReturnDate);
+        this.actualReturnDate = new SimpleStringProperty(actualReturnDate);
+        this.rentalFee = new SimpleStringProperty(rentalFee);
+        this.lateFee = new SimpleStringProperty(lateFee);
     }
 
     public String getCustID() {

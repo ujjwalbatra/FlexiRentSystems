@@ -23,12 +23,14 @@ public class RentalRecord {
     private double lateFee;
     private String custID;
 
-    public RentalRecord(String custID, DateTime rentDate, DateTime estimatedReturnDate) {
-        this.custID = custID;
+     public RentalRecord(String recordID, String custID,DateTime rentDate, DateTime estimatedReturnDate, DateTime actualReturnDate, double rentalFee, double lateFee) {
+        this.recordID = recordID;
         this.rentDate = rentDate;
         this.estimatedReturnDate = estimatedReturnDate;
-        this.actualReturnDate = null;
-
+        this.actualReturnDate = actualReturnDate;
+        this.rentalFee = rentalFee;
+        this.lateFee = lateFee;
+        this.custID = custID;
     }
 
     public String getDetails() {

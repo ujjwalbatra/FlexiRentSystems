@@ -55,31 +55,31 @@ public abstract class RentalProperty {
     //    checking all the renting conditions, if acceptable changing status and isAvailable for the property.
     public void rent(String customerID, DateTime rentDate, int numOfDays) throws InvalidOperationException, InvalidInputException {
 
-        if (!isAvailable()) throw new InvalidOperationException("Invalid Operation - the property isn't available");
-
-        //      checking if number of days is a valid input
-        if (numOfDays <= 0) throw new InvalidInputException("Invalid Input - the number of days is less than 1");
-
-        //      if renting conditions of a specific property is not satisfied exception bounces to caller
-        //        checkRentingCondition(rentDate, numOfDays);
-
-        DateTime estimatedReturnDate = new DateTime(rentDate, numOfDays);
-        RentalRecord newRecord;
-
-        // removing the oldest record/shifting records further
-        shiftRecords();
-
-        //adding new record
-        newRecord = new RentalRecord(customerID, rentDate, estimatedReturnDate);
-        this.getRentalRecord()[0] = newRecord;
-        newRecord.setRecordID("_" + customerID + "_" + rentDate.toString());
-
-
-        //making changes to status of property
-        setPropertyStatus("rented");
-        setAvailable(false);
-
-        if (numberOfRecords < 9) numberOfRecords++;     //can't let number of records stored exceed 10.
+        //        if (!isAvailable()) throw new InvalidOperationException("Invalid Operation - the property isn't available");
+        //
+        //        //      checking if number of days is a valid input
+        //        if (numOfDays <= 0) throw new InvalidInputException("Invalid Input - the number of days is less than 1");
+        //
+        //        //      if renting conditions of a specific property is not satisfied exception bounces to caller
+        //        //        checkRentingCondition(rentDate, numOfDays);
+        //
+        //        DateTime estimatedReturnDate = new DateTime(rentDate, numOfDays);
+        //        RentalRecord newRecord;
+        //
+        //        // removing the oldest record/shifting records further
+        //        shiftRecords();
+        //
+        //        //adding new record
+        //        newRecord = new RentalRecord(customerID, rentDate, estimatedReturnDate);
+        //        this.getRentalRecord()[0] = newRecord;
+        //        newRecord.setRecordID("_" + customerID + "_" + rentDate.toString());
+        //
+        //
+        //        //making changes to status of property
+        //        setPropertyStatus("rented");
+        //        setAvailable(false);
+        //
+        //        if (numberOfRecords < 9) numberOfRecords++;     //can't let number of records stored exceed 10.
 
     }
 
@@ -162,16 +162,22 @@ public abstract class RentalProperty {
      *  for given number of days
      */
     public double calculateRentalFee(int numOfDays) {
-        return rentalRate * numOfDays;
+        double rentalFee = rentalRate * numOfDays;
+
+        //rounding off double value to 2 decimal places
+        this.roundUpFee(rentalFee);
+
+        return rentalFee;
     }
 
-    //    shift records to make room for new record
-    private void shiftRecords() {
-        if (numberOfRecords > 0) {
-            for (int i = numberOfRecords - 1; i >= 0; i--) {
-                this.getRentalRecord()[i + 1] = this.getRentalRecord()[i];
-            }
-        }
+
+    /*
+     *
+     *rounds up a double value to 2 decimal places
+     *
+     */
+    public double roundUpFee(double doubleValue) {
+        return Math.round(doubleValue * 100) / 100;
     }
 
     public void setStreetNumber(int streetNumber) {

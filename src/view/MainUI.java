@@ -186,7 +186,8 @@ public class MainUI {
         this.bindLabeFilterlOptions.setSpacing(10);
         this.bindLabeFilterlOptions.getChildren().addAll(this.filterLabel, this.optionsPane);
         this.bindLabeFilterlOptions.setPadding(new Insets(4, 10, 10, 10));
-        this.bindLabeFilterlOptions.setId("filterOptions-Pane");
+        this.bindLabeFilterlOptions.getStylesheets().add(getClass().getResource("css/StyleUI.css").toExternalForm());
+        this.bindLabeFilterlOptions.getStyleClass().add("border");
 
         this.optionsPane.setHgap(30);
         this.optionsPane.setVgap(30);
@@ -313,7 +314,7 @@ public class MainUI {
         propertyDetails.getChildren().addAll(type, streetNumber, streetName, suburb);
 
         type.getStylesheets().add(getClass().getResource("css/StyleUI.css").toExternalForm());
-        type.getStyleClass().add("bold");
+        type.getStyleClass().addAll("bold", "childSize");
 
         if (rentalProperty.getPropertyType().equals("apartment")) {
             numberOfBedrooms = new Label("Number of Bedrooms : " + rentalProperty.getNumberOfBedrooms());
@@ -343,6 +344,7 @@ public class MainUI {
         //initialising a new pane every time there are changes in visible properties. to update it dynamically
         FlowPane allProperties = new FlowPane();
         this.propertyScrollPane.setContent(allProperties);
+
         allProperties.getStylesheets().add(getClass().getResource("css/StyleUI.css").toExternalForm());
         allProperties.getStyleClass().add("background");
 

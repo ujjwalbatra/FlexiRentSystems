@@ -33,10 +33,9 @@ public class Apartment extends RentalProperty {
         if (numOfDays > 0) totalLateFee = numOfDays * lateFeePerDay;
         else totalLateFee = 0;
 
-        return totalLateFee;
+        return this.roundUpFee(totalLateFee);
+
     }
-
-
 
 
 }

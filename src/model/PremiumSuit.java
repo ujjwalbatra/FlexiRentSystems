@@ -38,7 +38,7 @@ public class PremiumSuit extends RentalProperty {
         if (numOfDays > 0) totalLateFee = numOfDays * lateFeePerDay;
         else totalLateFee = 0;
 
-        return totalLateFee;
+        return this.roundUpFee(totalLateFee);
     }
 
     public void checkRentingCondition(DateTime rentDate, int numOfDays) throws InvalidOperationException, InvalidInputException {
@@ -72,5 +72,7 @@ public class PremiumSuit extends RentalProperty {
         return lastMaintenanceDate;
     }
 
-
+    public void setLastMaintenanceDate(DateTime lastMaintenanceDate) {
+        this.lastMaintenanceDate = lastMaintenanceDate;
+    }
 }

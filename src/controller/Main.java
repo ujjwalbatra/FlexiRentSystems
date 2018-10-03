@@ -27,7 +27,7 @@ public class Main extends Application {
         MainUI mainUI = new MainUI();
 
         //used to create tables in the first time.
-        //        this.createTableRentalPropertyAndRecords();
+//        this.createTableRentalPropertyAndRecords();
 
         //populating the main page in another thread
         dataFinder = new DataFinder(mainUI);
@@ -72,7 +72,7 @@ public class Main extends Application {
                     + "propertyType VARCHAR(20) NOT NULL,"
                     + "numberOfBedrooms INTEGER NOT NULL,"
                     + "rentalRate DOUBLE NOT NULL,"
-                    + "propertyStatus VARCHAR(10) NOT NULL,"
+                    + "propertyStatus VARCHAR(20) NOT NULL,"
                     + "lastMaintenanceDate VARCHAR(10),"
                     + "description VARCHAR(100),"
                     + "imagePath VARCHAR(100) ,"

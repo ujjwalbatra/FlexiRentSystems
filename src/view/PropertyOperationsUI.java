@@ -14,6 +14,7 @@ import javafx.util.StringConverter;
 import model.RentalProperty;
 import model.RentalRecord;
 import utility.exception.IncompleteInputException;
+import utility.exception.InvaliOperationException;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -24,6 +25,7 @@ public class PropertyOperationsUI {
     private DatePicker estimatedReturnDateInput;
     private DatePicker rentDateInput;
     private DatePicker actualReturnDateInput;
+    private DatePicker maintenanceDateInput;
     private TextField custIDinput;
     private ViewProperty viewProperty;
     private RentalProperty rentalProperty;
@@ -32,6 +34,7 @@ public class PropertyOperationsUI {
     public PropertyOperationsUI(ViewProperty viewProperty) {
         this.dialog = new Dialog();
         this.viewProperty = viewProperty;
+        this.rentalProperty = viewProperty.getRentalProperty();
     }
 
     /*
@@ -40,9 +43,8 @@ public class PropertyOperationsUI {
      * RentalRecordsOperationsHandler to adding to db
      *
      */
-    public void rentPropertyUI(RentalProperty rentalProperty) {
+    public void rentPropertyUI() {
 
-        this.rentalProperty = rentalProperty;
 
         this.dialog.setTitle("Rent Property");
 
@@ -101,9 +103,13 @@ public class PropertyOperationsUI {
 
     }
 
-    public void returnPropertyUI(RentalProperty rentalProperty) {
-        this.rentalProperty = rentalProperty;
-
+    /*
+     *
+     * displayes UI for return property method
+     * and calls RentalRecordsOperationsHandler for changing data in db
+     *
+     */
+    public void returnPropertyUI() {
         this.dialog.setTitle("Return Property");
 
         Label actualReturnDate = new Label("Actual Return Date : ");
@@ -150,6 +156,52 @@ public class PropertyOperationsUI {
 
     }
 
+    public void completeMaintenanceUI() {
+        this.dialog.setTitle("Complete Maintenance");
+
+        Label maintenanceDate = new Label("Enter Date : ");
+
+        this.maintenanceDateInput = new DatePicker();
+
+        this.maintenanceDateInput.setEditable(false);
+
+        this.setDateFormat(this.maintenanceDateInput);
+
+        GridPane gridPane = new GridPane();
+
+        gridPane.setHgap(10);
+        gridPane.setVgap(10);
+
+        gridPane.add(maintenanceDate, 0, 0);
+        gridPane.add(this.maintenanceDateInput, 1, 0);
+        gridPane.setPadding(new Insets(10, 10, 10, 10));
+
+        ButtonType returnBtnType = new ButtonType("Done", ButtonBar.ButtonData.OK_DONE);
+        ButtonType closeBtnType = new ButtonType("Close", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        this.dialog.getDialogPane().getButtonTypes().addAll(returnBtnType, closeBtnType);
+
+        Button returnBtn = (Button) dialog.getDialogPane().lookupButton(returnBtnType);
+
+        returnBtn.addEventFilter(
+                ActionEvent.ACTION,
+                event -> {
+                    try {
+                        RentalRecordsOperationsHandler rentalRecordsOperationsHandler = new RentalRecordsOperationsHandler(this.viewProperty, this);
+                        rentalRecordsOperationsHandler.verifyCompleteMaintenanceInput();
+                        this.dialog.close();
+                    } catch (InvaliOperationException e) {
+                        event.consume();
+                        AlertBox alertBox = new AlertBox();
+                        alertBox.generateWarningAlertBox(e.getTitle(), e.getHeader(), e.getMessage());
+                    }
+                }
+        );
+
+        dialog.getDialogPane().setContent(gridPane);
+        dialog.showAndWait();
+    }
+
     /*
      *
      * set date format to dd/MM/yyyy
@@ -184,6 +236,7 @@ public class PropertyOperationsUI {
 
     }
 
+
     public DatePicker getEstimatedReturnDateInput() {
         return estimatedReturnDateInput;
     }
@@ -202,5 +255,9 @@ public class PropertyOperationsUI {
 
     public String getCustIDinput() {
         return custIDinput.getText();
+    }
+
+    public DatePicker getMaintenanceDateInput() {
+        return maintenanceDateInput;
     }
 }
