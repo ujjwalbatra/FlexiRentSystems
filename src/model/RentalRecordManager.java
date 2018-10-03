@@ -37,8 +37,8 @@ public class RentalRecordManager {
 
     public void rentProperty() throws InvaliOperationException, InvalidInpuException {
 
-        rentDate = new DateTime(this.propertyOperationsUI.getRentDateInput().getEditor().getText());
-        estimatedReturnDate = new DateTime(this.propertyOperationsUI.getEstimatedReturnDateInput().getEditor().getText());
+        rentDate = new DateTime(this.propertyOperationsUI.getRentDateInput());
+        estimatedReturnDate = new DateTime(this.propertyOperationsUI.getEstimatedReturnDateInput());
 
         numberOfDays = DateTime.diffDays(estimatedReturnDate, rentDate);
 
@@ -78,7 +78,7 @@ public class RentalRecordManager {
 
     public void returnProperty() throws InvaliOperationException, InvalidInpuException {
 
-        DateTime actualReturnDate = new DateTime(this.propertyOperationsUI.getActualReturnDateInput().getEditor().getText());
+        DateTime actualReturnDate = new DateTime(this.propertyOperationsUI.getActualReturnDateInput());
 
         try (Connection connection = DriverManager.getConnection("jdbc:hsqldb:file:database/localhost", "SA", "")) {
 
@@ -181,14 +181,14 @@ public class RentalRecordManager {
 
             //save maintenance date if it is a rental property
             if (this.rentalProperty.getPropertyType().equals("premium suit")) {
-                ((PremiumSuit)this.rentalProperty).setLastMaintenanceDate(new DateTime(this.propertyOperationsUI.getMaintenanceDateInput().getEditor().getText()));
+                ((PremiumSuit)this.rentalProperty).setLastMaintenanceDate(new DateTime(this.propertyOperationsUI.getMaintenanceDateInput()));
 
                 preparedStatement = connection.prepareStatement("UPDATE RentalProperty " +
                         "SET propertyStatus = ?, lastMaintenanceDate = ? " +
                         "WHERE propertyID = ?;");
 
                 preparedStatement.setString(1, "available");
-                preparedStatement.setString(2, this.propertyOperationsUI.getMaintenanceDateInput().getEditor().getText());
+                preparedStatement.setString(2, this.propertyOperationsUI.getMaintenanceDateInput());
                 preparedStatement.setString(3, this.rentalProperty.getPropertyID());
 
             } else {

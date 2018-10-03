@@ -194,6 +194,10 @@ public class PropertyOperationsUI {
                         event.consume();
                         AlertBox alertBox = new AlertBox();
                         alertBox.generateWarningAlertBox(e.getTitle(), e.getHeader(), e.getMessage());
+                    } catch (IncompleteInputException e) {
+                        event.consume();
+                        AlertBox alertBox = new AlertBox();
+                        alertBox.generateWarningAlertBox(e.getTitle(), e.getHeader(), e.getMessage());
                     }
                 }
         );
@@ -237,16 +241,16 @@ public class PropertyOperationsUI {
     }
 
 
-    public DatePicker getEstimatedReturnDateInput() {
-        return estimatedReturnDateInput;
+    public String getEstimatedReturnDateInput() {
+        return estimatedReturnDateInput.getEditor().getText();
     }
 
-    public DatePicker getRentDateInput() {
-        return rentDateInput;
+    public String getRentDateInput() {
+        return rentDateInput.getEditor().getText();
     }
 
-    public DatePicker getActualReturnDateInput() {
-        return actualReturnDateInput;
+    public String getActualReturnDateInput() {
+        return actualReturnDateInput.getEditor().getText();
     }
 
     public RentalProperty getRentalProperty() {
@@ -257,7 +261,7 @@ public class PropertyOperationsUI {
         return custIDinput.getText();
     }
 
-    public DatePicker getMaintenanceDateInput() {
-        return maintenanceDateInput;
+    public String getMaintenanceDateInput() {
+        return maintenanceDateInput.getEditor().getText();
     }
 }

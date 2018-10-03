@@ -31,15 +31,15 @@ public class RentalRecordsOperationsHandler {
     /*
      *
      * takes rent property input from UI.
-     * Verifirs the input and then adds it to db
+     * Verifies the input and then rent procedure is called
      *
      */
     public void verifyAndProcessRentPropertyInput() throws IncompleteInputException {
 
-        if (this.propertyOperationsUI.getEstimatedReturnDateInput().getEditor().getText().trim().equals(""))
+        if (this.propertyOperationsUI.getEstimatedReturnDateInput().trim().equals(""))
             throw new IncompleteInputException("Error", "Incomplete Input", "Please fill all input fields");
 
-        if (this.propertyOperationsUI.getRentDateInput().getEditor().getText().trim().equals(""))
+        if (this.propertyOperationsUI.getRentDateInput().trim().equals(""))
             throw new IncompleteInputException("Error", "Incomplete Input", "Please fill all input fields");
 
         if (this.propertyOperationsUI.getCustIDinput().trim().equals(""))
@@ -59,8 +59,15 @@ public class RentalRecordsOperationsHandler {
 
     }
 
+    /*
+     *
+     * takes rent property input from UI.
+     * Verifies the input and then return property procedure is called
+     *
+     */
     public void verifyAndProcessReturnPropertyInput() throws IncompleteInputException {
-        if (this.propertyOperationsUI.getActualReturnDateInput().getEditor().getText().trim().equals(""))
+        //check if a date is entered
+        if (this.propertyOperationsUI.getActualReturnDateInput().trim().equals(""))
             throw new IncompleteInputException("Error", "Incomplete Date Input", "Please enter actual return date fields");
 
         RentalRecordManager rentalRecordManager = new RentalRecordManager(viewProperty, propertyOperationsUI);
@@ -75,8 +82,14 @@ public class RentalRecordsOperationsHandler {
         }
     }
 
+    /*
+     *
+     * takes rent property input from UI.
+     * Verifies the input and then perform maintenance procedure is called
+     *
+     */
     public void verifyPerformMaintenanceConditions() throws InvaliOperationException {
-
+        //check if property is available
         if (!this.rentalProperty.getPropertyStatus().equals("available")) {
             throw new InvaliOperationException("Error", "Invalid Operation", "The property is not available for maintenance");
         } else {
@@ -85,8 +98,18 @@ public class RentalRecordsOperationsHandler {
         }
     }
 
-    public void verifyCompleteMaintenanceInput() throws InvaliOperationException {
+    /*
+     *
+     * takes rent property input from UI.
+     * Verifies the input and then complete maintenance procedute is called
+     *
+     */
+    public void verifyCompleteMaintenanceInput() throws InvaliOperationException, IncompleteInputException {
+        //check if date is entered
+        if (this.propertyOperationsUI.getMaintenanceDateInput().trim().equals(""))
+            throw new IncompleteInputException("Error", "Incomplete Date Input", "Please enter the date");
 
+        //check if property is under maintenance
         if (!this.rentalProperty.getPropertyStatus().equals("under maintenance")) {
             throw new InvaliOperationException("Error", "Invalid Operation", "Property not under Maintenance");
         } else {
