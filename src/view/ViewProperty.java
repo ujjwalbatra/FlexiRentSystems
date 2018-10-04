@@ -218,7 +218,7 @@ public class ViewProperty {
         rentalFee.setCellValueFactory(new PropertyValueFactory<>("rentalFee"));
         lateFee.setCellValueFactory(new PropertyValueFactory<>("lateFee"));
 
-        RentalRecordTable rentalRecordTable = null;
+        RentalRecordTable rentalRecordTable;
         String none = "none";
 
         if (recordsFound != null) {
@@ -242,12 +242,11 @@ public class ViewProperty {
             }
         }
 
+        this.rentalRecords.getStylesheets().add(getClass().getResource("css/StyleUI.css").toExternalForm());
+        this.rentalRecords.getStyleClass().add("table");
 
         //making rental record table
         this.rentalRecords.getColumns().addAll(custID, rentDate, estimatedReturnDate, actualReturnDate, rentalFee, lateFee);
-
-        this.rentalRecords.getStylesheets().add(getClass().getResource("css/StyleUI.css").toExternalForm());
-        this.rentalRecords.getStyleClass().add("table");
 
         this.rentalRecords.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         rentalRecords.prefWidthProperty().bind(Bindings.add(-15, tableStackPane.widthProperty()));

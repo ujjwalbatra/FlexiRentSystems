@@ -9,6 +9,8 @@ package view;
 import controller.DataRequestHandler;
 import controller.ExitBtnHandler;
 import javafx.beans.binding.Bindings;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -21,7 +23,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.RentalProperty;
@@ -63,7 +64,7 @@ public class MainUI {
     private CheckBox oneBedroomFilter;
     private CheckBox twoBedroomFilter;
     private CheckBox threeBedroomFilter;
-    private ComboBox comboBox;
+    private ComboBox propertyStatusComboBox;
     private HBox searchFilter;
     private ObservableList<String> propertyStatusFilter;
     private HBox welcomePane;
@@ -71,6 +72,11 @@ public class MainUI {
     private VBox bindLabeFilterlOptions;
     private Label filterLabel;
     private HBox groupBtns;
+    private boolean apartmentSelected;
+    private boolean oneBedroomApartmentSelected;
+    private boolean twoBedroomApartmentSelected;
+    private boolean threeBedroomApartmentSelected;
+    private boolean premiumSuiteSelected;
 
 
     public MainUI() {
@@ -100,13 +106,14 @@ public class MainUI {
         this.oneBedroomFilter = new CheckBox();
         this.twoBedroomFilter = new CheckBox();
         this.threeBedroomFilter = new CheckBox();
-        this.comboBox = new ComboBox(propertyStatusFilter);
+        this.propertyStatusComboBox = new ComboBox(propertyStatusFilter);
         this.searchFilter = new HBox();
         this.welcomePane = new HBox();
         this.welcomeLabel = new Label();
         this.filterLabel = new Label();
         this.bindLabeFilterlOptions = new VBox();
         this.groupBtns = new HBox();
+
     }
 
     /*
@@ -115,26 +122,15 @@ public class MainUI {
      */
     public void generateMainPage() {
 
-        this.stage.setTitle("FlexiRentSystems");
-
         //block user interaction with other windows, until this window has been taken care of
         this.stage.initModality(Modality.APPLICATION_MODAL);
 
-        this.importData.setText("Import Data");
-        this.exportData.setText("Export Data");
-        this.deleteData.setText("Delete all Properties");
-        this.exitMenu.setText("Exit");
-        this.fileMenu.setText("File");
-        this.addPropertyMenuBtn.setText("Add Property");
-        this.toolsMenu.setText("Tools");
-        this.searchInput.setPromptText("Enter ID or Suburb");
-        this.apartmentFilter.setText("Apartment");
-        this.premiumSuitFilter.setText("Premium Suit");
-        this.oneBedroomFilter.setText("1 Bedroom");
-        this.twoBedroomFilter.setText("2 Bedroom");
-        this.threeBedroomFilter.setText("3 Bedroom");
-        this.filterLabel.setText("Filter Properties :");
-        this.filterLabel.setId("filterHeader");
+        //adding text to all labels and buttons
+        this.configureAllLabels();
+
+        this.selectAllPropertyTypes();
+
+        this.switchOffPropertyTypeFilter();
 
 
         //adding all menu items to menu and menu to menubar
@@ -144,28 +140,17 @@ public class MainUI {
 
         //setting up vbox to accommodate all content
         this.allContent.getChildren().addAll(this.welcomePane, this.bindLabeFilterlOptions, this.propertyScrollPane, this.groupBtns);
-        this.allContent.setPadding(new Insets(20, 20, 20, 20));
-        this.allContent.setSpacing(10);
+
 
         //configuring exit and add property button
         this.groupBtns.getChildren().addAll(this.addPropertyBtn, this.exitBtn);
-        this.groupBtns.setSpacing(20);
-
 
         //setting up welcomePane message and logo
         Image image = new Image(this.getClass().getResource("images/frsLogo.png").toString(), 100, 100, true, true);
         ImageView imageViewLogo = new ImageView(image);
 
-        this.welcomeLabel.setText("Welcome to Flexi Rent Systems");
-        this.welcomeLabel.setId("welcomeMessage");
         this.welcomePane.getChildren().addAll(imageViewLogo, this.welcomeLabel);
         this.welcomePane.setAlignment(Pos.CENTER);
-        this.welcomePane.setSpacing(20);
-
-        //setting up property scroll pane
-        this.propertyScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        this.propertyScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
-        this.propertyScrollPane.setPrefSize(115, 750);
 
         //setting up propertyStatusFilter pane
         this.propertyStatusFilter = FXCollections.observableArrayList(
@@ -175,63 +160,52 @@ public class MainUI {
                 "Rented",
                 "Under Maintenance"
         );
-        this.comboBox.setValue("Property Status");
+        this.propertyStatusComboBox.setValue("Property Status");
 
         this.searchFilter.getChildren().addAll(this.searchInput, this.searchBtn);
-        this.searchFilter.setSpacing(4);
         this.searchFilter.setAlignment(Pos.CENTER_LEFT);
 
-        this.comboBox.setItems(this.propertyStatusFilter);
+        this.propertyStatusComboBox.setItems(this.propertyStatusFilter);
 
-        this.bindLabeFilterlOptions.setSpacing(10);
         this.bindLabeFilterlOptions.getChildren().addAll(this.filterLabel, this.optionsPane);
-        this.bindLabeFilterlOptions.setPadding(new Insets(4, 10, 10, 10));
+
         this.bindLabeFilterlOptions.getStylesheets().add(getClass().getResource("css/StyleUI.css").toExternalForm());
         this.bindLabeFilterlOptions.getStyleClass().add("border");
 
-        this.optionsPane.setHgap(30);
-        this.optionsPane.setVgap(30);
-        this.optionsPane.getChildren().addAll(this.searchFilter, this.comboBox, this.checkBoxFilter);
+        this.optionsPane.getChildren().addAll(this.searchFilter, this.propertyStatusComboBox, this.checkBoxFilter);
 
         //setting up filterLabel pane
         this.checkBoxFilter.getChildren().addAll(this.filterPropertyType, this.filterNumberOfBedRooms);
         this.filterPropertyType.getChildren().addAll(this.apartmentFilter, this.premiumSuitFilter);
         this.filterNumberOfBedRooms.getChildren().addAll(this.oneBedroomFilter, this.twoBedroomFilter, this.threeBedroomFilter);
-        this.filterNumberOfBedRooms.setVgap(4);
-        this.filterNumberOfBedRooms.setHgap(4);
-        this.filterPropertyType.setVgap(4);
-        this.filterPropertyType.setHgap(4);
-        this.checkBoxFilter.setSpacing(4);
 
-        this.apartmentFilter.setSelected(true);
-        this.premiumSuitFilter.setSelected(true);
-        this.oneBedroomFilter.setSelected(true);
-        this.twoBedroomFilter.setSelected(true);
-        this.threeBedroomFilter.setSelected(true);
 
         //populating borderpane
         this.borderPane.setTop(this.menuBar);
         this.borderPane.setCenter(this.allContent);
 
         //handle apartment checkbox event
-        this.apartmentFilter.selectedProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue) {
-
-                oneBedroomFilter.setDisable(false);
-                twoBedroomFilter.setDisable(false);
-                threeBedroomFilter.setDisable(false);
-            } else {
-
-                oneBedroomFilter.setDisable(true);
-                twoBedroomFilter.setDisable(true);
-                threeBedroomFilter.setDisable(true);
-            }
-        });
+        this.apartmentFilter.selectedProperty().addListener(this::propertyTypeFilterChanged);
+        this.oneBedroomFilter.selectedProperty().addListener(this::propertyTypeFilterChanged);
+        this.twoBedroomFilter.selectedProperty().addListener(this::propertyTypeFilterChanged);
+        this.threeBedroomFilter.selectedProperty().addListener(this::propertyTypeFilterChanged);
+        this.premiumSuitFilter.selectedProperty().addListener(this::propertyTypeFilterChanged);
 
         this.deleteData.setOnAction(event -> {
-            DataRequestHandler dataRequestHandler = new DataRequestHandler();
-            dataRequestHandler.deleteDataRequest(this);
+            DataRequestHandler dataRequestHandler = new DataRequestHandler(this);
+            dataRequestHandler.deleteDataRequestHandler();
         });
+
+        //setting up all filtering options
+        this.searchBtn.setOnAction(event -> {
+            this.propertyStatusComboBox.setValue("Property Status");
+            this.selectAllPropertyTypes();
+            DataRequestHandler dataRequestHandler = new DataRequestHandler(this);
+            dataRequestHandler.searchPropertyHandler();
+        });
+
+        this.propertyStatusComboBox.valueProperty().addListener((ChangeListener<String>) this::propertyStatusFilterChanged);
+
 
         //defining exit procedure
         this.exitBtn.setOnAction(event -> ExitBtnHandler.getInstance().getConfirmDialogBoxMainUI(this));
@@ -256,6 +230,8 @@ public class MainUI {
             addPropertyUI.generateAddpropertyUI();
         });
 
+        this.setLayout();
+
         //styling
         this.allContent.getStylesheets().add(getClass().getResource("css/StyleUI.css").toExternalForm());
         this.allContent.getStyleClass().add("allContent-Pane");
@@ -278,7 +254,6 @@ public class MainUI {
         HBox propertyContent = new HBox(10);
         VBox propertyDetails = new VBox(4);
         VBox propertyWithLink = new VBox(30);
-
 
 
         String imagePath = rentalProperty.getImagePath();
@@ -358,5 +333,136 @@ public class MainUI {
             }
         }
 
+    }
+
+    private void configureAllLabels() {
+        this.stage.setTitle("FlexiRentSystems");
+        this.importData.setText("Import Data");
+        this.exportData.setText("Export Data");
+        this.deleteData.setText("Delete all Properties");
+        this.exitMenu.setText("Exit");
+        this.fileMenu.setText("File");
+        this.addPropertyMenuBtn.setText("Add Property");
+        this.toolsMenu.setText("Tools");
+        this.searchInput.setPromptText("Enter ID or Suburb");
+        this.apartmentFilter.setText("Apartment");
+        this.premiumSuitFilter.setText("Premium Suit");
+        this.oneBedroomFilter.setText("1 Bedroom");
+        this.twoBedroomFilter.setText("2 Bedroom");
+        this.threeBedroomFilter.setText("3 Bedroom");
+        this.filterLabel.setText("Filter Properties :");
+        this.filterLabel.setId("filterHeader");
+        this.welcomeLabel.setText("Welcome to Flexi Rent Systems");
+        this.welcomeLabel.setId("welcomeMessage");
+    }
+
+    private void setLayout() {
+        this.bindLabeFilterlOptions.setPadding(new Insets(4, 10, 10, 10));
+        this.allContent.setPadding(new Insets(20, 20, 20, 20));
+        this.allContent.setSpacing(10);
+        this.groupBtns.setSpacing(20);
+        this.checkBoxFilter.setSpacing(4);
+        this.welcomePane.setSpacing(20);
+        this.searchFilter.setSpacing(4);
+        this.bindLabeFilterlOptions.setSpacing(10);
+        this.optionsPane.setHgap(30);
+        this.optionsPane.setVgap(30);
+        this.filterNumberOfBedRooms.setVgap(4);
+        this.filterNumberOfBedRooms.setHgap(4);
+        this.filterPropertyType.setVgap(4);
+        this.filterPropertyType.setHgap(4);
+
+        //setting up property scroll pane
+        this.propertyScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        this.propertyScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+        this.propertyScrollPane.setPrefSize(115, 750);
+
+
+    }
+
+    public String getSearchInput() {
+        return searchInput.getText().trim();
+    }
+
+    private void propertyStatusFilterChanged(ObservableValue<? extends String> ov, String t, String t1) {
+        this.searchInput.setText("");
+        this.selectAllPropertyTypes();
+
+        String propertyStatus = t1.toLowerCase();
+
+        DataRequestHandler dataRequestHandler = new DataRequestHandler(this);
+
+        if (!propertyStatus.equals("property status"))
+            dataRequestHandler.filterPropertyStatusHandler(propertyStatus);
+    }
+
+    private void selectAllPropertyTypes() {
+        this.apartmentFilter.setSelected(true);
+        this.premiumSuitFilter.setSelected(true);
+        this.oneBedroomFilter.setSelected(true);
+        this.twoBedroomFilter.setSelected(true);
+        this.threeBedroomFilter.setSelected(true);
+    }
+
+    private void propertyTypeFilterChanged(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+
+        this.searchInput.setText("");
+        this.propertyStatusComboBox.setValue("Property Status");
+        this.switchOffPropertyTypeFilter();
+
+        if (premiumSuitFilter.isSelected()) premiumSuiteSelected = true;
+        if (apartmentFilter.isSelected()) apartmentSelected = true;
+        if (oneBedroomFilter.isSelected()) oneBedroomApartmentSelected = true;
+        if (twoBedroomFilter.isSelected()) twoBedroomApartmentSelected = true;
+        if (threeBedroomFilter.isSelected()) threeBedroomApartmentSelected = true;
+
+        if (apartmentSelected) {
+
+            oneBedroomFilter.setDisable(false);
+            twoBedroomFilter.setDisable(false);
+            threeBedroomFilter.setDisable(false);
+
+        } else {
+
+            oneBedroomFilter.setDisable(true);
+            twoBedroomFilter.setDisable(true);
+            threeBedroomFilter.setDisable(true);
+
+            oneBedroomApartmentSelected = false;
+            twoBedroomApartmentSelected = false;
+            threeBedroomApartmentSelected = false;
+        }
+
+        DataRequestHandler dataRequestHandler = new DataRequestHandler(this);
+        dataRequestHandler.filterPropertyTypeHandler();
+
+    }
+
+    private void switchOffPropertyTypeFilter() {
+        apartmentSelected = false;
+        oneBedroomApartmentSelected = false;
+        twoBedroomApartmentSelected = false;
+        threeBedroomApartmentSelected = false;
+        premiumSuiteSelected = false;
+    }
+
+    public boolean isApartmentSelected() {
+        return apartmentSelected;
+    }
+
+    public boolean isOneBedroomApartmentSelected() {
+        return oneBedroomApartmentSelected;
+    }
+
+    public boolean isTwoBedroomApartmentSelected() {
+        return twoBedroomApartmentSelected;
+    }
+
+    public boolean isThreeBedroomApartmentSelected() {
+        return threeBedroomApartmentSelected;
+    }
+
+    public boolean isPremiumSuiteSelected() {
+        return premiumSuiteSelected;
     }
 }

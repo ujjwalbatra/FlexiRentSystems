@@ -7,7 +7,6 @@ package model;/*
 
 import utility.DateTime;
 import view.MainUI;
-import view.ViewProperty;
 
 import java.sql.*;
 import java.util.HashMap;
@@ -17,19 +16,6 @@ public class DataFinder {
 
     private MainUI mainUI;
     private Map<String, RentalProperty> propertiesFound;
-    private static Connection connection;
-
-    static {
-        try {
-            connection = DriverManager.getConnection("jdbc:hsqldb:file:database/localhost", "SA", "");
-            Class.forName("org.hsqldb.jdbc.JDBCDriver");
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
 
     public DataFinder(MainUI mainUI) {
         this.mainUI = mainUI;
@@ -60,7 +46,10 @@ public class DataFinder {
      *
      */
     private void getAllOneBedRoomApartments() {
-        try {
+        try (Connection connection = DriverManager.getConnection("jdbc:hsqldb:file:database/localhost", "SA", "")) {
+
+            Class.forName("org.hsqldb.jdbc.JDBCDriver");
+
             RentalProperty rentalProperty;
 
             PreparedStatement preparedStatement;
@@ -71,15 +60,13 @@ public class DataFinder {
 
             while (resultSet.next()) {
                 rentalProperty = new Apartment(resultSet.getInt("streetNumber"), resultSet.getString("streetName"),
-                        resultSet.getString("suburb"),resultSet.getString("propertyStatus") ,resultSet.getInt("numberOfBedrooms"),
+                        resultSet.getString("suburb"), resultSet.getString("propertyStatus"), resultSet.getInt("numberOfBedrooms"),
                         resultSet.getString("description"), resultSet.getString("imagePath"));
-
-                rentalProperty.setPropertyID(resultSet.getString("propertyID"));
 
                 this.propertiesFound.put(resultSet.getString("propertyID"), rentalProperty);
             }
 
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
@@ -90,7 +77,10 @@ public class DataFinder {
      *
      */
     private void getAllTwoBedRoomApartments() {
-        try {
+        try (Connection connection = DriverManager.getConnection("jdbc:hsqldb:file:database/localhost", "SA", "")) {
+
+            Class.forName("org.hsqldb.jdbc.JDBCDriver");
+
             RentalProperty rentalProperty;
 
             PreparedStatement preparedStatement;
@@ -101,15 +91,13 @@ public class DataFinder {
 
             while (resultSet.next()) {
                 rentalProperty = new Apartment(resultSet.getInt("streetNumber"), resultSet.getString("streetName"),
-                        resultSet.getString("suburb"), resultSet.getString("propertyStatus"),resultSet.getInt("numberOfBedrooms"),
+                        resultSet.getString("suburb"), resultSet.getString("propertyStatus"), resultSet.getInt("numberOfBedrooms"),
                         resultSet.getString("description"), resultSet.getString("imagePath"));
-
-                rentalProperty.setPropertyID(resultSet.getString("propertyID"));
 
                 this.propertiesFound.put(resultSet.getString("propertyID"), rentalProperty);
             }
 
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
@@ -120,7 +108,10 @@ public class DataFinder {
      *
      */
     private void getAllThreeBedRoomApartments() {
-        try {
+        try (Connection connection = DriverManager.getConnection("jdbc:hsqldb:file:database/localhost", "SA", "")) {
+
+            Class.forName("org.hsqldb.jdbc.JDBCDriver");
+
             RentalProperty rentalProperty;
             PreparedStatement preparedStatement;
 
@@ -130,15 +121,13 @@ public class DataFinder {
 
             while (resultSet.next()) {
                 rentalProperty = new Apartment(resultSet.getInt("streetNumber"), resultSet.getString("streetName"),
-                        resultSet.getString("suburb"),resultSet.getString("propertyStatus"), resultSet.getInt("numberOfBedrooms"),
+                        resultSet.getString("suburb"), resultSet.getString("propertyStatus"), resultSet.getInt("numberOfBedrooms"),
                         resultSet.getString("description"), resultSet.getString("imagePath"));
-
-                rentalProperty.setPropertyID(resultSet.getString("propertyID"));
 
                 this.propertiesFound.put(resultSet.getString("propertyID"), rentalProperty);
             }
 
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
@@ -149,7 +138,10 @@ public class DataFinder {
      *
      */
     private void getAllPremiumSuits() {
-        try {
+        try (Connection connection = DriverManager.getConnection("jdbc:hsqldb:file:database/localhost", "SA", "")) {
+
+            Class.forName("org.hsqldb.jdbc.JDBCDriver");
+
             RentalProperty rentalProperty;
             PreparedStatement preparedStatement;
 
@@ -159,17 +151,79 @@ public class DataFinder {
 
             while (resultSet.next()) {
                 rentalProperty = new PremiumSuit(resultSet.getInt("streetNumber"), resultSet.getString("streetName"),
-                        resultSet.getString("suburb"),resultSet.getString("propertyStatus"), new DateTime(resultSet.getString("lastMaintenanceDate")),
+                        resultSet.getString("suburb"), resultSet.getString("propertyStatus"), new DateTime(resultSet.getString("lastMaintenanceDate")),
                         resultSet.getString("description"), resultSet.getString("imagePath"));
-
-                rentalProperty.setPropertyID(resultSet.getString("propertyID"));
 
                 this.propertiesFound.put(resultSet.getString("propertyID"), rentalProperty);
             }
 
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    /*
+     *
+     * search property on the basis of a property id or suburb
+     *
+     */
+    public void searchProperty(String searchString) {
+        try (Connection connection = DriverManager.getConnection("jdbc:hsqldb:file:database/localhost", "SA", "")) {
+
+            Class.forName("org.hsqldb.jdbc.JDBCDriver");
+
+            PreparedStatement preparedStatement;
+
+            preparedStatement = connection.prepareStatement("SELECT * FROM RentalProperty WHERE LOWER(propertyID) = ? OR LOWER(suburb) = ?;");
+
+            preparedStatement.setString(1, searchString);
+            preparedStatement.setString(2, searchString);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            this.wrapResultSet(resultSet);
+
+            this.updateView();
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*
+     *
+     * search property on the basis of a property id or suburb
+     *
+     */
+    public void filterPropertyStatus(String propertyStatus) {
+        try (Connection connection = DriverManager.getConnection("jdbc:hsqldb:file:database/localhost", "SA", "")) {
+
+            Class.forName("org.hsqldb.jdbc.JDBCDriver");
+
+            PreparedStatement preparedStatement;
+
+            preparedStatement = connection.prepareStatement("SELECT * FROM RentalProperty WHERE LOWER(propertyStatus) = ?");
+
+            preparedStatement.setString(1, propertyStatus);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            this.wrapResultSet(resultSet);
+
+            this.updateView();
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void filterPropertyType(){
+        if (mainUI.isOneBedroomApartmentSelected()) this.getAllOneBedRoomApartments();
+        if (mainUI.isTwoBedroomApartmentSelected()) this.getAllTwoBedRoomApartments();
+        if (mainUI.isThreeBedroomApartmentSelected()) this.getAllThreeBedRoomApartments();
+        if (mainUI.isPremiumSuiteSelected()) this.getAllPremiumSuits();
+        this.updateView();
+
     }
 
     /*
@@ -178,7 +232,9 @@ public class DataFinder {
      *
      */
     public void deleteAllProperties() {
-        try {
+        try (Connection connection = DriverManager.getConnection("jdbc:hsqldb:file:database/localhost", "SA", "")) {
+
+            Class.forName("org.hsqldb.jdbc.JDBCDriver");
             PreparedStatement preparedStatement;
 
             preparedStatement = connection.prepareStatement("DELETE FROM RentalProperty WHERE rowID > 0;");
@@ -191,7 +247,7 @@ public class DataFinder {
 
             this.updateView();
 
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
 
@@ -235,25 +291,25 @@ public class DataFinder {
 
             System.out.println(preparedStatement);
 
-//            //adding property ID to the property
-//            preparedStatement = connection.prepareStatement("UPDATE RentalProperty " +
-//                    "SET propertyID = ? " +
-//                    "WHERE streetNumber = ? " +
-//                    "AND streetName = ? " +
-//                    "AND suburb = ?;");
-//
-//            char propertyTypeChar = rentalProperty.getPropertyType().toUpperCase().charAt(0);
-//
-//            preparedStatement.setString(1, propertyTypeChar + "_" + rentalProperty.getStreetNumber()
-//                    + "_" + rentalProperty.getStreetName() + "_" + rentalProperty.getSuburb());
-//
-//            preparedStatement.setInt(2, rentalProperty.getStreetNumber());
-//            preparedStatement.setString(3, rentalProperty.getStreetName());
-//            preparedStatement.setString(4, rentalProperty.getSuburb());
-//
-//            preparedStatement.executeUpdate();
-//
-//            System.err.println("RentalProperty inserted into the table");
+            //            //adding property ID to the property
+            //            preparedStatement = connection.prepareStatement("UPDATE RentalProperty " +
+            //                    "SET propertyID = ? " +
+            //                    "WHERE streetNumber = ? " +
+            //                    "AND streetName = ? " +
+            //                    "AND suburb = ?;");
+            //
+            //            char propertyTypeChar = rentalProperty.getPropertyType().toUpperCase().charAt(0);
+            //
+            //            preparedStatement.setString(1, propertyTypeChar + "_" + rentalProperty.getStreetNumber()
+            //                    + "_" + rentalProperty.getStreetName() + "_" + rentalProperty.getSuburb());
+            //
+            //            preparedStatement.setInt(2, rentalProperty.getStreetNumber());
+            //            preparedStatement.setString(3, rentalProperty.getStreetName());
+            //            preparedStatement.setString(4, rentalProperty.getSuburb());
+            //
+            //            preparedStatement.executeUpdate();
+            //
+            //            System.err.println("RentalProperty inserted into the table");
 
             showAllProperties();
 
@@ -270,6 +326,28 @@ public class DataFinder {
      */
     private void updateView() {
         mainUI.populatePropertiesFlowPane(this.propertiesFound);
+    }
+
+    private void wrapResultSet(ResultSet resultSet) {
+        RentalProperty rentalProperty;
+        try {
+            while (resultSet.next()) {
+
+                if (resultSet.getString("propertyType").equals("premium suite")) {
+                    rentalProperty = new PremiumSuit(resultSet.getInt("streetNumber"), resultSet.getString("streetName"),
+                            resultSet.getString("suburb"), resultSet.getString("propertyStatus"), new DateTime(resultSet.getString("lastMaintenanceDate")),
+                            resultSet.getString("description"), resultSet.getString("imagePath"));
+                } else {
+                    rentalProperty = new Apartment(resultSet.getInt("streetNumber"), resultSet.getString("streetName"),
+                            resultSet.getString("suburb"), resultSet.getString("propertyStatus"), resultSet.getInt("numberOfBedrooms"),
+                            resultSet.getString("description"), resultSet.getString("imagePath"));
+                }
+
+                this.propertiesFound.put(resultSet.getString("propertyID"), rentalProperty);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 }

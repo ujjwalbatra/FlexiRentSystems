@@ -9,8 +9,8 @@ package controller;
 
 
 import model.Apartment;
-import model.PremiumSuit;
 import model.DataFinder;
+import model.PremiumSuit;
 import model.RentalProperty;
 import utility.DateTime;
 import utility.exception.IncompleteInputException;
@@ -107,6 +107,10 @@ public class AddPropertyBtnHandler {
             this.imagePath = "images/default.jpg";
         }
         wrapProperty();
+
+        DataFinder dataFinder = new DataFinder(mainUI);
+
+        dataFinder.addPropertyToDB(rentalProperty);
     }
 
     /*
@@ -123,17 +127,13 @@ public class AddPropertyBtnHandler {
             if (this.addPropertyUI.getSelectedNumberOfBed().equals("one")) this.numberOfBedrooms = 1;
             if (this.addPropertyUI.getSelectedNumberOfBed().equals("two")) this.numberOfBedrooms = 2;
             if (this.addPropertyUI.getSelectedNumberOfBed().equals("three")) this.numberOfBedrooms = 3;
-            this.rentalProperty = new Apartment(this.streetNumber, this.addPropertyUI.getStreetNameInput().trim(), this.addPropertyUI.getSuburbInput().trim(),"available", this.numberOfBedrooms, this.addPropertyUI.getDescriptionInput().trim(), this.imagePath.trim());
+            this.rentalProperty = new Apartment(this.streetNumber, this.addPropertyUI.getStreetNameInput().trim(), this.addPropertyUI.getSuburbInput().trim(), "available", this.numberOfBedrooms, this.addPropertyUI.getDescriptionInput().trim(), this.imagePath.trim());
 
         } else if (this.addPropertyUI.getSelectedPropertyType().equals("premium suit")) {
 
-            this.rentalProperty = new PremiumSuit(this.streetNumber, this.addPropertyUI.getStreetNameInput().trim(), this.addPropertyUI.getSuburbInput().trim(),"available", new DateTime(this.addPropertyUI.getLastMaintenanceDateInput()), this.addPropertyUI.getDescriptionInput().trim(), this.imagePath.trim());
+            this.rentalProperty = new PremiumSuit(this.streetNumber, this.addPropertyUI.getStreetNameInput().trim(), this.addPropertyUI.getSuburbInput().trim(), "available", new DateTime(this.addPropertyUI.getLastMaintenanceDateInput()), this.addPropertyUI.getDescriptionInput().trim(), this.imagePath.trim());
 
         }
-
-        DataFinder dataFinder = new DataFinder(mainUI);
-
-        dataFinder.addPropertyToDB(rentalProperty);
 
     }
 
