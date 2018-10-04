@@ -200,59 +200,60 @@ public class DataFinder {
 
     /*
      *
-     * adding the property to database and intialising it's row ID (auto increment) and a property ID.
+     * adding the property to database and initialising it's row ID (auto increment) and a property ID.
      *
      */
     public void addPropertyToDB(RentalProperty rentalProperty) {
         try (Connection connection = DriverManager.getConnection("jdbc:hsqldb:file:database/localhost", "SA", "")) {
 
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO RentalProperty " +
-                    "(streetNumber, streetName, suburb, propertyType, numberOfBedrooms, rentalRate, propertyStatus, lastMaintenanceDate, description, imagePath )" +
-                    " VALUES (?,?,?,?,?,?,?,?,?,?);");
+                    "(propertyID, streetNumber, streetName, suburb, propertyType, numberOfBedrooms, rentalRate, propertyStatus, lastMaintenanceDate, description, imagePath )" +
+                    " VALUES (?,?,?,?,?,?,?,?,?,?,?);");
 
-            preparedStatement.setInt(1, rentalProperty.getStreetNumber());
-            preparedStatement.setString(2, rentalProperty.getStreetName());
-            preparedStatement.setString(3, rentalProperty.getSuburb());
-            preparedStatement.setString(4, rentalProperty.getPropertyType());
-            preparedStatement.setInt(5, rentalProperty.getNumberOfBedrooms());
-            preparedStatement.setDouble(6, rentalProperty.getRentalRate());
-            preparedStatement.setString(7, rentalProperty.getPropertyStatus());
+            preparedStatement.setString(1, rentalProperty.getPropertyID());
+            preparedStatement.setInt(2, rentalProperty.getStreetNumber());
+            preparedStatement.setString(3, rentalProperty.getStreetName());
+            preparedStatement.setString(4, rentalProperty.getSuburb());
+            preparedStatement.setString(5, rentalProperty.getPropertyType());
+            preparedStatement.setInt(6, rentalProperty.getNumberOfBedrooms());
+            preparedStatement.setDouble(7, rentalProperty.getRentalRate());
+            preparedStatement.setString(8, rentalProperty.getPropertyStatus());
 
             if (rentalProperty.getPropertyType().equals("premium suit")) {
                 System.out.println(((PremiumSuit) rentalProperty).getLastMaintenanceDate().toString());
-                preparedStatement.setString(8, ((PremiumSuit) rentalProperty).getLastMaintenanceDate().toString());
+                preparedStatement.setString(9, ((PremiumSuit) rentalProperty).getLastMaintenanceDate().toString());
 
             } else if (rentalProperty.getPropertyType().equals("apartment"))
-                preparedStatement.setNull(8, Types.NULL);
+                preparedStatement.setNull(9, Types.NULL);
 
 
-            preparedStatement.setString(9, rentalProperty.getDescription());
-            preparedStatement.setString(10, rentalProperty.getImagePath());
+            preparedStatement.setString(10, rentalProperty.getDescription());
+            preparedStatement.setString(11, rentalProperty.getImagePath());
 
 
             preparedStatement.executeUpdate();
 
             System.out.println(preparedStatement);
 
-            //adding property ID to the property
-            preparedStatement = connection.prepareStatement("UPDATE RentalProperty " +
-                    "SET propertyID = ? " +
-                    "WHERE streetNumber = ? " +
-                    "AND streetName = ? " +
-                    "AND suburb = ?;");
-
-            char propertyTypeChar = rentalProperty.getPropertyType().toUpperCase().charAt(0);
-
-            preparedStatement.setString(1, propertyTypeChar + "_" + rentalProperty.getStreetNumber()
-                    + "_" + rentalProperty.getStreetName() + "_" + rentalProperty.getSuburb());
-
-            preparedStatement.setInt(2, rentalProperty.getStreetNumber());
-            preparedStatement.setString(3, rentalProperty.getStreetName());
-            preparedStatement.setString(4, rentalProperty.getSuburb());
-
-            preparedStatement.executeUpdate();
-
-            System.err.println("RentalProperty inserted into the table");
+//            //adding property ID to the property
+//            preparedStatement = connection.prepareStatement("UPDATE RentalProperty " +
+//                    "SET propertyID = ? " +
+//                    "WHERE streetNumber = ? " +
+//                    "AND streetName = ? " +
+//                    "AND suburb = ?;");
+//
+//            char propertyTypeChar = rentalProperty.getPropertyType().toUpperCase().charAt(0);
+//
+//            preparedStatement.setString(1, propertyTypeChar + "_" + rentalProperty.getStreetNumber()
+//                    + "_" + rentalProperty.getStreetName() + "_" + rentalProperty.getSuburb());
+//
+//            preparedStatement.setInt(2, rentalProperty.getStreetNumber());
+//            preparedStatement.setString(3, rentalProperty.getStreetName());
+//            preparedStatement.setString(4, rentalProperty.getSuburb());
+//
+//            preparedStatement.executeUpdate();
+//
+//            System.err.println("RentalProperty inserted into the table");
 
             showAllProperties();
 

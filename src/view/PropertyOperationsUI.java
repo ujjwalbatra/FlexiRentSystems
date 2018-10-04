@@ -1,9 +1,11 @@
-package view;/*
+/*
  *
  * @project - FlexiRentSystems
  * @author - ujjwalbatra on 20/09/18
  *
  */
+
+package view;
 
 import controller.RentalRecordsOperationsHandler;
 import javafx.event.ActionEvent;
@@ -11,7 +13,6 @@ import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.util.StringConverter;
-import model.RentalProperty;
 import model.RentalRecord;
 import utility.exception.IncompleteInputException;
 import utility.exception.InvaliOperationException;
@@ -28,13 +29,11 @@ public class PropertyOperationsUI {
     private DatePicker maintenanceDateInput;
     private TextField custIDinput;
     private ViewProperty viewProperty;
-    private RentalProperty rentalProperty;
 
 
     public PropertyOperationsUI(ViewProperty viewProperty) {
         this.dialog = new Dialog();
         this.viewProperty = viewProperty;
-        this.rentalProperty = viewProperty.getRentalProperty();
     }
 
     /*
@@ -251,10 +250,6 @@ public class PropertyOperationsUI {
 
     public String getActualReturnDateInput() {
         return actualReturnDateInput.getEditor().getText();
-    }
-
-    public RentalProperty getRentalProperty() {
-        return rentalProperty;
     }
 
     public String getCustIDinput() {

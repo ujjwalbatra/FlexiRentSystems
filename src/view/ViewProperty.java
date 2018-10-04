@@ -13,7 +13,10 @@ import javafx.beans.binding.Bindings;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -29,7 +32,8 @@ import model.RentalProperty;
 import model.RentalRecord;
 import utility.exception.InvaliOperationException;
 
-import java.util.Map;
+import java.util.Collections;
+import java.util.List;
 
 /*
  * this class is used to generate view property UI, when
@@ -193,7 +197,8 @@ public class ViewProperty {
 
     }
 
-    public void updateView(Map<String, RentalRecord> recordsFound) {
+    public void updateView(List<RentalRecord> recordsFound) {
+
 
         //disable property function buttons on the basis of property status
         this.switchButtons();
@@ -217,7 +222,11 @@ public class ViewProperty {
         String none = "none";
 
         if (recordsFound != null) {
-            for (RentalRecord rentalRecord : recordsFound.values()) {
+
+            //keep the most recent record on top
+            Collections.reverse(recordsFound);
+
+            for (RentalRecord rentalRecord : recordsFound) {
 
                 if (rentalRecord.getActualReturnDate() != null) {
                     rentalRecordTable = new RentalRecordTable(rentalRecord.getCustID(), rentalRecord.getRentDate().toString(), rentalRecord.getEstimatedReturnDate().toString(),

@@ -22,6 +22,9 @@ public class PremiumSuit extends RentalProperty {
         this.setRentalRate(this.PREMIUM_RENTAL_RATE);
         this.setPropertyType("premium suit");
         this.lastMaintenanceDate = lastMaintenanceDate;
+        char propertyTypeChar = getPropertyType().toUpperCase().charAt(0);
+        this.setPropertyID(propertyTypeChar + "_" + streetNumber
+                + "_" + streetName + "_" + suburb);
     }
 
 

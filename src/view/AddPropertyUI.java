@@ -57,8 +57,6 @@ public class AddPropertyUI {
     private ToggleButton threeBed;
     private MainUI mainUI;
 
-    private Button addPropertyBtn;
-
     private File selectedFile;
 
 
@@ -190,8 +188,8 @@ public class AddPropertyUI {
 
         //listener for toggle button
         groupPropertyType.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
-            public void changed(ObservableValue<? extends Toggle> ov,
-                                Toggle toggle, Toggle new_toggle) {
+            @Override
+            public void changed(ObservableValue<? extends Toggle> ov, Toggle toggle, Toggle new_toggle) {
                 boolean setVisibility = (new_toggle == apartment);
                 int visibility, visibilityInverse;
 
@@ -229,9 +227,9 @@ public class AddPropertyUI {
         form.add(image, 0, 9);
         form.add(imageInput, 1, 9);
 
-        this.addPropertyBtn = (Button) dialog.getDialogPane().lookupButton(addPropertyBtnType);
+        Button addPropertyBtn = (Button) dialog.getDialogPane().lookupButton(addPropertyBtnType);
 
-        this.addPropertyBtn.addEventFilter(
+        addPropertyBtn.addEventFilter(
                 ActionEvent.ACTION,
                 event -> {
                     try {

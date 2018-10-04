@@ -18,6 +18,9 @@ public class Apartment extends RentalProperty {
         else if (numberOfBedrooms == 2) this.setRentalRate(TWO_BEDROOM_RATE);
         else if (numberOfBedrooms == 3) this.setRentalRate(THREE_BEDROOM_RATE);
         this.setPropertyType("apartment");
+        char propertyTypeChar = getPropertyType().toUpperCase().charAt(0);
+        this.setPropertyID(propertyTypeChar + "_" + streetNumber
+                + "_" + streetName + "_" + suburb);
     }
 
     /*

@@ -104,7 +104,7 @@ public class AddPropertyBtnHandler {
             }
 
         } else {
-            throw new IncompleteInputException("Error", "Input Incomplete", "Please upload image for the property");
+            this.imagePath = "images/default.jpg";
         }
         wrapProperty();
     }

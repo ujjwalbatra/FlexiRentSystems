@@ -47,6 +47,7 @@ public abstract class RentalProperty {
         this.isAvailable = true;
         this.description = description;
         this.imagePath = imagePath;
+
     }
 
     public abstract double calculateLateFee(int numOfDays);
@@ -177,7 +178,7 @@ public abstract class RentalProperty {
      *
      */
     public double roundUpFee(double doubleValue) {
-        return Math.round(doubleValue * 100) / 100;
+        return Math.round(doubleValue * 100.00) / 100.00;
     }
 
     public void setStreetNumber(int streetNumber) {
@@ -242,10 +243,6 @@ public abstract class RentalProperty {
 
     public void setPropertyType(String propertyType) {
         this.propertyType = propertyType;
-    }
-
-    public RentalRecord[] getRentalRecord() {
-        return rentalRecord;
     }
 
     public double getRentalRate() {
