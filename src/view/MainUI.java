@@ -23,10 +23,13 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.RentalProperty;
+import utility.exception.InvaliOperationException;
 
+import java.io.File;
 import java.util.Map;
 
 
@@ -69,7 +72,7 @@ public class MainUI {
     private ObservableList<String> propertyStatusFilter;
     private HBox welcomePane;
     private Label welcomeLabel;
-    private VBox bindLabeFilterlOptions;
+    private VBox bindLabelFilterlOptions;
     private Label filterLabel;
     private HBox groupBtns;
     private boolean apartmentSelected;
@@ -77,6 +80,7 @@ public class MainUI {
     private boolean twoBedroomApartmentSelected;
     private boolean threeBedroomApartmentSelected;
     private boolean premiumSuiteSelected;
+    private File file;
 
 
     public MainUI() {
@@ -111,7 +115,7 @@ public class MainUI {
         this.welcomePane = new HBox();
         this.welcomeLabel = new Label();
         this.filterLabel = new Label();
-        this.bindLabeFilterlOptions = new VBox();
+        this.bindLabelFilterlOptions = new VBox();
         this.groupBtns = new HBox();
 
     }
@@ -139,7 +143,7 @@ public class MainUI {
         this.menuBar.getMenus().addAll(this.fileMenu, this.toolsMenu);
 
         //setting up vbox to accommodate all content
-        this.allContent.getChildren().addAll(this.welcomePane, this.bindLabeFilterlOptions, this.propertyScrollPane, this.groupBtns);
+        this.allContent.getChildren().addAll(this.welcomePane, this.bindLabelFilterlOptions, this.propertyScrollPane, this.groupBtns);
 
 
         //configuring exit and add property button
@@ -167,10 +171,10 @@ public class MainUI {
 
         this.propertyStatusComboBox.setItems(this.propertyStatusFilter);
 
-        this.bindLabeFilterlOptions.getChildren().addAll(this.filterLabel, this.optionsPane);
+        this.bindLabelFilterlOptions.getChildren().addAll(this.filterLabel, this.optionsPane);
 
-        this.bindLabeFilterlOptions.getStylesheets().add(getClass().getResource("css/StyleUI.css").toExternalForm());
-        this.bindLabeFilterlOptions.getStyleClass().add("border");
+        this.bindLabelFilterlOptions.getStylesheets().add(getClass().getResource("css/StyleUI.css").toExternalForm());
+        this.bindLabelFilterlOptions.getStyleClass().add("border");
 
         this.optionsPane.getChildren().addAll(this.searchFilter, this.propertyStatusComboBox, this.checkBoxFilter);
 
@@ -230,6 +234,15 @@ public class MainUI {
             addPropertyUI.generateAddpropertyUI();
         });
 
+        //config for export and import data
+        this.exportData.setOnAction(event -> {
+            this.showSaveDataDialog();
+        });
+
+        this.importData.setOnAction(event -> {
+            this.showOpenFileDialog();
+        });
+
         this.setLayout();
 
         //styling
@@ -240,7 +253,7 @@ public class MainUI {
         this.groupBtns.setAlignment(Pos.BOTTOM_RIGHT);
         this.optionsPane.setAlignment(Pos.CENTER);
         this.allContent.setAlignment(Pos.CENTER);
-        this.bindLabeFilterlOptions.setAlignment(Pos.CENTER);
+        this.bindLabelFilterlOptions.setAlignment(Pos.CENTER);
 
         this.stage.setScene(this.scene);
         this.stage.show();
@@ -262,7 +275,7 @@ public class MainUI {
         ImageView imageView;
 
         try {
-            image = new Image(this.getClass().getResource(imagePath).toString(), 200, 200, true, true);
+            image = new Image(this.getClass().getResource( "images/"+ imagePath).toString(), 200, 200, true, true);
         } catch (NullPointerException e) {
             image = new Image(this.getClass().getResource("images/sample.jpg").toString(), 200, 200, true, true);
         }
@@ -275,8 +288,6 @@ public class MainUI {
         viewPropertyBtn.setOnAction(event -> {
             ViewProperty viewProperty = new ViewProperty(rentalProperty);
             viewProperty.generateViewPropertyUI();
-
-
         });
 
         Label type = new Label(rentalProperty.getPropertyType().toUpperCase());
@@ -357,14 +368,14 @@ public class MainUI {
     }
 
     private void setLayout() {
-        this.bindLabeFilterlOptions.setPadding(new Insets(4, 10, 10, 10));
+        this.bindLabelFilterlOptions.setPadding(new Insets(4, 10, 10, 10));
         this.allContent.setPadding(new Insets(20, 20, 20, 20));
         this.allContent.setSpacing(10);
         this.groupBtns.setSpacing(20);
         this.checkBoxFilter.setSpacing(4);
         this.welcomePane.setSpacing(20);
         this.searchFilter.setSpacing(4);
-        this.bindLabeFilterlOptions.setSpacing(10);
+        this.bindLabelFilterlOptions.setSpacing(10);
         this.optionsPane.setHgap(30);
         this.optionsPane.setVgap(30);
         this.filterNumberOfBedRooms.setVgap(4);
@@ -378,6 +389,31 @@ public class MainUI {
         this.propertyScrollPane.setPrefSize(115, 750);
 
 
+    }
+
+    private void showOpenFileDialog(){
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open text file");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text Files (*.txt)", "*.txt"));
+        this.file = fileChooser.showOpenDialog(new Stage());
+
+        DataRequestHandler dataRequestHandler = new DataRequestHandler(this);
+        try {
+            dataRequestHandler.importDataHandler(this.file);
+        } catch (InvaliOperationException e) {
+            AlertBox alertBox = new AlertBox();
+            alertBox.generateWarningAlertBox(e.getTitle(), e.getHeader(), e.getMessage());
+        }
+    }
+
+    private void showSaveDataDialog() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save Data");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text Files (*.txt)", "*.txt"));
+        this.file = fileChooser.showSaveDialog(new Stage());
+
+        DataRequestHandler dataRequestHandler = new DataRequestHandler();
+        dataRequestHandler.exportDataHandler(this.file);
     }
 
     public String getSearchInput() {
@@ -444,10 +480,6 @@ public class MainUI {
         twoBedroomApartmentSelected = false;
         threeBedroomApartmentSelected = false;
         premiumSuiteSelected = false;
-    }
-
-    public boolean isApartmentSelected() {
-        return apartmentSelected;
     }
 
     public boolean isOneBedroomApartmentSelected() {

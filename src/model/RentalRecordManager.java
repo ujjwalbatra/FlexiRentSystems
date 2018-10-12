@@ -25,6 +25,8 @@ public class RentalRecordManager {
     private int numberOfDays;
     private RentalProperty rentalProperty;
 
+    public RentalRecordManager() {
+    }
 
     public RentalRecordManager(ViewProperty viewProperty, PropertyOperationsUI propertyOperationsUI) {
         this.propertyOperationsUI = propertyOperationsUI;
@@ -68,7 +70,7 @@ public class RentalRecordManager {
 
         RentalRecord rentalRecord = this.wrapRecord();
 
-        this.addRecordToDB(rentalRecord);
+        this.addRecordToDB(rentalRecord, this.rentalProperty.getPropertyID());
 
         this.showAllRecords(this.rentalProperty.getPropertyID());
 
@@ -264,7 +266,7 @@ public class RentalRecordManager {
             throw new InvaliOperationException("Error", "Invalid Date", "Overlap with property maintenance");
     }
 
-    private void addRecordToDB(RentalRecord rentalRecord) {
+    public void addRecordToDB(RentalRecord rentalRecord, String propertyID) {
 
         try (Connection connection = DriverManager.getConnection("jdbc:hsqldb:file:database/localhost", "SA", "")) {
 
@@ -273,17 +275,17 @@ public class RentalRecordManager {
                     " VALUES (?,?,?,?,?,?,?,?);");
 
             preparedStatement.setString(1, rentalRecord.getRecordID());
-            preparedStatement.setString(2, this.rentalProperty.getPropertyID());
+            preparedStatement.setString(2, propertyID);
             preparedStatement.setString(3, rentalRecord.getRentDate().toString());
             preparedStatement.setString(4, rentalRecord.getEstimatedReturnDate().toString());
 
-            if (this.rentalProperty.getPropertyStatus().equals("available")) {
+            if (rentalRecord.getActualReturnDate() != null) {
 
                 preparedStatement.setString(5, rentalRecord.getActualReturnDate().toString());
                 preparedStatement.setDouble(6, rentalRecord.getRentalFee());
                 preparedStatement.setDouble(7, rentalRecord.getLateFee());
 
-            } else if (this.rentalProperty.getPropertyStatus().equals("rented")) {
+            } else {
 
                 preparedStatement.setNull(5, Types.NULL);
                 preparedStatement.setNull(6, Types.NULL);

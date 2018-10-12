@@ -1,0 +1,2 @@
+/*C3*/SET SCHEMA PUBLIC
+CREATE TABLE RentalProperty (propertyID VARCHAR(10) NOT NULL,streetNumber int NOT NULL,streetName VARCHAR(20) NOT NULL,suburb VARCHAR(20) NOT NULL,propertyType VARCHAR(20) NOT NULL,numberOfBedrooms int NOT NULL,rentalRate double NOT NULL,isAvailable boolean NOT NULL,lastMaintenanceDate date,PRIMARY KEY (propertyID))

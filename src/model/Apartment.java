@@ -23,6 +23,16 @@ public class Apartment extends RentalProperty {
                 + "_" + streetName + "_" + suburb);
     }
 
+    @Override
+    public String toString() {
+        String details;
+
+        details = super.toString();
+        details += String.format(":%s:%s\n", this.getImagePath(), this.getDescription());
+
+        return details;
+    }
+
     /*
      *  calculateLateFee() will calculate the total late fee imposed,
      *

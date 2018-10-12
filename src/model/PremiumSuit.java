@@ -31,7 +31,7 @@ public class PremiumSuit extends RentalProperty {
 
     /*
     *  calculateLateFee() will calculate the total late fee imposed,
-    * save it tp rental record and return the fee. it will return 0 if there is no late fee.
+    * save it to rental record and return the fee. it will return 0 if there is no late fee.
     */
     @Override
     public double calculateLateFee(int numOfDays) {
@@ -44,31 +44,14 @@ public class PremiumSuit extends RentalProperty {
         return this.roundUpFee(totalLateFee);
     }
 
-    public void checkRentingCondition(DateTime rentDate, int numOfDays) throws InvalidOperationException, InvalidInputException {
-
-
-
-    }
-
-    @Override
-    public void completeMaintenance(DateTime completionDate) throws InvalidOperationException{
-
-        //if the property in not under maintenance return false, else proceed
-        if (!this.getPropertyStatus().toLowerCase().equals("under maintenance")) throw new InvalidOperationException("Invalid operation - Property is not under Maintenance");
-
-        this.setPropertyStatus("available");
-        this.setAvailable(true);
-        this.lastMaintenanceDate = completionDate;
-    }
-
     @Override
     public String toString() {
-        String print;
+        String details;
 
-        print = super.toString();
-        print += String.format(":%s", this.lastMaintenanceDate);
+        details = super.toString();
+        details += String.format(":%s:%s:%s\n", this.lastMaintenanceDate, this.getImagePath(), this.getDescription());
 
-        return print;
+        return details;
     }
 
     public DateTime getLastMaintenanceDate() {

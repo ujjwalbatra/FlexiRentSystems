@@ -107,7 +107,7 @@ public class ViewProperty {
         ImageView imageView;
         Image image;
         try {
-            image = new Image(this.getClass().getResource(imagePath).toString(), 500, 500, true, true);
+            image = new Image(this.getClass().getResource("images/"+imagePath).toString(), 500, 500, true, true);
             imageView = new ImageView(image);
         } catch (NullPointerException e) {
             image = new Image(this.getClass().getResource("images/sample.jpg").toString(), 200, 200, true, true);

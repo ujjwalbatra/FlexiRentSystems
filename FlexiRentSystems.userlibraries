@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eclipse-userlibraries>
+  <library name="hsqldb">
+    <archive path="/Users/ujjwalbatra/Downloads/hsqldb-2.4.1/hsqldb/lib/hsqldb.jar" />
+  </library>
+</eclipse-userlibraries>
+

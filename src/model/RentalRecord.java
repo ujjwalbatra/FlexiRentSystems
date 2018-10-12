@@ -15,13 +15,14 @@ public class RentalRecord {
     private DateTime estimatedReturnDate;
     private DateTime actualReturnDate;
     private double rentalFee;
+    private double lateFee;
+    private String custID;
 
     public String getCustID() {
         return custID;
     }
 
-    private double lateFee;
-    private String custID;
+
 
      public RentalRecord(String recordID, String custID,DateTime rentDate, DateTime estimatedReturnDate, DateTime actualReturnDate, double rentalFee, double lateFee) {
         this.recordID = recordID;
@@ -53,14 +54,14 @@ public class RentalRecord {
     @Override
     public String toString() {
         String none = "none";
-        String print;
+        String details;
 
-        if (actualReturnDate == null) print = String.format("%s:%s:%s:%s:%s:%s\n",
+        if (actualReturnDate == null) details = String.format("%s:%s:%s:%s:%s:%s\n",
                 recordID, rentDate.toString(), estimatedReturnDate.toString(), none, none, none);
-        else print = String.format("%s:%s:%s:%s:%.2f%.2f\n", recordID, rentDate.toString(),
+        else details = String.format("%s:%s:%s:%s:%.2f:%.2f\n", recordID, rentDate.toString(),
                  estimatedReturnDate.toString(),  actualReturnDate.toString(),  rentalFee,  lateFee);
 
-        return print;
+        return details;
     }
 
     public void setRecordID(String recordID) {

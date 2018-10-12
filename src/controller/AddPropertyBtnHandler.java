@@ -32,7 +32,7 @@ public class AddPropertyBtnHandler {
     private RentalProperty rentalProperty;
     private int streetNumber;
     private int numberOfBedrooms;
-    private String imagePath;
+    private String imageName;
 
 
     public AddPropertyBtnHandler(AddPropertyUI addPropertyUI, MainUI mainUI) {
@@ -93,8 +93,8 @@ public class AddPropertyBtnHandler {
 
             File imageFile = this.addPropertyUI.getSelectedFile();
             from = Paths.get(imageFile.toURI());
-            to = Paths.get("src/view/images/" + streetNumber + this.addPropertyUI.getStreetNameInput() + ".jpg");
-            this.imagePath = to.toString().substring(9);
+            this.imageName = streetNumber + this.addPropertyUI.getStreetNameInput() + ".jpg";
+            to = Paths.get("src/view/images/" + imageName);
 
             try {
                 Files.copy(from, to);
@@ -104,12 +104,11 @@ public class AddPropertyBtnHandler {
             }
 
         } else {
-            this.imagePath = "images/default.jpg";
+            this.imageName = "default.jpg";
         }
         wrapProperty();
 
         DataFinder dataFinder = new DataFinder(mainUI);
-
         dataFinder.addPropertyToDB(rentalProperty);
     }
 
@@ -127,11 +126,11 @@ public class AddPropertyBtnHandler {
             if (this.addPropertyUI.getSelectedNumberOfBed().equals("one")) this.numberOfBedrooms = 1;
             if (this.addPropertyUI.getSelectedNumberOfBed().equals("two")) this.numberOfBedrooms = 2;
             if (this.addPropertyUI.getSelectedNumberOfBed().equals("three")) this.numberOfBedrooms = 3;
-            this.rentalProperty = new Apartment(this.streetNumber, this.addPropertyUI.getStreetNameInput().trim(), this.addPropertyUI.getSuburbInput().trim(), "available", this.numberOfBedrooms, this.addPropertyUI.getDescriptionInput().trim(), this.imagePath.trim());
+            this.rentalProperty = new Apartment(this.streetNumber, this.addPropertyUI.getStreetNameInput().trim(), this.addPropertyUI.getSuburbInput().trim(), "available", this.numberOfBedrooms, this.addPropertyUI.getDescriptionInput().trim(), this.imageName.trim());
 
         } else if (this.addPropertyUI.getSelectedPropertyType().equals("premium suit")) {
 
-            this.rentalProperty = new PremiumSuit(this.streetNumber, this.addPropertyUI.getStreetNameInput().trim(), this.addPropertyUI.getSuburbInput().trim(), "available", new DateTime(this.addPropertyUI.getLastMaintenanceDateInput()), this.addPropertyUI.getDescriptionInput().trim(), this.imagePath.trim());
+            this.rentalProperty = new PremiumSuit(this.streetNumber, this.addPropertyUI.getStreetNameInput().trim(), this.addPropertyUI.getSuburbInput().trim(), "available", new DateTime(this.addPropertyUI.getLastMaintenanceDateInput()), this.addPropertyUI.getDescriptionInput().trim(), this.imageName.trim());
 
         }
 

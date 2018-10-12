@@ -11,6 +11,9 @@ import utility.DateTime;
 import utility.exception.InvalidInputException;
 import utility.exception.InvalidOperationException;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class RentalProperty {
     private String propertyID;
 
@@ -29,7 +32,7 @@ public abstract class RentalProperty {
     private String propertyType;
     private String propertyStatus;
     private double rentalRate;
-    private RentalRecord rentalRecord[];
+    private List<RentalRecord> rentalRecords;
     private boolean isAvailable;
     private int numberOfRecords = 0;
     private String description;
@@ -42,7 +45,7 @@ public abstract class RentalProperty {
         this.streetName = streetName;
         this.suburb = suburb;
         this.numberOfBedrooms = numberOfBedrooms;
-        this.rentalRecord = new RentalRecord[10];
+        this.rentalRecords = new ArrayList<RentalRecord>();
         this.propertyStatus = propertyStatus;
         this.isAvailable = true;
         this.description = description;
@@ -107,13 +110,13 @@ public abstract class RentalProperty {
 
     @Override
     public String toString() {
-        String print;
+        String details;
 
-        print = String.format("%d:%s:%s:%s:%d:%s",
-                this.streetNumber, this.streetName, this.suburb, this.propertyType,
+        details = String.format("%s:%d:%s:%s:%s:%d:%s",
+                this.propertyID, this.streetNumber, this.streetName, this.suburb, this.propertyType,
                 this.numberOfBedrooms, this.propertyStatus);
 
-        return print;
+        return details;
     }
 
     /*
@@ -122,40 +125,40 @@ public abstract class RentalProperty {
      * format is adapted if the property is on rent for now
      *
      */
-    public String getDetails() {
-        String details;
-        String row1 = "Property ID:";
-        String row2 = "Address:";
-        String row3 = "Type:";
-        String row4 = "Bedroom:";
-        String row5 = "Status:";
-        String row6 = "RENTAL RECORD:";
-        String additionalRow = "Last Maintenance Date:";
-
-        details = "-------------------------------------\n";
-        details += String.format("%-25s%d %s %s\n%-25s%s\n%-25s%d\n%-25s%s\n", row2,
-                this.streetNumber, this.streetName, this.suburb, row3, this.propertyType, row4, this.numberOfBedrooms, row5, this.propertyStatus);
-
-        if (this.propertyType.equals("premium suit"))
-            details += String.format("%-25s%s\n", additionalRow, ((PremiumSuit) this).getLastMaintenanceDate());
-
-        details += String.format("%-25s\n", row6);
-
-        if (this.rentalRecord[0] == null) {
-            details += "empty\n";
-            details += "-------------------------------------\n";
-        } else {
-            int index = 0;
-            RentalRecord record = this.rentalRecord[index];
-            while (record != null) {
-                details += record.getDetails();
-                details += "-------------------------------------\n";
-                record = this.rentalRecord[++index];
-            }
-        }
-
-        return details;
-    }
+    //    public String getDetails() {
+    //        String details;
+    //        String row1 = "Property ID:";
+    //        String row2 = "Address:";
+    //        String row3 = "Type:";
+    //        String row4 = "Bedroom:";
+    //        String row5 = "Status:";
+    //        String row6 = "RENTAL RECORD:";
+    //        String additionalRow = "Last Maintenance Date:";
+    //
+    //        details = "-------------------------------------\n";
+    //        details += String.format("%-25s%d %s %s\n%-25s%s\n%-25s%d\n%-25s%s\n", row2,
+    //                this.streetNumber, this.streetName, this.suburb, row3, this.propertyType, row4, this.numberOfBedrooms, row5, this.propertyStatus);
+    //
+    //        if (this.propertyType.equals("premium suit"))
+    //            details += String.format("%-25s%s\n", additionalRow, ((PremiumSuit) this).getLastMaintenanceDate());
+    //
+    //        details += String.format("%-25s\n", row6);
+    //
+    //        if (this.rentalRecords[0] == null) {
+    //            details += "empty\n";
+    //            details += "-------------------------------------\n";
+    //        } else {
+    //            int index = 0;
+    //            RentalRecord record = this.rentalRecords[index];
+    //            while (record != null) {
+    //                details += record.getDetails();
+    //                details += "-------------------------------------\n";
+    //                record = this.rentalRecords[++index];
+    //            }
+    //        }
+    //
+    //        return details;
+    //    }
 
 
     /*
@@ -164,9 +167,6 @@ public abstract class RentalProperty {
      */
     public double calculateRentalFee(int numOfDays) {
         double rentalFee = rentalRate * numOfDays;
-
-        //rounding off double value to 2 decimal places
-        this.roundUpFee(rentalFee);
 
         return rentalFee;
     }
@@ -185,32 +185,13 @@ public abstract class RentalProperty {
         this.streetNumber = streetNumber;
     }
 
-    public void setStreetName(String streetName) {
-        this.streetName = streetName;
-    }
-
     public void setSuburb(String suburb) {
         this.suburb = suburb;
     }
 
-    public void setNumberOfBedrooms(int numberOfBedrooms) {
-        this.numberOfBedrooms = numberOfBedrooms;
-    }
-
-    public void setRentalRecord(RentalRecord[] rentalRecord) {
-        this.rentalRecord = rentalRecord;
-    }
-
-    public void setNumberOfRecords(int numberOfRecords) {
-        this.numberOfRecords = numberOfRecords;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
+    public void addRentalRecord(RentalRecord rentalRecord) {
+        rentalRecords.add(0, rentalRecord);
+        this.numberOfRecords++;
     }
 
     public String getDescription() {
@@ -261,13 +242,15 @@ public abstract class RentalProperty {
         this.propertyStatus = propertyStatus;
     }
 
-    public boolean isAvailable() {
-        return isAvailable;
+    public int getNumberOfRecords() {
+        return numberOfRecords;
     }
 
     public void setAvailable(boolean available) {
         this.isAvailable = available;
     }
 
-
+    public List<RentalRecord> getRentalRecords() {
+        return rentalRecords;
+    }
 }

@@ -8,6 +8,9 @@ package model;/*
 import utility.DateTime;
 import view.MainUI;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -58,13 +61,7 @@ public class DataFinder {
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            while (resultSet.next()) {
-                rentalProperty = new Apartment(resultSet.getInt("streetNumber"), resultSet.getString("streetName"),
-                        resultSet.getString("suburb"), resultSet.getString("propertyStatus"), resultSet.getInt("numberOfBedrooms"),
-                        resultSet.getString("description"), resultSet.getString("imagePath"));
-
-                this.propertiesFound.put(resultSet.getString("propertyID"), rentalProperty);
-            }
+            this.wrapResultSet(resultSet);
 
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -89,13 +86,7 @@ public class DataFinder {
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            while (resultSet.next()) {
-                rentalProperty = new Apartment(resultSet.getInt("streetNumber"), resultSet.getString("streetName"),
-                        resultSet.getString("suburb"), resultSet.getString("propertyStatus"), resultSet.getInt("numberOfBedrooms"),
-                        resultSet.getString("description"), resultSet.getString("imagePath"));
-
-                this.propertiesFound.put(resultSet.getString("propertyID"), rentalProperty);
-            }
+            this.wrapResultSet(resultSet);
 
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -119,13 +110,7 @@ public class DataFinder {
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            while (resultSet.next()) {
-                rentalProperty = new Apartment(resultSet.getInt("streetNumber"), resultSet.getString("streetName"),
-                        resultSet.getString("suburb"), resultSet.getString("propertyStatus"), resultSet.getInt("numberOfBedrooms"),
-                        resultSet.getString("description"), resultSet.getString("imagePath"));
-
-                this.propertiesFound.put(resultSet.getString("propertyID"), rentalProperty);
-            }
+            this.wrapResultSet(resultSet);
 
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -149,13 +134,7 @@ public class DataFinder {
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            while (resultSet.next()) {
-                rentalProperty = new PremiumSuit(resultSet.getInt("streetNumber"), resultSet.getString("streetName"),
-                        resultSet.getString("suburb"), resultSet.getString("propertyStatus"), new DateTime(resultSet.getString("lastMaintenanceDate")),
-                        resultSet.getString("description"), resultSet.getString("imagePath"));
-
-                this.propertiesFound.put(resultSet.getString("propertyID"), rentalProperty);
-            }
+            this.wrapResultSet(resultSet);
 
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -217,7 +196,7 @@ public class DataFinder {
         }
     }
 
-    public void filterPropertyType(){
+    public void filterPropertyType() {
         if (mainUI.isOneBedroomApartmentSelected()) this.getAllOneBedRoomApartments();
         if (mainUI.isTwoBedroomApartmentSelected()) this.getAllTwoBedRoomApartments();
         if (mainUI.isThreeBedroomApartmentSelected()) this.getAllThreeBedRoomApartments();
@@ -333,7 +312,7 @@ public class DataFinder {
         try {
             while (resultSet.next()) {
 
-                if (resultSet.getString("propertyType").equals("premium suite")) {
+                if (resultSet.getString("propertyType").equals("premium suit")) {
                     rentalProperty = new PremiumSuit(resultSet.getInt("streetNumber"), resultSet.getString("streetName"),
                             resultSet.getString("suburb"), resultSet.getString("propertyStatus"), new DateTime(resultSet.getString("lastMaintenanceDate")),
                             resultSet.getString("description"), resultSet.getString("imagePath"));
@@ -346,6 +325,77 @@ public class DataFinder {
                 this.propertiesFound.put(resultSet.getString("propertyID"), rentalProperty);
             }
         } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void exportAllData(File file) {
+        try (Connection connection = DriverManager.getConnection("jdbc:hsqldb:file:database/localhost", "SA", "")) {
+
+            Class.forName("org.hsqldb.jdbc.JDBCDriver");
+
+            PreparedStatement preparedStatement;
+
+            preparedStatement = connection.prepareStatement("SELECT * FROM RentalProperty;");
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            this.wrapResultSet(resultSet);
+
+            for (RentalProperty rentalProperty: propertiesFound.values()) {
+
+                preparedStatement = connection.prepareStatement("SELECT * FROM RentalRecord WHERE propertyID = ?;");
+                preparedStatement.setString(1, rentalProperty.getPropertyID());
+
+                resultSet = preparedStatement.executeQuery();
+
+                RentalRecord rentalRecord;
+
+                while (resultSet.next()) {
+
+                    //if the record has actual return date, then add all fee
+                    if (resultSet.getString("actualReturnDate") == null) {
+                        rentalRecord = new RentalRecord(resultSet.getString("recordID"), resultSet.getString("custID"),
+                                new DateTime(resultSet.getString("rentDate")), new DateTime(resultSet.getString("estimatedReturnDate")), null, -1, -1);
+                    } else {
+                        rentalRecord = new RentalRecord(resultSet.getString("recordID"), resultSet.getString("custID"), new DateTime(resultSet.getString("rentDate")), new DateTime(resultSet.getString("estimatedReturnDate")),
+                                new DateTime(resultSet.getString("actualReturnDate")), resultSet.getDouble("rentalFee"), resultSet.getDouble("lateFee"));
+                    }
+
+                    rentalProperty.addRentalRecord(rentalRecord);
+                }
+            }
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        this.writeDataToFile(file);
+    }
+
+    private void writeDataToFile(File file){
+        String fileDetails = "";
+
+        if (propertiesFound != null) {
+            for (RentalProperty rentalProperty : this.propertiesFound.values()) {
+
+                fileDetails += rentalProperty.toString();
+
+                if (rentalProperty.getNumberOfRecords() > 0) {
+                    for (RentalRecord rentalRecord : rentalProperty.getRentalRecords()) {
+
+                        fileDetails += rentalRecord.toString();
+
+                    }
+                }
+            }
+        }
+
+        try {
+            FileWriter fileWriter = new FileWriter(file);
+            fileWriter.write(fileDetails);
+            fileWriter.close();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
