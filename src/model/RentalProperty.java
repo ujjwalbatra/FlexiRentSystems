@@ -8,8 +8,6 @@
 package model;
 
 import utility.DateTime;
-import utility.exception.InvalidInputException;
-import utility.exception.InvalidOperationException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +37,6 @@ public abstract class RentalProperty {
     private String imagePath;
     //stores number of rental records for this instance of property exists
 
-
     protected RentalProperty(int streetNumber, String streetName, String suburb, String propertyStatus, int numberOfBedrooms, String description, String imagePath) {
         this.streetNumber = streetNumber;
         this.streetName = streetName;
@@ -56,58 +53,6 @@ public abstract class RentalProperty {
     public abstract double calculateLateFee(int numOfDays);
 
 
-    //    checking all the renting conditions, if acceptable changing status and isAvailable for the property.
-    public void rent(String customerID, DateTime rentDate, int numOfDays) throws InvalidOperationException, InvalidInputException {
-
-        //        if (!isAvailable()) throw new InvalidOperationException("Invalid Operation - the property isn't available");
-        //
-        //        //      checking if number of days is a valid input
-        //        if (numOfDays <= 0) throw new InvalidInputException("Invalid Input - the number of days is less than 1");
-        //
-        //        //      if renting conditions of a specific property is not satisfied exception bounces to caller
-        //        //        checkRentingCondition(rentDate, numOfDays);
-        //
-        //        DateTime estimatedReturnDate = new DateTime(rentDate, numOfDays);
-        //        RentalRecord newRecord;
-        //
-        //        // removing the oldest record/shifting records further
-        //        shiftRecords();
-        //
-        //        //adding new record
-        //        newRecord = new RentalRecord(customerID, rentDate, estimatedReturnDate);
-        //        this.getRentalRecord()[0] = newRecord;
-        //        newRecord.setRecordID("_" + customerID + "_" + rentDate.toString());
-        //
-        //
-        //        //making changes to status of property
-        //        setPropertyStatus("rented");
-        //        setAvailable(false);
-        //
-        //        if (numberOfRecords < 9) numberOfRecords++;     //can't let number of records stored exceed 10.
-
-    }
-
-    public void performMaintenance() throws InvalidOperationException {
-
-        //if the property is rented or already under maintenance return false
-        if (!isAvailable) throw new InvalidOperationException("Invalid Operation - the property isn't available");
-
-        //changing status to under maintenance and making isAvailable false.
-        this.propertyStatus = "under maintenance";
-        this.isAvailable = false;
-    }
-
-    public void completeMaintenance(DateTime completionDate) throws InvalidOperationException {
-
-        //if the property is not under maintenance return false
-        if (!propertyStatus.toLowerCase().equals("under maintenance"))
-            throw new InvalidOperationException("Invalid operation - Property is not under maintenance");
-
-        this.propertyStatus = "available";
-        this.isAvailable = true;
-
-    }
-
     @Override
     public String toString() {
         String details;
@@ -118,48 +63,6 @@ public abstract class RentalProperty {
 
         return details;
     }
-
-    /*
-     *
-     * this method generates all the details for a property
-     * format is adapted if the property is on rent for now
-     *
-     */
-    //    public String getDetails() {
-    //        String details;
-    //        String row1 = "Property ID:";
-    //        String row2 = "Address:";
-    //        String row3 = "Type:";
-    //        String row4 = "Bedroom:";
-    //        String row5 = "Status:";
-    //        String row6 = "RENTAL RECORD:";
-    //        String additionalRow = "Last Maintenance Date:";
-    //
-    //        details = "-------------------------------------\n";
-    //        details += String.format("%-25s%d %s %s\n%-25s%s\n%-25s%d\n%-25s%s\n", row2,
-    //                this.streetNumber, this.streetName, this.suburb, row3, this.propertyType, row4, this.numberOfBedrooms, row5, this.propertyStatus);
-    //
-    //        if (this.propertyType.equals("premium suit"))
-    //            details += String.format("%-25s%s\n", additionalRow, ((PremiumSuit) this).getLastMaintenanceDate());
-    //
-    //        details += String.format("%-25s\n", row6);
-    //
-    //        if (this.rentalRecords[0] == null) {
-    //            details += "empty\n";
-    //            details += "-------------------------------------\n";
-    //        } else {
-    //            int index = 0;
-    //            RentalRecord record = this.rentalRecords[index];
-    //            while (record != null) {
-    //                details += record.getDetails();
-    //                details += "-------------------------------------\n";
-    //                record = this.rentalRecords[++index];
-    //            }
-    //        }
-    //
-    //        return details;
-    //    }
-
 
     /*
      *  calculateLateFee() will calculate the rental fee,
@@ -181,13 +84,6 @@ public abstract class RentalProperty {
         return Math.round(doubleValue * 100.00) / 100.00;
     }
 
-    public void setStreetNumber(int streetNumber) {
-        this.streetNumber = streetNumber;
-    }
-
-    public void setSuburb(String suburb) {
-        this.suburb = suburb;
-    }
 
     public void addRentalRecord(RentalRecord rentalRecord) {
         rentalRecords.add(0, rentalRecord);
@@ -244,10 +140,6 @@ public abstract class RentalProperty {
 
     public int getNumberOfRecords() {
         return numberOfRecords;
-    }
-
-    public void setAvailable(boolean available) {
-        this.isAvailable = available;
     }
 
     public List<RentalRecord> getRentalRecords() {

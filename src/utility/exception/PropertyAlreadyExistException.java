@@ -5,22 +5,11 @@ package utility.exception;/*
  *
  */
 
-public class PropertyAlreadyExistException extends Exception{
-
-    private String title;
-    private String header;
+public class PropertyAlreadyExistException extends InvalidOperationException{
 
     public PropertyAlreadyExistException(String title, String header, String message) {
-        super(message);
-        this.title = title;
-        this.header = header;
+        super(title, header, message);
+
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public String getHeader() {
-        return header;
-    }
 }

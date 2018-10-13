@@ -1,13 +1,15 @@
-package utility.exception;
+package utility.exception;/*
+ *
+ * @project - FlexiRentSystems
+ * @author - ujjwalbatra on 18/09/18
+ *
+ */
 
-public class InvalidInputException extends Exception {
+public class InvalidInputException extends FlexiRentException {
 
-    public InvalidInputException(String message) {
-        super(message);
+    public InvalidInputException(String title, String header, String message) {
+        super(title, header, message);
+
     }
 
-    @Override
-    public String getMessage() {
-        return super.getMessage();
-    }
 }

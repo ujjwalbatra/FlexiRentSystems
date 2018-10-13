@@ -5,21 +5,11 @@ package utility.exception;/*
  *
  */
 
-public class IncompleteInputException extends Exception {
-    private String title;
-    private String header;
+public class IncompleteInputException extends FlexiRentException{
+
 
     public IncompleteInputException(String title, String header, String message) {
-        super(message);
-        this.title = title;
-        this.header = header;
+        super(title, header, message);
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public String getHeader() {
-        return header;
-    }
 }

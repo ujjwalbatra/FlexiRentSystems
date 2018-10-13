@@ -27,7 +27,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.RentalProperty;
-import utility.exception.InvaliOperationException;
+import utility.exception.InvalidOperationException;
 
 import java.io.File;
 import java.util.Map;
@@ -136,7 +136,6 @@ public class MainUI {
 
         this.switchOffPropertyTypeFilter();
 
-
         //adding all menu items to menu and menu to menubar
         this.fileMenu.getItems().addAll(this.importData, this.exportData, this.deleteData, this.exitMenu);
         this.toolsMenu.getItems().addAll(this.addPropertyMenuBtn);
@@ -197,7 +196,11 @@ public class MainUI {
 
         this.deleteData.setOnAction(event -> {
             DataRequestHandler dataRequestHandler = new DataRequestHandler(this);
-            dataRequestHandler.deleteDataRequestHandler();
+            try {
+                dataRequestHandler.deleteDataRequestHandler();
+            } catch (InvalidOperationException e) {
+                new AlertBox().generateWarningAlertBox(e.getTitle(),e.getHeader(),e.getMessage());
+            }
         });
 
         //setting up all filtering options
@@ -205,7 +208,11 @@ public class MainUI {
             this.propertyStatusComboBox.setValue("Property Status");
             this.selectAllPropertyTypes();
             DataRequestHandler dataRequestHandler = new DataRequestHandler(this);
-            dataRequestHandler.searchPropertyHandler();
+            try {
+                dataRequestHandler.searchPropertyHandler();
+            } catch (InvalidOperationException e) {
+                new AlertBox().generateWarningAlertBox(e.getTitle(),e.getHeader(),e.getMessage());
+            }
         });
 
         this.propertyStatusComboBox.valueProperty().addListener((ChangeListener<String>) this::propertyStatusFilterChanged);
@@ -400,7 +407,7 @@ public class MainUI {
         DataRequestHandler dataRequestHandler = new DataRequestHandler(this);
         try {
             dataRequestHandler.importDataHandler(this.file);
-        } catch (InvaliOperationException e) {
+        } catch (InvalidOperationException e) {
             AlertBox alertBox = new AlertBox();
             alertBox.generateWarningAlertBox(e.getTitle(), e.getHeader(), e.getMessage());
         }
@@ -413,7 +420,11 @@ public class MainUI {
         this.file = fileChooser.showSaveDialog(new Stage());
 
         DataRequestHandler dataRequestHandler = new DataRequestHandler();
-        dataRequestHandler.exportDataHandler(this.file);
+        try {
+            dataRequestHandler.exportDataHandler(this.file);
+        } catch (InvalidOperationException e) {
+            new AlertBox().generateWarningAlertBox(e.getTitle(),e.getHeader(),e.getMessage());
+        }
     }
 
     public String getSearchInput() {
@@ -428,8 +439,14 @@ public class MainUI {
 
         DataRequestHandler dataRequestHandler = new DataRequestHandler(this);
 
-        if (!propertyStatus.equals("property status"))
-            dataRequestHandler.filterPropertyStatusHandler(propertyStatus);
+        if (!propertyStatus.equals("property status")) {
+            try {
+                dataRequestHandler.filterPropertyStatusHandler(propertyStatus);
+            } catch (InvalidOperationException e) {
+                new AlertBox().generateWarningAlertBox(e.getTitle(),e.getHeader(),e.getMessage());
+
+            }
+        }
     }
 
     private void selectAllPropertyTypes() {
@@ -470,7 +487,11 @@ public class MainUI {
         }
 
         DataRequestHandler dataRequestHandler = new DataRequestHandler(this);
-        dataRequestHandler.filterPropertyTypeHandler();
+        try {
+            dataRequestHandler.filterPropertyTypeHandler();
+        } catch (InvalidOperationException e) {
+            new AlertBox().generateWarningAlertBox(e.getTitle(),e.getHeader(),e.getMessage());
+        }
 
     }
 

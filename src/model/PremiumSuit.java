@@ -7,8 +7,7 @@
 package model;
 
 import utility.DateTime;
-import utility.exception.InvalidInputException;
-import utility.exception.InvalidOperationException;
+
 
 import java.sql.*;
 
@@ -26,8 +25,6 @@ public class PremiumSuit extends RentalProperty {
         this.setPropertyID(propertyTypeChar + "_" + streetNumber
                 + "_" + streetName + "_" + suburb);
     }
-
-
 
     /*
     *  calculateLateFee() will calculate the total late fee imposed,

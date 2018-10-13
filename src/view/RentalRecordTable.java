@@ -9,6 +9,7 @@ package view;
 
 import javafx.beans.property.SimpleStringProperty;
 
+//this class is used for filling the records table in property view.
 public class RentalRecordTable {
     private SimpleStringProperty custID;
     private SimpleStringProperty rentDate;

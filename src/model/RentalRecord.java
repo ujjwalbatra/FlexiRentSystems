@@ -64,24 +64,12 @@ public class RentalRecord {
         return details;
     }
 
-    public void setRecordID(String recordID) {
-        this.recordID = recordID;
-    }
-
     public double getRentalFee() {
         return rentalFee;
     }
 
-    public void setRentalFee(double rentalFee) {
-        this.rentalFee = rentalFee;
-    }
-
     public DateTime getActualReturnDate() {
         return actualReturnDate;
-    }
-
-    public void setActualReturnDate(DateTime actualReturnDate) {
-        this.actualReturnDate = actualReturnDate;
     }
 
     public DateTime getEstimatedReturnDate() {
@@ -96,9 +84,6 @@ public class RentalRecord {
         return recordID;
     }
 
-    public void setLateFee(double lateFee) {
-        this.lateFee = lateFee;
-    }
 
     public DateTime getRentDate() {
         return rentDate;

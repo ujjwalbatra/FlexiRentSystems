@@ -14,8 +14,9 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.util.StringConverter;
 import model.RentalRecord;
+import utility.exception.FlexiRentException;
 import utility.exception.IncompleteInputException;
-import utility.exception.InvaliOperationException;
+import utility.exception.InvalidOperationException;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -156,6 +157,7 @@ public class PropertyOperationsUI {
     }
 
     public void completeMaintenanceUI() {
+
         this.dialog.setTitle("Complete Maintenance");
 
         Label maintenanceDate = new Label("Enter Date : ");
@@ -189,11 +191,7 @@ public class PropertyOperationsUI {
                         RentalRecordsOperationsHandler rentalRecordsOperationsHandler = new RentalRecordsOperationsHandler(this.viewProperty, this);
                         rentalRecordsOperationsHandler.verifyCompleteMaintenanceInput();
                         this.dialog.close();
-                    } catch (InvaliOperationException e) {
-                        event.consume();
-                        AlertBox alertBox = new AlertBox();
-                        alertBox.generateWarningAlertBox(e.getTitle(), e.getHeader(), e.getMessage());
-                    } catch (IncompleteInputException e) {
+                    } catch (FlexiRentException e) {
                         event.consume();
                         AlertBox alertBox = new AlertBox();
                         alertBox.generateWarningAlertBox(e.getTitle(), e.getHeader(), e.getMessage());

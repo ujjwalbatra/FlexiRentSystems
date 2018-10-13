@@ -9,9 +9,10 @@ package controller;
 
 import model.RentalProperty;
 import model.RentalRecordManager;
+import utility.exception.FlexiRentException;
 import utility.exception.IncompleteInputException;
-import utility.exception.InvaliOperationException;
-import utility.exception.InvalidInpuException;
+import utility.exception.InvalidOperationException;
+import utility.exception.InvalidInputException;
 import view.AlertBox;
 import view.PropertyOperationsUI;
 import view.ViewProperty;
@@ -49,10 +50,7 @@ public class RentalRecordsOperationsHandler {
         RentalRecordManager rentalRecordManager = new RentalRecordManager(viewProperty, propertyOperationsUI);
         try {
             rentalRecordManager.rentProperty();
-        } catch (InvaliOperationException e) {
-            AlertBox alertBox = new AlertBox();
-            alertBox.generateWarningAlertBox(e.getTitle(), e.getHeader(), e.getMessage());
-        } catch (InvalidInpuException e) {
+        } catch (FlexiRentException e) {
             AlertBox alertBox = new AlertBox();
             alertBox.generateWarningAlertBox(e.getTitle(), e.getHeader(), e.getMessage());
         }
@@ -73,10 +71,7 @@ public class RentalRecordsOperationsHandler {
         RentalRecordManager rentalRecordManager = new RentalRecordManager(viewProperty, propertyOperationsUI);
         try {
             rentalRecordManager.returnProperty();
-        } catch (InvaliOperationException e) {
-            AlertBox alertBox = new AlertBox();
-            alertBox.generateWarningAlertBox(e.getTitle(), e.getHeader(), e.getMessage());
-        } catch (InvalidInpuException e) {
+        } catch (FlexiRentException e) {
             AlertBox alertBox = new AlertBox();
             alertBox.generateWarningAlertBox(e.getTitle(), e.getHeader(), e.getMessage());
         }
@@ -88,10 +83,10 @@ public class RentalRecordsOperationsHandler {
      * Verifies the input and then perform maintenance procedure is called
      *
      */
-    public void verifyPerformMaintenanceConditions() throws InvaliOperationException {
+    public void verifyPerformMaintenanceConditions() throws InvalidOperationException {
         //check if property is available
         if (!this.rentalProperty.getPropertyStatus().equals("available")) {
-            throw new InvaliOperationException("Error", "Invalid Operation", "The property is not available for maintenance");
+            throw new InvalidOperationException("Error", "Invalid Operation", "The property is not available for maintenance");
         } else {
             RentalRecordManager rentalRecordManager = new RentalRecordManager(this.viewProperty, null);
             rentalRecordManager.preformMaintenance();
@@ -104,14 +99,14 @@ public class RentalRecordsOperationsHandler {
      * Verifies the input and then complete maintenance procedute is called
      *
      */
-    public void verifyCompleteMaintenanceInput() throws InvaliOperationException, IncompleteInputException {
+    public void verifyCompleteMaintenanceInput() throws InvalidOperationException, IncompleteInputException {
         //check if date is entered
         if (this.propertyOperationsUI.getMaintenanceDateInput().trim().equals(""))
             throw new IncompleteInputException("Error", "Incomplete Date Input", "Please enter the date");
 
         //check if property is under maintenance
         if (!this.rentalProperty.getPropertyStatus().equals("under maintenance")) {
-            throw new InvaliOperationException("Error", "Invalid Operation", "Property not under Maintenance");
+            throw new InvalidOperationException("Error", "Invalid Operation", "Property not under Maintenance");
         } else {
             RentalRecordManager rentalRecordManager = new RentalRecordManager(this.viewProperty, propertyOperationsUI);
             rentalRecordManager.completeMaintenance();

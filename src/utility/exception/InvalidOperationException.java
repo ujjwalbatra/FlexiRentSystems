@@ -1,13 +1,14 @@
-package utility.exception;
+package utility.exception;/*
+ *
+ * @project - FlexiRentSystems
+ * @author - ujjwalbatra on 20/09/18
+ *
+ */
 
-public class InvalidOperationException extends Exception {
+public class InvalidOperationException extends FlexiRentException{
 
-    public InvalidOperationException(String message) {
-        super(message);
+    public InvalidOperationException(String title, String header, String message) {
+        super(title, header,message);
     }
 
-    @Override
-    public String getMessage() {
-        return super.getMessage();
-    }
 }

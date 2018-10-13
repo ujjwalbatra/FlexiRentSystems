@@ -30,7 +30,7 @@ import javafx.stage.Stage;
 import model.PremiumSuit;
 import model.RentalProperty;
 import model.RentalRecord;
-import utility.exception.InvaliOperationException;
+import utility.exception.InvalidOperationException;
 
 import java.util.Collections;
 import java.util.List;
@@ -49,7 +49,6 @@ public class ViewProperty {
     private HBox topHalfPage;
     private Button closeBtn;
     private RentalProperty rentalProperty;
-    private TableView<RentalRecordTable> rentalRecords;
     private TableColumn<RentalRecordTable, String> rentDate;
     private TableColumn<RentalRecordTable, String> estimatedReturnDate;
     private TableColumn<RentalRecordTable, String> actualReturnDate;
@@ -100,9 +99,13 @@ public class ViewProperty {
 
         //load view property pane with rental records in another thread
         DataRequestHandler dataRequestHandler = new DataRequestHandler();
-        dataRequestHandler.requestAllRentalRecords(this, rentalProperty.getPropertyID());
+        try {
+            dataRequestHandler.requestAllRentalRecords(this, rentalProperty.getPropertyID());
+        } catch (InvalidOperationException e) {
+            new AlertBox().generateWarningAlertBox(e.getTitle(),e.getHeader(),e.getMessage());
+        }
 
-        String imagePath = rentalProperty.getImagePath();
+        String imagePath = this.rentalProperty.getImagePath();
 
         ImageView imageView;
         Image image;
@@ -124,53 +127,53 @@ public class ViewProperty {
 
         this.showPropertyStatus();
 
-        rentalPropertyDetails.add(propertyID, 0, 5, 4, 1);
-        rentalPropertyDetails.add(streetNumber, 0, 6, 4, 1);
-        rentalPropertyDetails.add(streetName, 0, 7, 4, 1);
-        rentalPropertyDetails.add(suburb, 0, 8, 4, 1);
-        rentalPropertyDetails.add(numberOfBedrooms, 0, 9, 4, 1);
-        rentalPropertyDetails.add(rentalRate, 0, 10, 4, 1);
-        rentalPropertyDetails.add(description, 0, 13, 4, 3);
+        this.rentalPropertyDetails.add(propertyID, 0, 5, 4, 1);
+        this.rentalPropertyDetails.add(streetNumber, 0, 6, 4, 1);
+        this.rentalPropertyDetails.add(streetName, 0, 7, 4, 1);
+        this.rentalPropertyDetails.add(suburb, 0, 8, 4, 1);
+        this.rentalPropertyDetails.add(numberOfBedrooms, 0, 9, 4, 1);
+        this.rentalPropertyDetails.add(rentalRate, 0, 10, 4, 1);
+        this.rentalPropertyDetails.add(description, 0, 13, 4, 3);
 
         if (this.rentalProperty instanceof PremiumSuit) {
             this.showLastMaintenanceDate();
         }
 
-        this.functionBtns.getChildren().addAll(rentBtn, returnPropertyBtn, performMaintenanceBtn, completeMaintenanceBtn);
+        this.functionBtns.getChildren().addAll(this.rentBtn, this.returnPropertyBtn, this.performMaintenanceBtn, this.completeMaintenanceBtn);
         this.functionBtns.setSpacing(10);
         this.functionBtns.setAlignment(Pos.CENTER_RIGHT);
-        rentBtn.setMaxWidth(Double.MAX_VALUE);
-        returnPropertyBtn.setMaxWidth(Double.MAX_VALUE);
-        performMaintenanceBtn.setMaxWidth(Double.MAX_VALUE);
-        completeMaintenanceBtn.setMaxWidth(Double.MAX_VALUE);
+        this.rentBtn.setMaxWidth(Double.MAX_VALUE);
+        this.returnPropertyBtn.setMaxWidth(Double.MAX_VALUE);
+        this.performMaintenanceBtn.setMaxWidth(Double.MAX_VALUE);
+        this.completeMaintenanceBtn.setMaxWidth(Double.MAX_VALUE);
 
 
         //configuring buttons
         this.closeBtn.setOnAction(event -> this.stage.close());
 
-        rentBtn.setOnAction(event -> {
+        this.rentBtn.setOnAction(event -> {
             PropertyOperationsUI propertyOperationsUI = new PropertyOperationsUI(this);
             propertyOperationsUI.rentPropertyUI();
         });
 
-        returnPropertyBtn.setOnAction(event -> {
+        this.returnPropertyBtn.setOnAction(event -> {
             PropertyOperationsUI propertyOperationsUI = new PropertyOperationsUI(this);
             propertyOperationsUI.returnPropertyUI();
         });
 
-        performMaintenanceBtn.setOnAction(event -> {
+        this.performMaintenanceBtn.setOnAction(event -> {
 
             RentalRecordsOperationsHandler rentalRecordsOperationsHandler = new RentalRecordsOperationsHandler(this, null);
 
             try {
                 rentalRecordsOperationsHandler.verifyPerformMaintenanceConditions();
-            } catch (InvaliOperationException e) {
+            } catch (InvalidOperationException e) {
                 AlertBox alertBox = new AlertBox();
                 alertBox.generateWarningAlertBox(e.getTitle(), e.getHeader(), e.getMessage());
             }
         });
 
-        completeMaintenanceBtn.setOnAction(event -> {
+        this.completeMaintenanceBtn.setOnAction(event -> {
             PropertyOperationsUI propertyOperationsUI = new PropertyOperationsUI(this);
             propertyOperationsUI.completeMaintenanceUI();
         });
@@ -182,17 +185,17 @@ public class ViewProperty {
         this.completeUI.setPadding(new Insets(20, 20, 20, 20));
         this.completeUI.setSpacing(20);
 
-        rentalPropertyDetails.setVgap(5);
+        this.rentalPropertyDetails.setVgap(5);
 
-        this.completeUI.getChildren().addAll(this.topHalfPage, rentalPropertyDetails, tableStackPane, this.closeBtn);
+        this.completeUI.getChildren().addAll(this.topHalfPage, this.rentalPropertyDetails, this.tableStackPane, this.closeBtn);
         this.completeUI.setAlignment(Pos.CENTER_RIGHT);
-        rentalPropertyDetails.setAlignment(Pos.CENTER_LEFT);
+        this.rentalPropertyDetails.setAlignment(Pos.CENTER_LEFT);
 
         //styling the page
-        completeUI.getStylesheets().add(getClass().getResource("css/StyleUI.css").toExternalForm());
-        completeUI.getStyleClass().add("viewPropertyDialog-pane");
+        this.completeUI.getStylesheets().add(getClass().getResource("css/StyleUI.css").toExternalForm());
+        this.completeUI.getStyleClass().add("viewPropertyDialog-pane");
 
-        this.stage.setScene(new Scene(completeUI, 1050, 900));
+        this.stage.setScene(new Scene(this.completeUI, 1050, 900));
         this.stage.showAndWait();
 
     }
@@ -209,7 +212,7 @@ public class ViewProperty {
             this.showLastMaintenanceDate();
         }
 
-        this.rentalRecords = new TableView();
+        TableView<RentalRecordTable> rentalRecords = new TableView();
 
         custID.setCellValueFactory(new PropertyValueFactory<>("custID"));
         rentDate.setCellValueFactory(new PropertyValueFactory<>("rentDate"));
@@ -242,13 +245,13 @@ public class ViewProperty {
             }
         }
 
-        this.rentalRecords.getStylesheets().add(getClass().getResource("css/StyleUI.css").toExternalForm());
-        this.rentalRecords.getStyleClass().add("table");
+        rentalRecords.getStylesheets().add(getClass().getResource("css/StyleUI.css").toExternalForm());
+        rentalRecords.getStyleClass().add("table");
 
         //making rental record table
-        this.rentalRecords.getColumns().addAll(custID, rentDate, estimatedReturnDate, actualReturnDate, rentalFee, lateFee);
+        rentalRecords.getColumns().addAll(custID, rentDate, estimatedReturnDate, actualReturnDate, rentalFee, lateFee);
 
-        this.rentalRecords.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        rentalRecords.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         rentalRecords.prefWidthProperty().bind(Bindings.add(-15, tableStackPane.widthProperty()));
         tableStackPane.getChildren().add(rentalRecords);
 
@@ -287,20 +290,20 @@ public class ViewProperty {
 
     private void showPropertyStatus() {
         //        rentalPropertyDetails.getChildren().remove(propertyTypeAndStatus);
-        propertyTypeAndStatus.setText("");
-        propertyTypeAndStatus = new Label(this.rentalProperty.getPropertyType().toUpperCase() + " " + this.rentalProperty.getPropertyStatus().toUpperCase());
-        propertyTypeAndStatus.setTextFill(Color.PALEVIOLETRED);
-        rentalPropertyDetails.add(propertyTypeAndStatus, 0, 4, 4, 1);
+        this.propertyTypeAndStatus.setText("");
+        this.propertyTypeAndStatus = new Label(this.rentalProperty.getPropertyType().toUpperCase() + " " + this.rentalProperty.getPropertyStatus().toUpperCase());
+        this.propertyTypeAndStatus.setTextFill(Color.PALEVIOLETRED);
+        this.rentalPropertyDetails.add(this.propertyTypeAndStatus, 0, 4, 4, 1);
 
     }
 
     private void showLastMaintenanceDate() {
-        lastMaintenanceDate.setText("");
-        lastMaintenanceDate = new Label(String.format("%s : %s", "Last Maintenance Date", ((PremiumSuit) this.rentalProperty).getLastMaintenanceDate().toString()));
-        rentalPropertyDetails.add(lastMaintenanceDate, 0, 12, 4, 1);
+        this.lastMaintenanceDate.setText("");
+        this.lastMaintenanceDate = new Label(String.format("%s : %s", "Last Maintenance Date", ((PremiumSuit) this.rentalProperty).getLastMaintenanceDate().toString()));
+        this.rentalPropertyDetails.add(this.lastMaintenanceDate, 0, 12, 4, 1);
     }
 
     public RentalProperty getRentalProperty() {
-        return rentalProperty;
+        return this.rentalProperty;
     }
 }

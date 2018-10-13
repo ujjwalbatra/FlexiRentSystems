@@ -6,15 +6,17 @@ package model;/*
  */
 
 import utility.DateTime;
-import utility.exception.InvaliOperationException;
-import utility.exception.InvalidInpuException;
+import utility.exception.InvalidInputException;
+import utility.exception.InvalidOperationException;
 import view.PropertyOperationsUI;
 import view.ViewProperty;
 
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 public class RentalRecordManager {
     private PropertyOperationsUI propertyOperationsUI;
@@ -35,7 +37,7 @@ public class RentalRecordManager {
         this.rentalProperty = this.viewProperty.getRentalProperty();
     }
 
-    public void rentProperty() throws InvaliOperationException, InvalidInpuException {
+    public void rentProperty() throws InvalidOperationException, InvalidInputException {
 
         rentDate = new DateTime(this.propertyOperationsUI.getRentDateInput());
         estimatedReturnDate = new DateTime(this.propertyOperationsUI.getEstimatedReturnDateInput());
@@ -49,6 +51,7 @@ public class RentalRecordManager {
         }
 
         try (Connection connection = DriverManager.getConnection("jdbc:hsqldb:file:database/localhost", "SA", "")) {
+            Class.forName("org.hsqldb.jdbc.JDBCDriver");
 
             //adding property ID to the property
             PreparedStatement preparedStatement = connection.prepareStatement("UPDATE RentalProperty " +
@@ -60,11 +63,8 @@ public class RentalRecordManager {
 
             preparedStatement.executeUpdate();
 
-            System.out.println(preparedStatement);
-            System.out.println("property " + this.rentalProperty.getPropertyID() + " rented");
-
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new InvalidOperationException("Error", "Problem occurred", "A problem occurred while performing the operation");
         }
         this.rentalProperty.setPropertyStatus("rented");
 
@@ -76,7 +76,7 @@ public class RentalRecordManager {
 
     }
 
-    public void returnProperty() throws InvaliOperationException, InvalidInpuException {
+    public void returnProperty() throws InvalidOperationException {
 
         DateTime actualReturnDate = new DateTime(this.propertyOperationsUI.getActualReturnDateInput());
 
@@ -93,7 +93,7 @@ public class RentalRecordManager {
             rentDate = new DateTime(resultSet.getString("rentDate"));
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new InvalidOperationException("Error", "Problem occurred", "A problem occurred while performing the operation");
         }
 
         int numOfRentalDays = DateTime.diffDays(estimatedReturnDate, rentDate);
@@ -121,9 +121,6 @@ public class RentalRecordManager {
 
             preparedStatement.executeUpdate();
 
-
-            System.out.println(preparedStatement);
-
             //updating property status
             preparedStatement = connection.prepareStatement("UPDATE RentalProperty " +
                     "SET propertyStatus = ? " +
@@ -134,19 +131,15 @@ public class RentalRecordManager {
 
             preparedStatement.executeUpdate();
 
-            System.out.println(preparedStatement);
-            System.out.println("property " + this.rentalProperty.getPropertyID() + " returned");
-
-
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new InvalidOperationException("Error", "Problem occurred", "A problem occurred while performing the operation");
         }
 
         this.rentalProperty.setPropertyStatus("available");
         this.showAllRecords(this.rentalProperty.getPropertyID());
     }
 
-    public void preformMaintenance() {
+    public void preformMaintenance() throws InvalidOperationException {
         try (Connection connection = DriverManager.getConnection("jdbc:hsqldb:file:database/localhost", "SA", "")) {
 
             //adding property ID to the property
@@ -159,11 +152,8 @@ public class RentalRecordManager {
 
             preparedStatement.executeUpdate();
 
-            System.out.println(preparedStatement);
-            System.out.println("property " + this.rentalProperty.getPropertyID() + " is now under maintenance");
-
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new InvalidOperationException("Error", "Problem occurred", "A problem occurred while performing the operation");
         }
 
         this.rentalProperty.setPropertyStatus("under maintenance");
@@ -172,7 +162,7 @@ public class RentalRecordManager {
 
     }
 
-    public void completeMaintenance() {
+    public void completeMaintenance() throws InvalidOperationException {
         try (Connection connection = DriverManager.getConnection("jdbc:hsqldb:file:database/localhost", "SA", "")) {
 
             //adding property ID to the property
@@ -202,11 +192,8 @@ public class RentalRecordManager {
 
             preparedStatement.executeUpdate();
 
-            System.out.println(preparedStatement);
-            System.out.println("property " + this.rentalProperty.getPropertyID() + " is now available");
-
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new InvalidOperationException("Error", "Problem occurred", "A problem occurred while performing the operation");
         }
         this.rentalProperty.setPropertyStatus("available");
 
@@ -220,7 +207,7 @@ public class RentalRecordManager {
     }
 
     //todo : move these to rental property
-    private void checkApartmentCondition() throws InvaliOperationException {
+    private void checkApartmentCondition() throws InvalidOperationException {
 
         int dayOfWeek = 0;
 
@@ -230,24 +217,24 @@ public class RentalRecordManager {
             calendar.setTime(new SimpleDateFormat("dd/mm/yyyy").parse(rentDate.toString()));
             dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
         } catch (ParseException e) {
-            System.err.println("Can't parse date to day");
+            throw new InvalidOperationException("Error", "Problem occurred", "A problem occurred while performing the operation");
         }
 
         //checking if rental day is between sunday and thursday
         if (numberOfDays < 2 && (dayOfWeek >= 1 && dayOfWeek <= 5))
-            throw new InvaliOperationException("Error", "Invalid Operation", "Renting condition not Satisfied");
+            throw new InvalidOperationException("Error", "Invalid Operation", "Renting condition not Satisfied");
 
         //checking if rental day is friday or saturday
         if (numberOfDays < 3 && (dayOfWeek == 6 || dayOfWeek == 7))
-            throw new InvaliOperationException("Error", "Invalid Operation", "Renting condition not Satisfied");
+            throw new InvalidOperationException("Error", "Invalid Operation", "Renting condition not Satisfied");
 
         //checking if the apartment is being rented for more than 28 days
         if (numberOfDays > 28)
-            throw new InvaliOperationException("Error", "Invalid Operation", "Renting condition not Satisfied");
+            throw new InvalidOperationException("Error", "Invalid Operation", "Renting condition not Satisfied");
 
     }
 
-    private void checkPremiumSuitCondtition() throws InvalidInpuException, InvaliOperationException {
+    private void checkPremiumSuitCondtition() throws InvalidInputException, InvalidOperationException {
 
         //true when property is rented on a maintenance day.
         boolean overlapsMaintenanceDay = false;
@@ -261,14 +248,15 @@ public class RentalRecordManager {
             if (nextMaintenanceDate.toString().equals(testDate.toString())) overlapsMaintenanceDay = true;
         }
 
-        if (numberOfDays < 1) throw new InvalidInpuException("Error", "Invalid Dates", "Please Enter valid dates");
+        if (numberOfDays < 1) throw new InvalidInputException("Error", "Invalid Dates", "Please Enter valid dates");
         if (overlapsMaintenanceDay)
-            throw new InvaliOperationException("Error", "Invalid Date", "Overlap with property maintenance");
+            throw new InvalidOperationException("Error", "Invalid Date", "Overlap with property maintenance");
     }
 
-    public void addRecordToDB(RentalRecord rentalRecord, String propertyID) {
+    public void addRecordToDB(RentalRecord rentalRecord, String propertyID) throws InvalidOperationException {
 
         try (Connection connection = DriverManager.getConnection("jdbc:hsqldb:file:database/localhost", "SA", "")) {
+            Class.forName("org.hsqldb.jdbc.JDBCDriver");
 
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO RentalRecord " +
                     "(recordID, properTyID, rentDate, estimatedReturnDate, actualReturnDate, rentalFee, lateFee, custID)" +
@@ -295,12 +283,8 @@ public class RentalRecordManager {
             preparedStatement.setString(8, rentalRecord.getCustID());
             preparedStatement.executeUpdate();
 
-            System.out.println(preparedStatement);
-            System.err.println("RentalRecord inserted into the db");
-
-
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new InvalidOperationException("Error", "Problem occurred", "A problem occurred while performing the operation");
         }
 
     }
@@ -314,8 +298,10 @@ public class RentalRecordManager {
      * find all rental records for a rental property
      *
      */
-    public void showAllRecords(String propertyID) {
+    public void showAllRecords(String propertyID) throws InvalidOperationException {
         try (Connection connection = DriverManager.getConnection("jdbc:hsqldb:file:database/localhost", "SA", "")) {
+
+            Class.forName("org.hsqldb.jdbc.JDBCDriver");
 
             RentalRecord rentalRecord;
             PreparedStatement preparedStatement;
@@ -342,8 +328,8 @@ public class RentalRecordManager {
 
             this.updateView();
 
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new InvalidOperationException("Error", "Problem occurred", "A problem occurred while performing the operation");
         }
 
     }

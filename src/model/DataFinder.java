@@ -6,6 +6,7 @@ package model;/*
  */
 
 import utility.DateTime;
+import utility.exception.InvalidOperationException;
 import view.MainUI;
 
 import java.io.File;
@@ -33,7 +34,7 @@ public class DataFinder {
      * all the properties to display
      *
      */
-    public void showAllProperties() {
+    public void showAllProperties() throws InvalidOperationException {
 
         this.getAllOneBedRoomApartments();
         this.getAllTwoBedRoomApartments();
@@ -48,12 +49,10 @@ public class DataFinder {
      * adds all one bedroom apartments available in DB to the hash map
      *
      */
-    private void getAllOneBedRoomApartments() {
+    private void getAllOneBedRoomApartments() throws InvalidOperationException {
         try (Connection connection = DriverManager.getConnection("jdbc:hsqldb:file:database/localhost", "SA", "")) {
 
             Class.forName("org.hsqldb.jdbc.JDBCDriver");
-
-            RentalProperty rentalProperty;
 
             PreparedStatement preparedStatement;
 
@@ -64,7 +63,7 @@ public class DataFinder {
             this.wrapResultSet(resultSet);
 
         } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
+            throw new InvalidOperationException("Error", "Problem occurred", "A problem occurred while performing the operation");
         }
     }
 
@@ -73,12 +72,10 @@ public class DataFinder {
      * adds all two bedroom apartments available in DB to the hash map
      *
      */
-    private void getAllTwoBedRoomApartments() {
+    private void getAllTwoBedRoomApartments() throws InvalidOperationException {
         try (Connection connection = DriverManager.getConnection("jdbc:hsqldb:file:database/localhost", "SA", "")) {
 
             Class.forName("org.hsqldb.jdbc.JDBCDriver");
-
-            RentalProperty rentalProperty;
 
             PreparedStatement preparedStatement;
 
@@ -89,7 +86,7 @@ public class DataFinder {
             this.wrapResultSet(resultSet);
 
         } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
+            throw new InvalidOperationException("Error", "Problem occurred", "A problem occurred while performing the operation");
         }
     }
 
@@ -98,12 +95,11 @@ public class DataFinder {
      * adds all three bedroom apartments available in DB to the hash map
      *
      */
-    private void getAllThreeBedRoomApartments() {
+    private void getAllThreeBedRoomApartments() throws InvalidOperationException {
         try (Connection connection = DriverManager.getConnection("jdbc:hsqldb:file:database/localhost", "SA", "")) {
 
             Class.forName("org.hsqldb.jdbc.JDBCDriver");
 
-            RentalProperty rentalProperty;
             PreparedStatement preparedStatement;
 
             preparedStatement = connection.prepareStatement("SELECT * FROM RentalProperty WHERE propertyType = 'apartment' AND numberOfBedrooms = 3;");
@@ -113,7 +109,7 @@ public class DataFinder {
             this.wrapResultSet(resultSet);
 
         } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
+            throw new InvalidOperationException("Error", "Problem occurred", "A problem occurred while performing the operation");
         }
     }
 
@@ -122,12 +118,11 @@ public class DataFinder {
      * adds all premium suits available in DB to the hash map
      *
      */
-    private void getAllPremiumSuits() {
+    private void getAllPremiumSuits() throws InvalidOperationException {
         try (Connection connection = DriverManager.getConnection("jdbc:hsqldb:file:database/localhost", "SA", "")) {
 
             Class.forName("org.hsqldb.jdbc.JDBCDriver");
 
-            RentalProperty rentalProperty;
             PreparedStatement preparedStatement;
 
             preparedStatement = connection.prepareStatement("SELECT * FROM RentalProperty WHERE propertyType = 'premium suit';");
@@ -137,7 +132,7 @@ public class DataFinder {
             this.wrapResultSet(resultSet);
 
         } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
+            throw new InvalidOperationException("Error", "Problem occurred", "A problem occurred while performing the operation");
         }
     }
 
@@ -146,7 +141,7 @@ public class DataFinder {
      * search property on the basis of a property id or suburb
      *
      */
-    public void searchProperty(String searchString) {
+    public void searchProperty(String searchString) throws InvalidOperationException {
         try (Connection connection = DriverManager.getConnection("jdbc:hsqldb:file:database/localhost", "SA", "")) {
 
             Class.forName("org.hsqldb.jdbc.JDBCDriver");
@@ -165,7 +160,7 @@ public class DataFinder {
             this.updateView();
 
         } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
+            throw new InvalidOperationException("Error", "Problem occurred", "A problem occurred while performing the operation");
         }
     }
 
@@ -174,7 +169,7 @@ public class DataFinder {
      * search property on the basis of a property id or suburb
      *
      */
-    public void filterPropertyStatus(String propertyStatus) {
+    public void filterPropertyStatus(String propertyStatus) throws InvalidOperationException {
         try (Connection connection = DriverManager.getConnection("jdbc:hsqldb:file:database/localhost", "SA", "")) {
 
             Class.forName("org.hsqldb.jdbc.JDBCDriver");
@@ -192,11 +187,11 @@ public class DataFinder {
             this.updateView();
 
         } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
+            throw new InvalidOperationException("Error", "Problem occurred", "A problem occurred while performing the operation");
         }
     }
 
-    public void filterPropertyType() {
+    public void filterPropertyType() throws InvalidOperationException {
         if (mainUI.isOneBedroomApartmentSelected()) this.getAllOneBedRoomApartments();
         if (mainUI.isTwoBedroomApartmentSelected()) this.getAllTwoBedRoomApartments();
         if (mainUI.isThreeBedroomApartmentSelected()) this.getAllThreeBedRoomApartments();
@@ -210,7 +205,7 @@ public class DataFinder {
      * Deleting all properties from database
      *
      */
-    public void deleteAllProperties() {
+    public void deleteAllProperties() throws InvalidOperationException {
         try (Connection connection = DriverManager.getConnection("jdbc:hsqldb:file:database/localhost", "SA", "")) {
 
             Class.forName("org.hsqldb.jdbc.JDBCDriver");
@@ -218,16 +213,14 @@ public class DataFinder {
 
             preparedStatement = connection.prepareStatement("DELETE FROM RentalProperty WHERE rowID > 0;");
 
-            int result = preparedStatement.executeUpdate();
-
-            if (result == 0) System.out.println("All properties deleted");
+            preparedStatement.executeUpdate();
 
             this.propertiesFound = null;
 
             this.updateView();
 
         } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
+            throw new InvalidOperationException("Error", "Problem occurred", "A problem occurred while performing the operation");
         }
 
 
@@ -238,8 +231,10 @@ public class DataFinder {
      * adding the property to database and initialising it's row ID (auto increment) and a property ID.
      *
      */
-    public void addPropertyToDB(RentalProperty rentalProperty) {
+    public void addPropertyToDB(RentalProperty rentalProperty) throws InvalidOperationException {
         try (Connection connection = DriverManager.getConnection("jdbc:hsqldb:file:database/localhost", "SA", "")) {
+
+            Class.forName("org.hsqldb.jdbc.JDBCDriver");
 
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO RentalProperty " +
                     "(propertyID, streetNumber, streetName, suburb, propertyType, numberOfBedrooms, rentalRate, propertyStatus, lastMaintenanceDate, description, imagePath )" +
@@ -255,7 +250,6 @@ public class DataFinder {
             preparedStatement.setString(8, rentalProperty.getPropertyStatus());
 
             if (rentalProperty.getPropertyType().equals("premium suit")) {
-                System.out.println(((PremiumSuit) rentalProperty).getLastMaintenanceDate().toString());
                 preparedStatement.setString(9, ((PremiumSuit) rentalProperty).getLastMaintenanceDate().toString());
 
             } else if (rentalProperty.getPropertyType().equals("apartment"))
@@ -268,32 +262,10 @@ public class DataFinder {
 
             preparedStatement.executeUpdate();
 
-            System.out.println(preparedStatement);
-
-            //            //adding property ID to the property
-            //            preparedStatement = connection.prepareStatement("UPDATE RentalProperty " +
-            //                    "SET propertyID = ? " +
-            //                    "WHERE streetNumber = ? " +
-            //                    "AND streetName = ? " +
-            //                    "AND suburb = ?;");
-            //
-            //            char propertyTypeChar = rentalProperty.getPropertyType().toUpperCase().charAt(0);
-            //
-            //            preparedStatement.setString(1, propertyTypeChar + "_" + rentalProperty.getStreetNumber()
-            //                    + "_" + rentalProperty.getStreetName() + "_" + rentalProperty.getSuburb());
-            //
-            //            preparedStatement.setInt(2, rentalProperty.getStreetNumber());
-            //            preparedStatement.setString(3, rentalProperty.getStreetName());
-            //            preparedStatement.setString(4, rentalProperty.getSuburb());
-            //
-            //            preparedStatement.executeUpdate();
-            //
-            //            System.err.println("RentalProperty inserted into the table");
-
             showAllProperties();
 
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new InvalidOperationException("Error", "Problem occurred", "A problem occurred while performing the operation");
         }
     }
 
@@ -307,7 +279,7 @@ public class DataFinder {
         mainUI.populatePropertiesFlowPane(this.propertiesFound);
     }
 
-    private void wrapResultSet(ResultSet resultSet) {
+    private void wrapResultSet(ResultSet resultSet) throws InvalidOperationException {
         RentalProperty rentalProperty;
         try {
             while (resultSet.next()) {
@@ -325,11 +297,11 @@ public class DataFinder {
                 this.propertiesFound.put(resultSet.getString("propertyID"), rentalProperty);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new InvalidOperationException("Error", "Problem occurred", "A problem occurred while performing the operation");
         }
     }
 
-    public void exportAllData(File file) {
+    public void exportAllData(File file) throws InvalidOperationException {
         try (Connection connection = DriverManager.getConnection("jdbc:hsqldb:file:database/localhost", "SA", "")) {
 
             Class.forName("org.hsqldb.jdbc.JDBCDriver");
@@ -367,13 +339,13 @@ public class DataFinder {
             }
 
         } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
+            throw new InvalidOperationException("Error", "Problem occurred", "A problem occurred while performing the operation");
         }
 
         this.writeDataToFile(file);
     }
 
-    private void writeDataToFile(File file){
+    private void writeDataToFile(File file) throws InvalidOperationException {
         String fileDetails = "";
 
         if (propertiesFound != null) {
@@ -396,7 +368,7 @@ public class DataFinder {
             fileWriter.write(fileDetails);
             fileWriter.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new InvalidOperationException("Error", "Problem occurred", "A problem occurred while performing the operation");
         }
     }
 

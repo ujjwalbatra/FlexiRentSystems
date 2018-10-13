@@ -19,8 +19,10 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import model.RentalProperty;
+import utility.exception.FlexiRentException;
 import utility.exception.IncompleteInputException;
-import utility.exception.InvalidInpuException;
+import utility.exception.InvalidInputException;
+import utility.exception.PropertyAlreadyExistException;
 
 import java.io.File;
 import java.time.LocalDate;
@@ -237,11 +239,7 @@ public class AddPropertyUI {
                         addPropertyBtnHandler.verifyProcessInput();
                         closeProcedure();
                         close();
-                    } catch (InvalidInpuException e) {
-                        event.consume();
-                        AlertBox alertBox = new AlertBox();
-                        alertBox.generateWarningAlertBox(e.getTitle(), e.getHeader(), e.getMessage());
-                    } catch (IncompleteInputException e) {
+                    }   catch (FlexiRentException e) {
                         event.consume();
                         AlertBox alertBox = new AlertBox();
                         alertBox.generateWarningAlertBox(e.getTitle(), e.getHeader(), e.getMessage());

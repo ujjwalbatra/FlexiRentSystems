@@ -14,12 +14,15 @@ import model.PremiumSuit;
 import model.RentalProperty;
 import utility.DateTime;
 import utility.exception.IncompleteInputException;
-import utility.exception.InvalidInpuException;
+import utility.exception.InvalidInputException;
+import utility.exception.InvalidOperationException;
+import utility.exception.PropertyAlreadyExistException;
 import view.AddPropertyUI;
 import view.MainUI;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -46,7 +49,7 @@ public class AddPropertyBtnHandler {
      * and copies the image to project resources
      *
      */
-    public void verifyProcessInput() throws IncompleteInputException, InvalidInpuException {
+    public void verifyProcessInput() throws IncompleteInputException, InvalidInputException, InvalidOperationException {
         //get details and insert into DB from model
 
         //if any input field is empty throw exception
@@ -57,10 +60,14 @@ public class AddPropertyBtnHandler {
             throw new IncompleteInputException("Error", "Incomplete Input", "All input fields are required");
         }
 
+        if (this.addPropertyUI.getDescriptionInput().length() > 100) {
+            throw new InvalidInputException("Error", "Invalid Imput", "Description shouldn't be longer that 100 characters");
+        }
+
         try {
             this.streetNumber = Integer.parseInt(this.addPropertyUI.getStreetNumberInput());
         } catch (NumberFormatException e) {
-            throw new InvalidInpuException("Error", "Invalid Input", "Enter a number (without decimal) in the Street number field");
+            throw new InvalidInputException("Error", "Invalid Input", "Enter a number (without decimal) in the Street number field");
         }
 
 
@@ -98,9 +105,10 @@ public class AddPropertyBtnHandler {
 
             try {
                 Files.copy(from, to);
+            } catch (FileAlreadyExistsException e) {
+                throw new PropertyAlreadyExistException("Error", "Cannot add property", "The property already exists.");
             } catch (IOException e) {
-                e.printStackTrace();
-                throw new InvalidInpuException("Error", "Image not found", "The file attached was not found please attach another");
+                throw new InvalidInputException("Error", "Image not found", "The file attached was not found please attach another");
             }
 
         } else {

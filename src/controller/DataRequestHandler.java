@@ -7,8 +7,7 @@ package controller;/*
 
 import model.*;
 import utility.DateTime;
-import utility.exception.InvaliOperationException;
-import utility.exception.InvalidInpuException;
+import utility.exception.InvalidOperationException;
 import view.MainUI;
 import view.ViewProperty;
 
@@ -28,17 +27,17 @@ public class DataRequestHandler {
         this.mainUI = mainUI;
     }
 
-    public void deleteDataRequestHandler() {
+    public void deleteDataRequestHandler() throws InvalidOperationException {
         DataFinder dataFinder = new DataFinder(mainUI);
         dataFinder.deleteAllProperties();
     }
 
-    public void requestAllRentalRecords(ViewProperty viewProperty, String propertyID) {
+    public void requestAllRentalRecords(ViewProperty viewProperty, String propertyID) throws InvalidOperationException {
         RentalRecordManager rentalRecordManager = new RentalRecordManager(viewProperty, null);
         rentalRecordManager.showAllRecords(propertyID);
     }
 
-    public void searchPropertyHandler() {
+    public void searchPropertyHandler() throws InvalidOperationException {
         DataFinder dataFinder = new DataFinder(mainUI);
         String searchString = mainUI.getSearchInput();
 
@@ -51,7 +50,7 @@ public class DataRequestHandler {
         }
     }
 
-    public void filterPropertyStatusHandler(String propertyStatus) {
+    public void filterPropertyStatusHandler(String propertyStatus) throws InvalidOperationException {
         DataFinder dataFinder = new DataFinder(mainUI);
 
         if (propertyStatus.equals("all")) {
@@ -61,19 +60,19 @@ public class DataRequestHandler {
         }
     }
 
-    public void filterPropertyTypeHandler() {
+    public void filterPropertyTypeHandler() throws InvalidOperationException {
         DataFinder dataFinder = new DataFinder(mainUI);
         dataFinder.filterPropertyType();
 
     }
 
-    public void exportDataHandler(File file) {
+    public void exportDataHandler(File file) throws InvalidOperationException {
 
         DataFinder dataFinder = new DataFinder(mainUI);
         dataFinder.exportAllData(file);
     }
 
-    public void importDataHandler(File file) throws InvaliOperationException {
+    public void importDataHandler(File file) throws InvalidOperationException {
         DataFinder dataFinder = new DataFinder(mainUI);
         RentalRecordManager rentalRecordManager = new RentalRecordManager();
         String line;
@@ -87,6 +86,7 @@ public class DataRequestHandler {
 
                 RentalProperty rentalProperty;
 
+                //checking if the line is of rental record
                 if (details.length == 6) {
 
                     if (details[3].equals("none")){
@@ -113,7 +113,7 @@ public class DataRequestHandler {
             }
             scanner.close();
         } catch (FileNotFoundException e) {
-            throw new InvaliOperationException("Error","Invalid Operation","File not found!");
+            throw new InvalidOperationException("Error","Invalid Operation","File not found!");
         }
     }
 }
