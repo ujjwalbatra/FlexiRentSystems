@@ -69,7 +69,8 @@ public class DataRequestHandler {
     public void exportDataHandler(File file) throws InvalidOperationException {
 
         DataFinder dataFinder = new DataFinder(mainUI);
-        dataFinder.exportAllData(file);
+        if (file != null)
+            dataFinder.exportAllData(file);
     }
 
     public void importDataHandler(File file) throws InvalidOperationException {
@@ -77,43 +78,48 @@ public class DataRequestHandler {
         RentalRecordManager rentalRecordManager = new RentalRecordManager();
         String line;
         try {
+
             Scanner scanner = new Scanner(new FileInputStream(file));
             String propertyID = null;
-            while (scanner.hasNextLine()){
+            while (scanner.hasNextLine()) {
+
+
                 line = scanner.nextLine();
 
-                String []details = line.split(":");
+                String[] details = line.split(":");
 
                 RentalProperty rentalProperty;
 
                 //checking if the line is of rental record
                 if (details.length == 6) {
 
-                    if (details[3].equals("none")){
+                    if (details[3].equals("none")) {
                         rentalRecordManager.addRecordToDB(new RentalRecord(details[0], "", new DateTime(details[1]),
-                                new DateTime(details[2]), null, -1, -1),propertyID );
-                    }else {
+                                new DateTime(details[2]), null, -1, -1), propertyID);
+                    } else {
                         rentalRecordManager.addRecordToDB(new RentalRecord(details[0], "", new DateTime(details[1]),
                                 new DateTime(details[2]), new DateTime(details[3]), Double.valueOf(details[4]), Double.valueOf(details[5])), propertyID);
                     }
 
-                } else if(line.charAt(0) == 'A'){
+                } else if (line.charAt(0) == 'A') {
                     propertyID = details[0];
 
-                    rentalProperty = new Apartment(Integer.valueOf(details[1]),details[2],
-                            details[3], details[6],Integer.valueOf(details[5]), details[8], details[7]);
+                    rentalProperty = new Apartment(Integer.valueOf(details[1]), details[2],
+                            details[3], details[6], Integer.valueOf(details[5]), details[8], details[7]);
                     dataFinder.addPropertyToDB(rentalProperty);
-                } else if (line.charAt(0) == 'P'){
+                } else if (line.charAt(0) == 'P') {
                     propertyID = details[0];
 
-                    rentalProperty = new PremiumSuit(Integer.valueOf(details[1]),details[2],
-                            details[3], details[6],new DateTime(details[7]), details[9], details[8]);
+                    rentalProperty = new PremiumSuit(Integer.valueOf(details[1]), details[2],
+                            details[3], details[6], new DateTime(details[7]), details[9], details[8]);
                     dataFinder.addPropertyToDB(rentalProperty);
                 }
             }
             scanner.close();
         } catch (FileNotFoundException e) {
-            throw new InvalidOperationException("Error","Invalid Operation","File not found!");
+            throw new InvalidOperationException("Error", "Invalid Operation", "File not found!");
+        } catch (NullPointerException e){
+            //do nothing if no file was attached
         }
     }
 }

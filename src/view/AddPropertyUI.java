@@ -20,9 +20,6 @@ import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import model.RentalProperty;
 import utility.exception.FlexiRentException;
-import utility.exception.IncompleteInputException;
-import utility.exception.InvalidInputException;
-import utility.exception.PropertyAlreadyExistException;
 
 import java.io.File;
 import java.time.LocalDate;
